@@ -7,7 +7,7 @@ import IndexWrapper from './components/IndexWrapper.tsx'
 import AuthWrapper from './components/AuthWrapper.tsx'
 import Login from './routes/Login.tsx'
 import Signup from './routes/Signup.tsx'
-import Index from './routes/Index.tsx'
+import Channels from './routes/Channels.tsx'
 import User from './routes/User.tsx'
 
 import './App.css'
@@ -64,7 +64,7 @@ export default function App (): JSX.Element | undefined {
       </Route>
       {userData !== null && (
         <Route element={<IndexWrapper userData={userData} setToken={setToken} />}>
-          <Route path="/" element={<Index userData={userData} />} />
+          <Route path="/" element={<Channels />} />
           <Route
             path="/user/:id"
             element={

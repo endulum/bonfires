@@ -121,3 +121,13 @@ form {
 }
 
 .ReactModalPortal, [data-react-modal-body-trap] { border: none }
+
+main h2 {
+  margin-bottom: 1rem;
+}
+
+.channels {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+}

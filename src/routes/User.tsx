@@ -1,6 +1,7 @@
 import { type Dispatch, type SetStateAction, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import Modal from 'react-modal'
+import { useReadLocalStorage } from 'usehooks-ts'
 import APIForm from '../components/APIForm.tsx'
 import useFetch from '../useFetch.ts'
 
@@ -20,13 +21,20 @@ export default function User ({ userData, setUserData }: {
 
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)
 
+  const token = useReadLocalStorage<string>('token')
+
   const {
     data, loading, error, fetchData
   } = useFetch<UserDetail>(
     true,
     `http://localhost:3000/user/${params.id}`,
     {
-      method: 'GET'
+      method: 'GET',
+      headers: token !== null
+        ? {
+            Authorization: `Bearer ${token}`
+          }
+        : {}
     }
   )
 
