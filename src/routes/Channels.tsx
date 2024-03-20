@@ -1,5 +1,8 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useReadLocalStorage } from 'usehooks-ts'
+import Modal from 'react-modal'
+import APIForm from '../components/APIForm.tsx'
 import useFetch from '../useFetch.ts'
 
 interface ChannelList {
@@ -11,10 +14,12 @@ interface ChannelList {
 }
 
 export default function Channels (): JSX.Element | undefined {
+  Modal.setAppElement('#root')
   const token = useReadLocalStorage<string>('token')
+  const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)
 
   const {
-    data, loading, error
+    data, loading, error, fetchData
   } = useFetch<ChannelList[]>(
     true,
     'http://localhost:3000/channels',
@@ -28,12 +33,48 @@ export default function Channels (): JSX.Element | undefined {
     }
   )
 
+  function handleSuccess (): void {
+    setModalIsOpen(false)
+    void fetchData()
+  }
+
   if (loading) return <p>Loading...</p>
   if (error !== null) return <p>{error}</p>
   if (data !== null) {
     return (
       <>
-        <h2>Your Channels</h2>
+        <div className="header-bar">
+          <h2>Your Channels</h2>
+          <button type="button" onClick={() => { setModalIsOpen(true) }}>
+            New Channel
+          </button>
+        </div>
+
+        <Modal
+          className="modal-content edit-form"
+          overlayClassName="modal-overlay"
+          contentLabel="Creating a Channel"
+          isOpen={modalIsOpen}
+        >
+          <APIForm
+            endpoint={{
+              url: 'http://localhost:3000/channels',
+              method: 'POST'
+            }}
+            onSuccess={handleSuccess}
+          >
+            <h2>Create a Channel</h2>
+            <label htmlFor="title">
+              <span>Title</span>
+              <input type="text" id="title" />
+            </label>
+            <button type="submit">Create</button>
+          </APIForm>
+          <button type="button" onClick={() => { setModalIsOpen(false) }}>
+            Cancel
+          </button>
+        </Modal>
+
         {data.length > 0
           ? (
             <div className="channels">
