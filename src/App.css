@@ -149,3 +149,22 @@ form {
 .messages {
   flex-grow: 1;
 }
+
+.compose {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.compose-row {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  align-items: center;
+  textarea {
+    flex-grow: 1;
+  }
+  button {
+    height: 100%;
+  }
+}

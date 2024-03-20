@@ -1,9 +1,11 @@
-import { useState } from 'react'
+import { type Dispatch, type SetStateAction, useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import Modal from 'react-modal'
 import { useReadLocalStorage } from 'usehooks-ts'
 import APIForm from '../components/APIForm.tsx'
 import useFetch from '../useFetch.ts'
+import Messages from './Messages.tsx'
+import { type FormErrors } from '../types.ts'
 
 interface ChannelDetail {
   id: string
@@ -25,6 +27,7 @@ export default function Channel (): JSX.Element | undefined {
   const token = useReadLocalStorage<string>('token')
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)
   const channelId = useParams().channel
+  const [messageSeed, setMessageSeed] = useState<number>(0)
 
   const {
     data, loading, error, fetchData
@@ -169,12 +172,71 @@ export default function Channel (): JSX.Element | undefined {
         </Modal>
 
         <div className="messages">
-          {/* Messages component here */}
+          <Messages messageSeed={messageSeed} />
         </div>
-        <div className="compose">
-          {/* Form to send messages here */}
-        </div>
+        <ComposeMessage setMessageSeed={setMessageSeed} />
       </>
     )
   }
+}
+
+function ComposeMessage ({ setMessageSeed }: {
+  setMessageSeed: Dispatch<SetStateAction<number>>
+}): JSX.Element {
+  const token = useReadLocalStorage<string>('token')
+  const channelId = useParams().channel
+
+  const [messageContent, setMessageContent] = useState<string>('')
+
+  const {
+    data, loading, error, fetchData
+  } = useFetch<string | FormErrors>(
+    false,
+    `http://localhost:3000/channel/${channelId}/messages`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: token !== null ? `Bearer ${token}` : ''
+      },
+      body: JSON.stringify({
+        content: messageContent
+      })
+    }
+  )
+
+  useEffect(() => {
+    if (data !== null && data === 'OK') {
+      setMessageSeed(Math.random())
+    }
+  }, [data])
+
+  return (
+    <div className="compose">
+      {error !== null && (
+        <div className="compose-error">
+          {data !== null && typeof data !== 'string'
+            ? (
+              <p>{data[0].msg}</p>
+              )
+            : <p>{error}</p>}
+        </div>
+      )}
+      <form
+        className="compose-row"
+        onSubmit={(e) => {
+          e.preventDefault()
+          void fetchData()
+        }}
+      >
+        <textarea
+          placeholder="Say something nice..."
+          onChange={(e) => { setMessageContent(e.target.value) }}
+        />
+        <button type="submit" disabled={loading}>
+          Send
+        </button>
+      </form>
+    </div>
+  )
 }
