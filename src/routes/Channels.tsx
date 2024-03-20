@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { useReadLocalStorage } from 'usehooks-ts'
 import useFetch from '../useFetch.ts'
 
@@ -37,29 +38,32 @@ export default function Channels (): JSX.Element | undefined {
           ? (
             <div className="channels">
               {data.map((channel) => (
-                <div className="channel" key={channel.id}>
-                  <h3>{channel.title}</h3>
-                  <p>
-                    {channel.userCount > 1
-                      ? (
-                        <span>
-                          {channel.userCount}
-                          {' '}
-                          members
-                        </span>
-                        )
-                      : (<span>Just you</span>)}
-                    {channel.ownDisplayName !== null && (
-                    <span>
-                      {' '}
-                      |
-                      {' '}
-                      You appear as $
-                      {channel.ownDisplayName}
-                    </span>
-                    )}
-                  </p>
-                </div>
+                <Link to={`/channel/${channel.id}`} key={channel.id}>
+                  <div className="channel">
+                    <h3>{channel.title}</h3>
+                    <p>
+                      {channel.userCount > 1
+                        ? (
+                          <span>
+                            {channel.userCount}
+                            {' '}
+                            members
+                          </span>
+                          )
+                        : (<span>Just you</span>)}
+                      {channel.ownDisplayName !== null && (
+                      <span>
+                        {' '}
+                        |
+                        {' '}
+                        You appear as $
+                        {channel.ownDisplayName}
+                      </span>
+                      )}
+                    </p>
+                  </div>
+                </Link>
+
               ))}
             </div>
             )
