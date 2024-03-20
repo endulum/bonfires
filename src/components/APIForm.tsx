@@ -4,7 +4,7 @@ import useFetch from '../useFetch.ts'
 import { type FormErrors } from '../types.ts'
 
 export default function APIForm ({ endpoint, onSuccess, children }: {
-  children: JSX.Element[]
+  children: Array<JSX.Element | false>
   onSuccess: (...args: any) => void
   endpoint: { url: string, method: string }
 }): JSX.Element {
@@ -69,23 +69,26 @@ export default function APIForm ({ endpoint, onSuccess, children }: {
     <form onSubmit={handleSubmit}>
       {error !== null && <p>{error}</p>}
       {children.map((child) => {
-        if (child.type === 'label') {
-          return (
-            <Input
-              key={child.props.htmlFor}
-              fieldName={child.props.htmlFor}
-              formErrors={formErrors}
-            >
-              {child.props.children}
-            </Input>
-          )
-        } if (child.type === 'button') {
-          return (
-            <button type="submit" key="submit" disabled={loading}>
-              {loading ? 'Processing...' : (child.props.children)}
-            </button>
-          )
-        } return child
+        if (child !== false) {
+          if (child.type === 'label') {
+            return (
+              <Input
+                key={child.props.htmlFor}
+                fieldName={child.props.htmlFor}
+                formErrors={formErrors}
+              >
+                {child.props.children}
+              </Input>
+            )
+          } if (child.type === 'button') {
+            return (
+              <button type="submit" key="submit" disabled={loading}>
+                {loading ? 'Processing...' : (child.props.children)}
+              </button>
+            )
+          }
+        }
+        return child
       })}
     </form>
   )

@@ -17,7 +17,7 @@ export default function useFetch<T> (
   function handleError (e: unknown): void {
     if (e instanceof TypeError) {
       setError('A network error occurred. Try again later.')
-    } else if (e instanceof Error) {
+    } else if (e instanceof Error && e.message !== '') {
       setError(e.message)
     } else {
       // eslint-disable-next-line no-console

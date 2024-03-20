@@ -79,32 +79,30 @@ export default function Channels (): JSX.Element | undefined {
           ? (
             <div className="channels">
               {data.map((channel) => (
-                <Link to={`/channel/${channel.id}`} key={channel.id}>
-                  <div className="channel">
-                    <h3>{channel.title}</h3>
-                    <p>
-                      {channel.userCount > 1
-                        ? (
-                          <span>
-                            {channel.userCount}
-                            {' '}
-                            members
-                          </span>
-                          )
-                        : (<span>Just you</span>)}
-                      {channel.ownDisplayName !== null && (
+                <Link to={`/channel/${channel.id}`} key={channel.id} className="channel">
+                  <h3>{channel.title}</h3>
+                  <p>
+                    {channel.userCount > 1
+                      ? (
+                        <span>
+                          {channel.userCount}
+                          {' '}
+                          members
+                        </span>
+                        )
+                      : (<span>Just you</span>)}
+                    {channel.ownDisplayName !== null && (
                       <span>
                         {' '}
                         |
                         {' '}
-                        You appear as $
-                        {channel.ownDisplayName}
+                        You appear as
+                        {' '}
+                        <b>{channel.ownDisplayName}</b>
                       </span>
-                      )}
-                    </p>
-                  </div>
+                    )}
+                  </p>
                 </Link>
-
               ))}
             </div>
             )

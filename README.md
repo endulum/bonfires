@@ -19,10 +19,10 @@ Bonfires is a simple messaging web app allowing users to start "camps" with one 
   - [x] Makes a request to `GET /channel/:channel` on load
   - [ ] Form that posts to `POST /channel/:channel/messages` ("Send message" section)
   - [ ] Component that makes a request to `GET /channel/:channel/messages` on load ("Messages" section)
-  - [ ] "Channel settings" modal:
-    - [ ] Form that posts to `POST /channel/:channel/name` ("Change display name" section)
-    - [ ] Form that posts to `POST /channel/:channel/invite` ("Invite a user" section)
-    - [ ] If admin, form that posts to `PUT /channel/:channel` ("Edit channel details" section)
-    - [ ] If admin, form that posts to `POST /channel/:channel/promote` ("Promote a user" section)
-    - [ ] If admin, form that posts to `POST /channel/:channel/kick` ("Kick a user" section)
-    - [ ] Button that posts to `DELETE /channel/:channel` ("Leave channel" button)
+  - [x] "Channel settings" modal:
+    - [x] Form that posts to `POST /channel/:channel/name` ("Change display name" section)
+    - [x] Form that posts to `POST /channel/:channel/invite` ("Invite a user" section)
+    - [x] If admin, form that posts to `PUT /channel/:channel` ("Edit channel details" section)
+    - [x] If admin, form that posts to `POST /channel/:channel/promote` ("Promote a user" section)
+    - [x] If admin, form that posts to `POST /channel/:channel/kick` ("Kick a user" section)
+    - [x] Button that posts to `DELETE /channel/:channel` ("Leave channel" button)
