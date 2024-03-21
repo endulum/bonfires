@@ -207,13 +207,14 @@ function ComposeMessage ({ setMessageSeed }: {
     }
   )
 
-  function handleSubmit (e: FormEvent<HTMLFormElement>): void {
-    e.preventDefault()
+  function handleSubmit (e?: FormEvent<HTMLFormElement>): void {
+    if (e !== undefined) e.preventDefault()
     if (textarea.current !== null) {
       setMessageContent(textarea.current.value)
       setIsSending(true)
     }
-    e.currentTarget.reset()
+    if (e !== undefined) e.currentTarget.reset()
+    else if (textarea.current !== null) textarea.current.value = ''
   }
 
   useEffect(() => {
@@ -247,6 +248,12 @@ function ComposeMessage ({ setMessageSeed }: {
         <textarea
           placeholder="Say something nice..."
           ref={textarea}
+          onKeyDown={(e) => {
+            if (!e.shiftKey && e.code === 'Enter') {
+              e.preventDefault()
+              handleSubmit()
+            }
+          }}
         />
         <button type="submit" disabled={loading}>
           Send
