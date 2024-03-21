@@ -233,9 +233,14 @@ function ComposeMessage ({ setMessageSeed }: {
           placeholder="Say something nice..."
           onChange={(e) => { setMessageContent(e.target.value) }}
         />
+        {/* todo: submit on enter, excluding shift+enter */}
         <button type="submit" disabled={loading}>
           Send
         </button>
+        {/* todo: instead of having the message be stateful,
+            capture the value of the textbox on submit
+            using useRef and erase it after submit too
+         */}
       </form>
     </div>
   )

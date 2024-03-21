@@ -18,7 +18,7 @@ Bonfires is a simple messaging web app allowing users to start "camps" with one 
 - [x] `/channel/:channel`
   - [x] Makes a request to `GET /channel/:channel` on load
   - [x] Form that posts to `POST /channel/:channel/messages` ("Send message" section)
-  - [ ] Component that makes a request to `GET /channel/:channel/messages` on load ("Messages" section)
+  - [x] Component that makes a request to `GET /channel/:channel/messages` on load ("Messages" section)
   - [x] "Channel settings" modal:
     - [x] Form that posts to `POST /channel/:channel/name` ("Change display name" section)
     - [x] Form that posts to `POST /channel/:channel/invite` ("Invite a user" section)

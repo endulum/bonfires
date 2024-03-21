@@ -7,6 +7,7 @@ export default function APIForm ({ endpoint, onSuccess, children }: {
   children: Array<JSX.Element | false>
   onSuccess: (...args: any) => void
   endpoint: { url: string, method: string }
+  // todo: option to NOT nullify data on refetch
 }): JSX.Element {
   const token = useReadLocalStorage<string>('token')
   const [form, setForm] = useState<Record<string, string>>({})
