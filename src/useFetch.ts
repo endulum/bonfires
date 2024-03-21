@@ -8,7 +8,7 @@ export default function useFetch<T> (
     data: T | null
     loading: boolean
     error: string | null
-    fetchData: () => Promise<void>
+    fetchData: (preserveData?: boolean) => Promise<void>
   } {
   const [data, setData] = useState<T | null>(null)
   const [loading, setLoading] = useState<boolean>(false)
@@ -26,9 +26,11 @@ export default function useFetch<T> (
     }
   }
 
-  async function fetchData (): Promise<void> {
-    setData(null)
-    setLoading(true)
+  async function fetchData (preserveData?: boolean): Promise<void> {
+    if (!(preserveData === true)) {
+      setLoading(true)
+      setData(null)
+    }
     setError(null)
 
     try {

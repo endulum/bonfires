@@ -52,7 +52,7 @@ export default function Messages ({ messageSeed }: {
   }
 
   useEffect(() => {
-    if (messageSeed !== 0) void fetchData()
+    if (messageSeed !== 0) void fetchData(true)
   }, [messageSeed])
 
   useEffect(() => {
