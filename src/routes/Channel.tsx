@@ -1,4 +1,4 @@
-import { type Dispatch, type SetStateAction, useState, useEffect } from 'react'
+import { type KeyboardEvent, type Dispatch, type SetStateAction, useState, useEffect, useRef, type FormEvent } from 'react'
 import { useParams } from 'react-router-dom'
 import Modal from 'react-modal'
 import { useReadLocalStorage } from 'usehooks-ts'
@@ -185,8 +185,10 @@ function ComposeMessage ({ setMessageSeed }: {
 }): JSX.Element {
   const token = useReadLocalStorage<string>('token')
   const channelId = useParams().channel
+  const textarea = useRef<null | HTMLTextAreaElement>(null)
 
   const [messageContent, setMessageContent] = useState<string>('')
+  const [isSending, setIsSending] = useState(false)
 
   const {
     data, loading, error, fetchData
@@ -205,11 +207,27 @@ function ComposeMessage ({ setMessageSeed }: {
     }
   )
 
+  function handleSubmit (e: FormEvent<HTMLFormElement>): void {
+    e.preventDefault()
+    if (textarea.current !== null) {
+      setMessageContent(textarea.current.value)
+      setIsSending(true)
+    }
+    e.currentTarget.reset()
+  }
+
   useEffect(() => {
     if (data !== null && data === 'OK') {
       setMessageSeed(Math.random())
     }
   }, [data])
+
+  useEffect(() => {
+    if (isSending) {
+      setIsSending(false)
+      void fetchData()
+    }
+  }, [isSending])
 
   return (
     <div className="compose">
@@ -224,23 +242,15 @@ function ComposeMessage ({ setMessageSeed }: {
       )}
       <form
         className="compose-row"
-        onSubmit={(e) => {
-          e.preventDefault()
-          void fetchData()
-        }}
+        onSubmit={handleSubmit}
       >
         <textarea
           placeholder="Say something nice..."
-          onChange={(e) => { setMessageContent(e.target.value) }}
+          ref={textarea}
         />
-        {/* todo: submit on enter, excluding shift+enter */}
         <button type="submit" disabled={loading}>
           Send
         </button>
-        {/* todo: instead of having the message be stateful,
-            capture the value of the textbox on submit
-            using useRef and erase it after submit too
-         */}
       </form>
     </div>
   )
