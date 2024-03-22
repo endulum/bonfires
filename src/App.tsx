@@ -9,18 +9,19 @@ import Login from './routes/Login.tsx'
 import Signup from './routes/Signup.tsx'
 import Channels from './routes/Channels.tsx'
 import Channel from './routes/Channel.tsx'
-import User from './routes/User.tsx'
 
 import './App.css'
 
 export default function App (): JSX.Element | undefined {
-  const [token, setToken] = useLocalStorage<string | null>('token', null)
-  const [userData, setUserData] = useState<{ username: string, id: string } | null>(null)
+  const [token, setToken] = useLocalStorage<string | null>('token', null, {
+    initializeWithValue: true
+  })
+  const [tokenChanged, setTokenChanged] = useState<boolean>(false)
 
   const {
     data, loading, error, fetchData
   } = useFetch<{ username: string, id: string }>(
-    false,
+    true,
     'http://localhost:3000/login',
     {
       method: 'GET',
@@ -34,6 +35,7 @@ export default function App (): JSX.Element | undefined {
 
   useEffect(() => {
     if (
+      !loading &&
       error !== null &&
       [
         'Token could not be verified.',
@@ -42,17 +44,27 @@ export default function App (): JSX.Element | undefined {
     ) {
       // eslint-disable-next-line no-console
       console.warn('Invalid token provided, nullifying token...')
-      setToken(null)
+      setTokenAndRefresh()
     }
   }, [error])
 
-  useEffect(() => {
-    void fetchData()
-  }, [token])
+  function setTokenAndRefresh (t: string | null = null): void {
+    setToken(t)
+    setTokenChanged(true)
+  }
 
   useEffect(() => {
-    setUserData(data)
-  }, [data])
+    // the "tokenChanged" flag is here
+    // because we can't call the fetch hook
+    // at the same time we change our token.
+    // if we do, the fetch hook will use the token
+    // BEFORE the token's state changed.
+    // or maybe there's another way...?
+    if (tokenChanged) {
+      setTokenChanged(false)
+      void fetchData()
+    }
+  }, [tokenChanged])
 
   if (loading) return <p>Loading...</p>
   if (error !== null && error !== 'Please log in.') return <p>{error}</p>
@@ -60,30 +72,19 @@ export default function App (): JSX.Element | undefined {
   return (
     <Routes>
       <Route element={token === null ? <AuthWrapper /> : <Navigate to="/" />}>
-        <Route path="/login" element={<Login setToken={setToken} />} />
+        <Route path="/login" element={<Login setToken={setTokenAndRefresh} />} />
         <Route path="/signup" element={<Signup />} />
       </Route>
-      {userData !== null && (
+      {data !== null && (
         <Route element={(
-          <IndexWrapper
-            userData={userData}
-            setUserData={setUserData}
-            setToken={setToken}
-          />
+          <IndexWrapper userData={data} setToken={setTokenAndRefresh} />
           )}
         >
           <Route path="/" element={<Channels />} />
           <Route path="/channel/:channel" element={<Channel />} />
-          <Route
-            path="/user/:id"
-            element={
-              <User userData={userData} setUserData={setUserData} />
-            }
-          />
           <Route path="*" element={<p>Not found.</p>} />
         </Route>
       )}
-
       <Route
         path="*"
         element={

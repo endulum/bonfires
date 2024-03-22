@@ -1,4 +1,3 @@
-import { type Dispatch, type SetStateAction } from 'react'
 import { Outlet, Link, useNavigate } from 'react-router-dom'
 import DropdownMenu from './DropdownMenu.tsx'
 import APIForm from './APIForm.tsx'
@@ -8,22 +7,14 @@ interface UserDetail {
   id: string
 }
 
-export default function IndexWrapper ({ userData, setUserData, setToken }: {
+export default function IndexWrapper ({ userData, setToken }: {
   userData: UserDetail
-  setUserData: Dispatch<SetStateAction<UserDetail | null>>
-  setToken: Dispatch<SetStateAction<string | null>>
+  setToken: (t?: string | null) => void
 }): JSX.Element {
   const navigate = useNavigate()
 
   function logOut (): void {
     setToken(null)
-  }
-
-  function handleSuccess (_dummy: any, form: { username: string }): void {
-    if (form.username !== userData.username) {
-      setUserData({ ...userData, username: form.username })
-    }
-    navigate(0)
   }
 
   return (
@@ -43,7 +34,7 @@ export default function IndexWrapper ({ userData, setUserData, setToken }: {
                     url: `http://localhost:3000/user/${userData.username}`,
                     method: 'PUT'
                   }}
-                  onSuccess={handleSuccess}
+                  onSuccess={() => { navigate(0) }}
                 >
                   <h3>Profile Details</h3>
                   <label htmlFor="username">

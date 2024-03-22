@@ -11,7 +11,7 @@ export default function useFetch<T> (
     fetchData: (preserveData?: boolean) => Promise<void>
   } {
   const [data, setData] = useState<T | null>(null)
-  const [loading, setLoading] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(fetchOnMount)
   const [error, setError] = useState<null | string>(null)
 
   function handleError (e: unknown): void {

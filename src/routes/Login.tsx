@@ -1,9 +1,8 @@
 import { Link, useLocation } from 'react-router-dom'
-import { type Dispatch, type SetStateAction } from 'react'
 import APIForm from '../components/APIForm.tsx'
 
 export default function Login ({ setToken }: {
-  setToken: Dispatch<SetStateAction<string | null>>
+  setToken: (t?: string | null) => void
 }): JSX.Element {
   function handleSuccess (data: { token: string }): void {
     setToken(data.token)
