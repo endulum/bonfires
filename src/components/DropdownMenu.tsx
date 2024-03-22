@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import Modal from 'react-modal'
 
-export default function DropdownMenu ({ menuItems }: {
-  menuItems: Array<{ title: string, element: JSX.Element }>
+export default function DropdownMenu ({ menuItems, children }: {
+  menuItems: Array<{ title: string, element?: JSX.Element, function?: () => void }>
+  children: JSX.Element[] | JSX.Element
 }): JSX.Element {
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false)
   const [modalOpen, setModalOpen] = useState<string>('')
@@ -11,7 +12,9 @@ export default function DropdownMenu ({ menuItems }: {
 
   return (
     <div className="dropdown-menu-wrapper">
-      <button onClick={toggleOpen} type="button">Settings</button>
+      <button type="button" onClick={toggleOpen}>
+        {children}
+      </button>
       {dropdownOpen && (
         <div className="dropdown-menu">
           {menuItems.map((item) => (
@@ -19,8 +22,13 @@ export default function DropdownMenu ({ menuItems }: {
               type="button"
               key={item.title}
               onClick={() => {
+                if (item.element !== undefined) {
+                  setModalOpen(item.title)
+                }
+                if (item.function !== undefined) {
+                  item.function()
+                }
                 setDropdownOpen(false)
-                setModalOpen(item.title)
               }}
             >
               {item.title}
@@ -29,6 +37,7 @@ export default function DropdownMenu ({ menuItems }: {
         </div>
       )}
       {menuItems.map((item) => (
+        (item.element !== undefined && (
         <Modal
           className="modal-content edit-form"
           overlayClassName="modal-overlay"
@@ -41,6 +50,7 @@ export default function DropdownMenu ({ menuItems }: {
             Close
           </button>
         </Modal>
+        ))
       ))}
     </div>
   )

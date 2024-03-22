@@ -64,7 +64,14 @@ export default function App (): JSX.Element | undefined {
         <Route path="/signup" element={<Signup />} />
       </Route>
       {userData !== null && (
-        <Route element={<IndexWrapper userData={userData} setToken={setToken} />}>
+        <Route element={(
+          <IndexWrapper
+            userData={userData}
+            setUserData={setUserData}
+            setToken={setToken}
+          />
+          )}
+        >
           <Route path="/" element={<Channels />} />
           <Route path="/channel/:channel" element={<Channel />} />
           <Route

@@ -202,7 +202,11 @@ export default function Channel (): JSX.Element | undefined {
                 )
               }
             ]}
-          />
+          >
+            <span>
+              Settings
+            </span>
+          </DropdownMenu>
         </div>
 
         <div className="messages">
