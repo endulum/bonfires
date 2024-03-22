@@ -5,6 +5,7 @@ import { useReadLocalStorage } from 'usehooks-ts'
 import APIForm from '../components/APIForm.tsx'
 import useFetch from '../useFetch.ts'
 import Messages from './Messages.tsx'
+import DropdownMenu from '../components/DropdownMenu.tsx'
 import { type FormErrors } from '../types.ts'
 
 interface ChannelDetail {
@@ -25,7 +26,6 @@ interface ChannelDetail {
 export default function Channel (): JSX.Element | undefined {
   Modal.setAppElement('#root')
   const token = useReadLocalStorage<string>('token')
-  const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)
   const channelId = useParams().channel
   const [messageSeed, setMessageSeed] = useState<number>(0)
 
@@ -45,7 +45,6 @@ export default function Channel (): JSX.Element | undefined {
   )
 
   function handleSuccess (): void {
-    setModalIsOpen(false)
     void fetchData()
   }
 
@@ -56,120 +55,155 @@ export default function Channel (): JSX.Element | undefined {
       <>
         <div className="header-bar">
           <h2>{data.title}</h2>
-          <button type="button" onClick={() => { setModalIsOpen(true) }}>
-            Settings
-          </button>
+          <DropdownMenu
+            menuItems={[
+              {
+                title: 'Edit Channel',
+                element: (
+                  <APIForm
+                    endpoint={{
+                      url: `http://localhost:3000/channel/${channelId}`,
+                      method: 'PUT'
+                    }}
+                    onSuccess={handleSuccess}
+                  >
+                    <h3>Edit Channel Details</h3>
+                    <label htmlFor="title">
+                      <span>Channel Title</span>
+                      <input type="text" id="title" />
+                    </label>
+                    <button type="submit">Submit</button>
+                  </APIForm>
+                )
+              }, {
+                title: 'Edit Display Name',
+                element: (
+                  <APIForm
+                    endpoint={{
+                      url: `http://localhost:3000/channel/${channelId}/name`,
+                      method: 'POST'
+                    }}
+                    onSuccess={handleSuccess}
+                  >
+                    <h3>Change Display Name</h3>
+                    <p>
+                      Your display name is your custom name for this channel
+                      {' '}
+                      that will be shown in place of your username. Submit blank
+                      {' '}
+                      to use your username.
+                    </p>
+                    <label htmlFor="displayName">
+                      <span>Display Name</span>
+                      <input type="text" id="displayName" />
+                    </label>
+                    <button type="submit">Change</button>
+                  </APIForm>
+                )
+              }, {
+                title: 'Leave this Channel',
+                element: (
+                  <APIForm
+                    endpoint={{
+                      url: `http://localhost:3000/channel/${channelId}`,
+                      method: 'DELETE'
+                    }}
+                    onSuccess={handleSuccess}
+                  >
+                    <h3>Leave Channel</h3>
+                    {data.users.length === 1
+                      ? (
+                        <p>
+                          You are currently the only user left.
+                          {' '}
+                          If you leave and no other members remain,
+                          {' '}
+                          this channel and all its messages will be permanently deleted.
+                        </p>
+                        )
+                      : (
+                        <p>
+                          You will be removed from this channel,
+                          {' '}
+                          and will not be able to re-enter until
+                          {' '}
+                          you are invited back in.
+                        </p>
+                        )}
+                    <button type="submit">Leave</button>
+                  </APIForm>
+                )
+              }, {
+                title: 'Invite a User',
+                element: (
+                  <APIForm
+                    endpoint={{
+                      url: `http://localhost:3000/channel/${channelId}/invite`,
+                      method: 'POST'
+                    }}
+                    onSuccess={handleSuccess}
+                  >
+                    <h3>Invite a User</h3>
+                    <p>
+                      The user will be added to this channel.
+                    </p>
+                    <label htmlFor="username">
+                      <span>Username</span>
+                      <input type="text" id="username" />
+                    </label>
+                    <button type="submit">Invite</button>
+                  </APIForm>
+                )
+              }, {
+                title: 'Kick a User',
+                element: (
+                  <APIForm
+                    endpoint={{
+                      url: `http://localhost:3000/channel/${channelId}/kick`,
+                      method: 'POST'
+                    }}
+                    onSuccess={handleSuccess}
+                  >
+                    <h3>Kick a User</h3>
+                    <p>
+                      The user will be removed from the channel.
+                      {' '}
+                      They cannot re-enter this channel unless invited back in.
+                    </p>
+                    <label htmlFor="username">
+                      <span>Username</span>
+                      <input type="text" id="username" />
+                    </label>
+                    <button type="submit">Kick</button>
+                  </APIForm>
+                )
+              }, {
+                title: 'Promote a User',
+                element: (
+                  <APIForm
+                    endpoint={{
+                      url: `http://localhost:3000/channel/${channelId}/promote`,
+                      method: 'POST'
+                    }}
+                    onSuccess={handleSuccess}
+                  >
+                    <h3>Promote a User</h3>
+                    <p>
+                      This will remove your admin privileges and
+                      {' '}
+                      bestow them to another member of this channel.
+                    </p>
+                    <label htmlFor="username">
+                      <span>Username</span>
+                      <input type="text" id="username" />
+                    </label>
+                    <button type="submit">Promote</button>
+                  </APIForm>
+                )
+              }
+            ]}
+          />
         </div>
-
-        <Modal
-          className="modal-content edit-form"
-          overlayClassName="modal-overlay"
-          contentLabel="Channel Settings"
-          isOpen={modalIsOpen}
-        >
-          <APIForm
-            endpoint={{
-              url: `http://localhost:3000/channel/${channelId}/name`,
-              method: 'POST'
-            }}
-            onSuccess={handleSuccess}
-          >
-            <h3>Change Display Name</h3>
-            <label htmlFor="displayName">
-              <span>Display Name</span>
-              <input type="text" id="displayName" />
-            </label>
-            <button type="submit">Change</button>
-          </APIForm>
-
-          <APIForm
-            endpoint={{
-              url: `http://localhost:3000/channel/${channelId}/invite`,
-              method: 'POST'
-            }}
-            onSuccess={handleSuccess}
-          >
-            <h3>Invite a User</h3>
-            <label htmlFor="username">
-              <span>Username</span>
-              <input type="text" id="username" />
-            </label>
-            <button type="submit">Invite</button>
-          </APIForm>
-
-          <APIForm
-            endpoint={{
-              url: `http://localhost:3000/channel/${channelId}`,
-              method: 'DELETE'
-            }}
-            onSuccess={handleSuccess}
-          >
-            <h3>Leave Channel</h3>
-            {data.users.length === 1 && (
-              <p>
-                You are currently the only user left.
-                {' '}
-                If no members remain in this channel,
-                {' '}
-                this channel and all its messages will be permanently deleted.
-              </p>
-            )}
-            <button type="submit">Leave</button>
-          </APIForm>
-
-          <h2>Admin Actions</h2>
-          <APIForm
-            endpoint={{
-              url: `http://localhost:3000/channel/${channelId}`,
-              method: 'PUT'
-            }}
-            onSuccess={handleSuccess}
-          >
-            <h3>Edit Channel Details</h3>
-            <label htmlFor="title">
-              <span>Channel Title</span>
-              <input type="text" id="title" />
-            </label>
-            <button type="submit">Submit</button>
-          </APIForm>
-          <APIForm
-            endpoint={{
-              url: `http://localhost:3000/channel/${channelId}/kick`,
-              method: 'POST'
-            }}
-            onSuccess={handleSuccess}
-          >
-            <h3>Kick a User</h3>
-            <label htmlFor="username">
-              <span>Username</span>
-              <input type="text" id="username" />
-            </label>
-            <button type="submit">Kick</button>
-          </APIForm>
-          <APIForm
-            endpoint={{
-              url: `http://localhost:3000/channel/${channelId}/promote`,
-              method: 'POST'
-            }}
-            onSuccess={handleSuccess}
-          >
-            <h3>Promote a User</h3>
-            <p>
-              This will remove your admin privileges and
-              {' '}
-              bestow them to another member of this channel.
-            </p>
-            <label htmlFor="username">
-              <span>Username</span>
-              <input type="text" id="username" />
-            </label>
-            <button type="submit">Promote</button>
-          </APIForm>
-
-          <button type="button" onClick={() => { setModalIsOpen(false) }}>
-            Close
-          </button>
-        </Modal>
 
         <div className="messages">
           <Messages messageSeed={messageSeed} />
