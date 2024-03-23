@@ -80,18 +80,20 @@ export default function Channels (): JSX.Element | undefined {
             <div className="channels">
               {data.map((channel) => (
                 <Link to={`/channel/${channel.id}`} key={channel.id} className="channel">
-                  <h3>{channel.title}</h3>
-                  <p>
-                    {channel.userCount > 1
-                      ? (
-                        <span>
-                          {channel.userCount}
-                          {' '}
-                          members
-                        </span>
-                        )
-                      : (<span>Just you</span>)}
-                    {channel.ownDisplayName !== null && (
+                  {/* icon goes here */}
+                  <div className="channel-details">
+                    <h3>{channel.title}</h3>
+                    <p className="channel-status">
+                      {channel.userCount > 1
+                        ? (
+                          <span>
+                            {channel.userCount}
+                            {' '}
+                            members
+                          </span>
+                          )
+                        : (<span>Just you</span>)}
+                      {channel.ownDisplayName !== null && (
                       <span>
                         {' '}
                         |
@@ -100,8 +102,10 @@ export default function Channels (): JSX.Element | undefined {
                         {' '}
                         <b>{channel.ownDisplayName}</b>
                       </span>
-                    )}
-                  </p>
+                      )}
+                    </p>
+                  </div>
+
                 </Link>
               ))}
             </div>

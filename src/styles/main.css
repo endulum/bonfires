@@ -54,7 +54,7 @@ form {
     border-bottom: 1px solid rgb(var(--red));
   }
   input {
-    background-color: rgba(var(--darkest), 0.25);
+    background-color: rgba(var(--darkest), 0.3);
     border-bottom: 1px solid rgb(var(--white));
   }
   p {
@@ -79,6 +79,9 @@ button {
     svg {
       fill: rgb(var(--white));
     }
+  }
+  &:disabled {
+    opacity: 0.5;
   }
   span {
     min-width: max-content;
@@ -192,6 +195,7 @@ small {
   box-shadow: rgba(0, 0, 0, 0.5) 0px 5px 15px;
   z-index: 9;
   > * {
+    min-width: max-content;
     width: 100%;
   }
   button {
@@ -242,3 +246,100 @@ small {
 }
 
 .ReactModalPortal, [data-react-modal-body-trap] { border: none }
+
+.header-bar {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  h2 {
+    flex-grow: 1;
+    border-bottom: 1px solid rgb(var(--dark));
+  }
+  button {
+    background-color: rgb(var(--darker));
+  }
+}
+
+.channels {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 15px;
+}
+
+.channel {
+  padding: 1rem;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  align-items: center;
+  border: 1px solid rgb(var(--dark));
+  background-color: rgb(var(--darker));
+  &:hover {
+    border-color: rgb(var(--white));
+  }
+}
+
+.channel-details {
+  max-width: 100%;
+}
+
+.channel-status {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;  
+}
+
+.messages {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  overflow-y: auto;
+  height: 0px;
+  padding: 1rem;
+  border: 1px solid rgb(var(--dark));
+  background-color: rgb(var(--darker));
+}
+
+.message {
+  display: flex;
+  flex-direction: row;
+}
+
+.message-timestamp {
+  margin-top: 0.125rem;
+  margin-right: 0.5rem;
+  min-width: max-content;
+}
+
+.message-user {
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+
+.compose {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.compose-row {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  align-items: end;
+  height: calc(2.5rem + 2px);
+  textarea {
+    height: 100%;
+    flex-grow: 1;
+    border: 1px solid rgb(var(--dark));
+    background-color: rgb(var(--darker));
+    color: rgb(var(--white));
+    &::placeholder {
+      color: rgb(var(--dark))
+    } 
+  }
+  button {
+    background-color: rgb(var(--darker));
+  }
+}
