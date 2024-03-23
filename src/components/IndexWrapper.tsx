@@ -1,11 +1,7 @@
 import { Outlet, Link, useNavigate } from 'react-router-dom'
 import DropdownMenu from './DropdownMenu.tsx'
 import APIForm from './APIForm.tsx'
-
-interface UserDetail {
-  username: string
-  id: string
-}
+import { type UserDetail } from '../types.ts'
 
 export default function IndexWrapper ({ userData, setToken }: {
   userData: UserDetail
@@ -75,7 +71,7 @@ export default function IndexWrapper ({ userData, setToken }: {
         </DropdownMenu>
       </header>
       <main>
-        <Outlet />
+        <Outlet context={userData} />
       </main>
     </>
   )

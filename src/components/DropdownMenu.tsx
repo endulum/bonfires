@@ -2,7 +2,7 @@ import { useState } from 'react'
 import Modal from 'react-modal'
 
 export default function DropdownMenu ({ menuItems, children }: {
-  menuItems: Array<{ title: string, element?: JSX.Element, function?: () => void }>
+  menuItems: Array<false | { title: string, element?: JSX.Element, function?: () => void }>
   children: JSX.Element[] | JSX.Element
 }): JSX.Element {
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false)
@@ -17,7 +17,7 @@ export default function DropdownMenu ({ menuItems, children }: {
       </button>
       {dropdownOpen && (
         <div className="dropdown-menu">
-          {menuItems.map((item) => (
+          {menuItems.map((item) => item !== false && (
             <button
               type="button"
               key={item.title}
@@ -36,7 +36,7 @@ export default function DropdownMenu ({ menuItems, children }: {
           ))}
         </div>
       )}
-      {menuItems.map((item) => (
+      {menuItems.filter((item) => item).map((item) => item !== false && (
         (item.element !== undefined && (
         <Modal
           className="modal-content edit-form"

@@ -1,12 +1,12 @@
 import { type Dispatch, type SetStateAction, useState, useEffect, useRef, type FormEvent } from 'react'
-import { useParams } from 'react-router-dom'
+import { useOutletContext, useParams } from 'react-router-dom'
 import Modal from 'react-modal'
 import { useReadLocalStorage } from 'usehooks-ts'
 import APIForm from '../components/APIForm.tsx'
 import useFetch from '../useFetch.ts'
 import Messages from './Messages.tsx'
 import DropdownMenu from '../components/DropdownMenu.tsx'
-import { type FormErrors } from '../types.ts'
+import { type FormErrors, type UserDetail } from '../types.ts'
 
 interface ChannelDetail {
   id: string
@@ -28,6 +28,7 @@ export default function Channel (): JSX.Element | undefined {
   const token = useReadLocalStorage<string>('token')
   const channelId = useParams().channel
   const [messageSeed, setMessageSeed] = useState<number>(0)
+  const { id } = useOutletContext<UserDetail>()
 
   const {
     data, loading, error, fetchData
@@ -57,7 +58,7 @@ export default function Channel (): JSX.Element | undefined {
           <h2>{data.title}</h2>
           <DropdownMenu
             menuItems={[
-              {
+              data.admin.id === id && {
                 title: 'Edit Channel',
                 element: (
                   <APIForm
@@ -101,6 +102,24 @@ export default function Channel (): JSX.Element | undefined {
                   </APIForm>
                 )
               }, {
+                title: 'Invite a User',
+                element: (
+                  <APIForm
+                    endpoint={{
+                      url: `http://localhost:3000/channel/${channelId}/invite`,
+                      method: 'POST'
+                    }}
+                    onSuccess={handleSuccess}
+                  >
+                    <h3>Invite a User</h3>
+                    <label htmlFor="username">
+                      <span>Username</span>
+                      <input type="text" id="username" />
+                    </label>
+                    <button type="submit">Invite</button>
+                  </APIForm>
+                )
+              }, {
                 title: 'Leave this Channel',
                 element: (
                   <APIForm
@@ -133,28 +152,7 @@ export default function Channel (): JSX.Element | undefined {
                     <button type="submit">Leave</button>
                   </APIForm>
                 )
-              }, {
-                title: 'Invite a User',
-                element: (
-                  <APIForm
-                    endpoint={{
-                      url: `http://localhost:3000/channel/${channelId}/invite`,
-                      method: 'POST'
-                    }}
-                    onSuccess={handleSuccess}
-                  >
-                    <h3>Invite a User</h3>
-                    <p>
-                      The user will be added to this channel.
-                    </p>
-                    <label htmlFor="username">
-                      <span>Username</span>
-                      <input type="text" id="username" />
-                    </label>
-                    <button type="submit">Invite</button>
-                  </APIForm>
-                )
-              }, {
+              }, data.admin.id === id && data.users.length > 1 && {
                 title: 'Kick a User',
                 element: (
                   <APIForm
@@ -177,7 +175,7 @@ export default function Channel (): JSX.Element | undefined {
                     <button type="submit">Kick</button>
                   </APIForm>
                 )
-              }, {
+              }, data.admin.id === id && data.users.length > 1 && {
                 title: 'Promote a User',
                 element: (
                   <APIForm
