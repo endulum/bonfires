@@ -72,7 +72,7 @@ export default function Channel (): JSX.Element | undefined {
                     <h3>Edit Channel Details</h3>
                     <label htmlFor="title">
                       <span>Channel Title</span>
-                      <input type="text" id="title" />
+                      <input type="text" id="title" defaultValue={data.title} />
                     </label>
                     <button type="submit">Submit</button>
                   </APIForm>
@@ -88,7 +88,7 @@ export default function Channel (): JSX.Element | undefined {
                     onSuccess={handleSuccess}
                   >
                     <h3>Change Display Name</h3>
-                    <p>
+                    <p className="form-info">
                       Your display name is your custom name for this channel
                       {' '}
                       that will be shown in place of your username. Submit blank
@@ -133,7 +133,7 @@ export default function Channel (): JSX.Element | undefined {
                     <h3>Leave Channel</h3>
                     {data.users.length === 1
                       ? (
-                        <p>
+                        <p className="form-info">
                           You are currently the only user left.
                           {' '}
                           If you leave and no other members remain,
@@ -142,7 +142,7 @@ export default function Channel (): JSX.Element | undefined {
                         </p>
                         )
                       : (
-                        <p>
+                        <p className="form-info">
                           You will be removed from this channel,
                           {' '}
                           and will not be able to re-enter until
@@ -164,7 +164,7 @@ export default function Channel (): JSX.Element | undefined {
                     onSuccess={handleSuccess}
                   >
                     <h3>Kick a User</h3>
-                    <p>
+                    <p className="form-info">
                       The user will be removed from the channel.
                       {' '}
                       They cannot re-enter this channel unless invited back in.
@@ -187,7 +187,7 @@ export default function Channel (): JSX.Element | undefined {
                     onSuccess={handleSuccess}
                   >
                     <h3>Promote a User</h3>
-                    <p>
+                    <p className="form-info">
                       This will remove your admin privileges and
                       {' '}
                       bestow them to another member of this channel.

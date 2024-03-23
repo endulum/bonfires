@@ -16,6 +16,21 @@ body {
   justify-content: center;
 }
 
+header, main {
+  width: 100%;
+  padding: 1rem;
+}
+
+header {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgb(var(--darker));
+  border-bottom: 1px solid rgb(var(--dark));
+}
+
 main {
   flex-grow: 1;
   display: flex;
@@ -28,12 +43,22 @@ form {
   flex-direction: column;
   align-items: center;
   width: 100%;
-  gap: 1.5rem;
+  gap: 1.25rem;
   label {
     display: flex;
     flex-direction: column;
     width: 100%;
     gap: 0.25rem;
+  }
+  .invalid input {
+    border-bottom: 1px solid rgb(var(--red));
+  }
+  input {
+    background-color: rgba(var(--darkest), 0.25);
+    border-bottom: 1px solid rgb(var(--white));
+  }
+  p {
+    padding: 0.5rem 0.75rem;
   }
 }
 
@@ -46,6 +71,15 @@ button {
   padding: 0.5rem 1rem;
   font-size: 1rem;
   cursor: pointer;
+  background-color: transparent;
+  border: 1px solid rgb(var(--dark));
+  color: rgb(var(--white));
+  &:hover {
+    border: 1px solid rgb(var(--white));
+    svg {
+      fill: rgb(var(--white));
+    }
+  }
   span {
     min-width: max-content;
   }
@@ -65,6 +99,7 @@ input, textarea {
 }
 
 a {
+  text-decoration: none;
   color: rgb(var(--white));
 }
 
@@ -112,13 +147,6 @@ small {
   gap: 1.5rem;
   padding: 1rem;
   background-color: rgba(var(--darkest), 0.7);
-  .invalid input {
-    border-bottom: 1px solid rgb(var(--red));
-  }
-  input {
-    background-color: rgba(var(--darkest), 0.25);
-    border-bottom: 1px solid rgb(var(--white));
-  }
   button {
     color: rgb(var(--white));
     background-color: rgba(var(--darkest), 0.25);
@@ -127,8 +155,8 @@ small {
       box-shadow: 0px 0px 10px rgb(var(--yellow));
     }
   }
-  p {
-    padding: 0.5rem;
+  a:hover {
+    text-decoration: underline;
   }
 }
 
@@ -136,6 +164,81 @@ small {
   background-color: rgba(var(--red), 0.3);
 }
 
-.form-success { 
+.form-info { 
   background-color: rgba(var(--blue), 0.3);
 }
+
+
+.dropdown-menu-wrapper {
+  position: relative;
+  height: 100%;
+  min-height: 3rem;
+  button {
+    height: 100%;
+  }
+}
+
+.dropdown-menu {
+  position: absolute;
+  min-width: 100%;
+  right: 0;
+  top: 3.5rem;
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  background-color: rgb(var(--darker));
+  border: 1px solid rgb(var(--dark));
+  box-shadow: rgba(0, 0, 0, 0.5) 0px 5px 15px;
+  z-index: 9;
+  > * {
+    width: 100%;
+  }
+  button {
+    border: none;
+    padding: 0.5rem;
+    &:hover {
+      background-color: rgb(var(--dark));
+    }
+  }
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  padding: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  background-color: rgba(var(--darkest), 0.75);
+}
+
+.modal-content {
+  position: relative;
+  padding: 1rem;
+  background-color: rgb(var(--darker));
+  border: 1px solid rgb(var(--dark));
+  width: calc(100% - 20px);
+  max-width: 400px;
+  margin-bottom: 3rem;
+  h3, p {
+    width: 100%;
+  }
+  > button {
+    position: absolute;
+    bottom: -3.5rem;
+    left: 0;
+    right: 0;
+    justify-content: center;
+    background-color: rgb(var(--darker));
+  }
+}
+
+.dropdown-menu, .modal-content, .modal-content > button {
+  box-shadow: rgba(0, 0, 0, 0.5) 0px 5px 15px;
+}
+
+.ReactModalPortal, [data-react-modal-body-trap] { border: none }
