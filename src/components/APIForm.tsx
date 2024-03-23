@@ -67,7 +67,7 @@ export default function APIForm ({ endpoint, onSuccess, children }: {
 
   return (
     <form onSubmit={handleSubmit}>
-      {error !== null && <p>{error}</p>}
+      {error !== null && <p className="form-error">{error}</p>}
       {children.map((child) => {
         if (child !== false) {
           if (child.type === 'label') {
@@ -102,7 +102,7 @@ function Input ({ formErrors, fieldName, children }: {
   return (
     <label
       htmlFor={fieldName}
-      className={fieldName in formErrors ? 'error' : ''}
+      className={fieldName in formErrors ? 'invalid' : ''}
     >
       {children}
       {fieldName in formErrors && (

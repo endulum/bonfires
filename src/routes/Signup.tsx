@@ -18,7 +18,7 @@ export default function Signup (): JSX.Element {
       >
         {newUserName !== ''
           ? (
-            <p className="auth-success">
+            <p className="form-success">
               Account created. Please
               {' '}
               <Link to="/login" state={{ username: newUserName }}>
