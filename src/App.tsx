@@ -10,8 +10,6 @@ import Signup from './routes/Signup.tsx'
 import Channels from './routes/Channels.tsx'
 import Channel from './routes/Channel.tsx'
 
-import './App.css'
-
 export default function App (): JSX.Element | undefined {
   const [token, setToken] = useLocalStorage<string | null>('token', null, {
     initializeWithValue: true
