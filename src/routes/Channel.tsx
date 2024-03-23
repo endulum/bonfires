@@ -1,5 +1,5 @@
 import { type Dispatch, type SetStateAction, useState, useEffect, useRef, type FormEvent } from 'react'
-import { useOutletContext, useParams } from 'react-router-dom'
+import { useOutletContext, useParams, useNavigate } from 'react-router-dom'
 import Modal from 'react-modal'
 import { useReadLocalStorage } from 'usehooks-ts'
 import APIForm from '../components/APIForm.tsx'
@@ -29,6 +29,7 @@ export default function Channel (): JSX.Element | undefined {
   const channelId = useParams().channel
   const [messageSeed, setMessageSeed] = useState<number>(0)
   const { id } = useOutletContext<UserDetail>()
+  const navigate = useNavigate()
 
   const {
     data, loading, error, fetchData
@@ -127,7 +128,7 @@ export default function Channel (): JSX.Element | undefined {
                       url: `http://localhost:3000/channel/${channelId}`,
                       method: 'DELETE'
                     }}
-                    onSuccess={handleSuccess}
+                    onSuccess={() => { navigate('/') }}
                   >
                     <h3>Leave Channel</h3>
                     {data.users.length === 1
