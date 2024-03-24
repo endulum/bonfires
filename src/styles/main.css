@@ -377,6 +377,10 @@ svg.inline {
   }
 }
 
+.message-content {
+  display: inline-block;
+}
+
 .compose {
   display: flex;
   flex-direction: column;

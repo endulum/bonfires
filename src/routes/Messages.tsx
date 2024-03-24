@@ -3,6 +3,8 @@ import { useReadLocalStorage } from 'usehooks-ts'
 import { useEffect, useRef } from 'react'
 import { DateTime } from 'luxon'
 import { Tooltip } from 'react-tooltip'
+import Markdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 import useFetch from '../useFetch.ts'
 
 import CrownSvg from '../icons/crown-solid.svg?react'
@@ -132,9 +134,17 @@ export default function Messages ({ messageSeed }: {
                   </>
                   )}
                 </span>
-                <span className="message-content">
+                <Markdown
+                  remarkPlugins={[remarkGfm]}
+                  allowedElements={[
+                    'a', 'strong', 'em', 'del', 'p', 'br'
+                  ]}
+                  unwrapDisallowed
+                  skipHtml
+                  className="message-content"
+                >
                   {unEscape(message.content)}
-                </span>
+                </Markdown>
               </div>
             </div>
           ))
