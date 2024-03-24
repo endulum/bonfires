@@ -5,6 +5,9 @@ import { DateTime } from 'luxon'
 import { Tooltip } from 'react-tooltip'
 import useFetch from '../useFetch.ts'
 
+import CrownSvg from '../icons/crown-solid.svg?react'
+import GhostSvg from '../icons/ghost-solid.svg?react'
+
 interface ChannelMessage {
   id: string
   content: string
@@ -90,26 +93,45 @@ export default function Messages ({ messageSeed }: {
                 })}
               </small>
               <div className="message-body">
-                {message.user.displayName !== null
-                  ? (
-                    <>
-                      <span
-                        className="message-user"
-                        data-tooltip-id={message.user.id}
-                        data-tooltip-content={message.user.username}
-                      >
-                        {message.user.displayName}
+                <span className={`message-user${message.user.isAdmin ? ' admin' : ''}${message.user.isInChannel ? '' : ' not-in-channel'}`}>
+                  {message.user.displayName !== null
+                    ? (
+                      <>
+                        <span
+                          data-tooltip-id={message.user.id}
+                          data-tooltip-content={message.user.username}
+                        >
+                          {message.user.displayName}
+                        </span>
+                        <Tooltip id={message.user.id} className="tooltip" />
+                      </>
+                      )
+                    : (
+                      <span>
+                        {message.user.username}
                       </span>
-                      <Tooltip id={message.user.id} className="tooltip" />
+                      )}
+                  {message.user.isAdmin && (
+                    <>
+                      <CrownSvg
+                        className="mini inline"
+                        data-tooltip-id="admin"
+                        data-tooltip-content="This user is the admin of this channel."
+                      />
+                      <Tooltip id="admin" className="tooltip" />
                     </>
-                    )
-                  : (
-                    <span
-                      className="message-user"
-                    >
-                      {message.user.username}
-                    </span>
-                    )}
+                  )}
+                  {!message.user.isInChannel && (
+                  <>
+                    <GhostSvg
+                      className="mini inline"
+                      data-tooltip-id="admin"
+                      data-tooltip-content="This user is no longer in this channel."
+                    />
+                    <Tooltip id="admin" className="tooltip" />
+                  </>
+                  )}
+                </span>
                 <span className="message-content">
                   {unEscape(message.content)}
                 </span>

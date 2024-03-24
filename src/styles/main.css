@@ -348,6 +348,7 @@ svg.inline {
   display: flex;
   flex-direction: row;
   max-width: 100%;
+  hyphens: auto;
   word-break: break-all;
 }
 
@@ -355,11 +356,26 @@ svg.inline {
   margin-top: 0.125rem;
   margin-right: 0.5rem;
   min-width: max-content;
+  opacity: 0.75;
 }
 
 .message-user {
   font-weight: bold;
   margin-right: 0.5rem;
+  color: rgb(var(--blue));
+  svg {
+    margin-left: 0.5rem;
+    margin-right: 0rem;
+    fill: rgb(var(--blue));
+  }
+  &.admin {
+    color: rgb(var(--yellow));
+    svg { fill: rgb(var(--yellow)) }
+  }
+  &.not-in-channel {
+    color: rgb(var(--white));
+    svg { fill: rgb(var(--white)) }
+  }
 }
 
 .compose {
@@ -393,11 +409,6 @@ svg.inline {
   fill: rgb(var(--red));
 }
 
-.react-tooltip.tooltip {
-  background-color: rgb(var(--white));
-  color: rgb(var(--darker));
-}
-
 a:has(.logo) { 
   text-decoration: none; 
 }
@@ -426,6 +437,12 @@ a:has(.logo) {
       }
     }
   }
+}
+
+.react-tooltip.tooltip {
+  background-color: rgb(var(--white));
+  color: rgb(var(--darker));
+  font-weight: normal;
 }
 
 @media screen and (max-width: 500px) {
