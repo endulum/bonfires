@@ -1,9 +1,10 @@
 import { Outlet } from 'react-router-dom'
+import Logo from './Logo.tsx'
 
 export default function AuthWrapper (): JSX.Element {
   return (
     <main className="auth-wrapper">
-      <h1>App</h1>
+      <Logo />
       <div className="auth-form-outer">
         <Outlet />
       </div>

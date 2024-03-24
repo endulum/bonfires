@@ -398,6 +398,36 @@ svg.inline {
   color: rgb(var(--darker));
 }
 
+a:has(.logo) { 
+  text-decoration: none; 
+}
+
+.logo {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  align-items: center;
+  font-size: 3rem;
+  svg {
+    width: 3rem;
+    fill: rgb(var(--yellow));
+  }
+  &.smaller {
+    gap: 0.5rem;
+    font-size: 2rem;
+    svg {
+      width: 2rem;
+      fill: rgb(var(--dark));
+    }
+    &:hover {
+      cursor: pointer;
+      svg {
+        fill: rgb(var(--yellow))
+      }
+    }
+  }
+}
+
 @media screen and (max-width: 500px) {
   header button b, .header-bar .dropdown-menu-wrapper > button > span {
     display: none;

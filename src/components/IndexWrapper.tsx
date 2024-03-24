@@ -2,6 +2,7 @@ import { Outlet, Link, useNavigate } from 'react-router-dom'
 import DropdownMenu from './DropdownMenu.tsx'
 import APIForm from './APIForm.tsx'
 import { type UserDetail } from '../types.ts'
+import Logo from './Logo.tsx'
 
 import PersonSvg from '../icons/user-solid.svg?react'
 import LogOutSvg from '../icons/right-from-bracket-solid.svg?react'
@@ -20,9 +21,7 @@ export default function IndexWrapper ({ userData, setToken }: {
   return (
     <>
       <header>
-        <h1>
-          <Link to="/">App</Link>
-        </h1>
+        <Link to="/"><Logo className="smaller" /></Link>
 
         <DropdownMenu
           menuItems={[
