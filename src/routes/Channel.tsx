@@ -21,16 +21,13 @@ import AlertSvg from '../icons/triangle-exclamation-solid.svg?react'
 interface ChannelDetail {
   id: string
   title: string
-  admin: {
-    username: string
+  currentUser: {
     id: string
+    username: string
     displayName: string | null
   }
-  users: Array<{
-    username: string
-    id: string
-    displayName: string | null
-  }>
+  adminId: string
+  userIds: string[]
 }
 
 export default function Channel (): JSX.Element | undefined {
@@ -69,7 +66,7 @@ export default function Channel (): JSX.Element | undefined {
           <h2>{data.title}</h2>
           <DropdownMenu
             menuItems={[
-              data.admin.id === id && {
+              data.adminId === id && {
                 title: 'Edit Channel',
                 icon: (<EditSvg />),
                 element: (
@@ -109,7 +106,7 @@ export default function Channel (): JSX.Element | undefined {
                     </p>
                     <label htmlFor="displayName">
                       <span>Display Name</span>
-                      <input type="text" id="displayName" />
+                      <input type="text" id="displayName" defaultValue={data.currentUser.displayName ?? ''} />
                     </label>
                     <button type="submit">Change</button>
                   </APIForm>
@@ -133,7 +130,7 @@ export default function Channel (): JSX.Element | undefined {
                     <button type="submit">Invite</button>
                   </APIForm>
                 )
-              }, data.admin.id === id && data.users.length > 1 && {
+              }, data.adminId === id && data.userIds.length > 1 && {
                 title: 'Kick a User',
                 icon: (<RemoveUserSvg />),
                 element: (
@@ -157,7 +154,7 @@ export default function Channel (): JSX.Element | undefined {
                     <button type="submit">Kick</button>
                   </APIForm>
                 )
-              }, data.admin.id === id && data.users.length > 1 && {
+              }, data.adminId === id && data.userIds.length > 1 && {
                 title: 'Promote a User',
                 icon: (<PromoteUserSvg />),
                 element: (
@@ -193,7 +190,7 @@ export default function Channel (): JSX.Element | undefined {
                     onSuccess={() => { navigate('/') }}
                   >
                     <h3>Leave Channel</h3>
-                    {data.users.length === 1
+                    {data.userIds.length === 1
                       ? (
                         <p className="form-info">
                           You are currently the only user left.
