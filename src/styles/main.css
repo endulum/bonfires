@@ -349,7 +349,6 @@ svg.inline {
   flex-direction: row;
   max-width: 100%;
   hyphens: auto;
-  word-break: break-all;
 }
 
 .message-timestamp {
