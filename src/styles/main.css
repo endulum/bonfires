@@ -74,7 +74,7 @@ button {
   background-color: transparent;
   border: 1px solid rgb(var(--dark));
   color: rgb(var(--white));
-  &:hover {
+  &:hover, &.active {
     border: 1px solid rgb(var(--white));
     svg {
       fill: rgb(var(--white));
@@ -87,7 +87,9 @@ button {
     min-width: max-content;
   }
   svg {
+    fill: rgb(var(--dark));
     width: 1.25rem;
+    min-width: 1.25rem;
   }
 }
 
@@ -102,12 +104,22 @@ input, textarea {
 }
 
 a {
-  text-decoration: none;
   color: rgb(var(--white));
+  font-weight: bold;
 }
 
 small {
   font-size: 0.875rem;
+}
+
+svg.mini {
+  height: 1rem;
+}
+
+svg.inline {
+  display: inline-block;
+  vertical-align: text-top;
+  margin-right: 0.5rem;
 }
 
 .auth-wrapper {
@@ -117,7 +129,7 @@ small {
   justify-content: center;
   gap: 1rem;
   width: calc(100% - 20px);
-  max-width: 300px;
+  max-width: 400px;
 }
 
 .auth-form-outer {
@@ -165,10 +177,13 @@ small {
 
 .form-error {
   background-color: rgba(var(--red), 0.3);
+  svg {
+    fill: rgb(var(--white));
+  }
 }
 
 .form-info { 
-  background-color: rgba(var(--blue), 0.3);
+  background-color: rgba(var(--purple), 0.3);
 }
 
 
@@ -201,8 +216,14 @@ small {
   button {
     border: none;
     padding: 0.5rem;
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
     &:hover {
       background-color: rgb(var(--dark));
+    }
+    span {
+      min-width: min-content;
     }
   }
 }
@@ -250,12 +271,14 @@ small {
 .header-bar {
   display: flex;
   flex-direction: row;
-  gap: 0.5rem;
+  gap: 1rem;
   h2 {
     flex-grow: 1;
     border-bottom: 1px solid rgb(var(--dark));
   }
-  button {
+  > button, .dropdown-menu-wrapper > button {
+    min-height: 3rem;
+    height: 100%;
     background-color: rgb(var(--darker));
   }
 }
@@ -267,6 +290,7 @@ small {
 }
 
 .channel {
+  text-decoration: none;
   padding: 1rem;
   display: flex;
   flex-direction: row;
@@ -274,16 +298,35 @@ small {
   align-items: center;
   border: 1px solid rgb(var(--dark));
   background-color: rgb(var(--darker));
+  svg {
+    fill: rgb(var(--white));
+  }
+  .fire {
+    fill: rgb(var(--dark));
+    width: 2.5rem;
+    min-width: 2.5rem;
+  }
   &:hover {
     border-color: rgb(var(--white));
+    .fire {
+      fill: rgb(var(--white))
+    }
   }
 }
 
 .channel-details {
-  max-width: 100%;
+  flex-grow: 1;
+  max-width: calc(100% - 3.5rem);
 }
 
 .channel-status {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.channel-displayname, .channel-title, .header-bar h2, header button {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;  
@@ -304,6 +347,8 @@ small {
 .message {
   display: flex;
   flex-direction: row;
+  max-width: 100%;
+  word-break: break-all;
 }
 
 .message-timestamp {
@@ -341,5 +386,15 @@ small {
   }
   button {
     background-color: rgb(var(--darker));
+  }
+}
+
+.compose-error svg {
+  fill: rgb(var(--red));
+}
+
+@media screen and (max-width: 500px) {
+  header button b, .header-bar .dropdown-menu-wrapper > button > span {
+    display: none;
   }
 }

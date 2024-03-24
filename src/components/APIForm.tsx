@@ -3,6 +3,8 @@ import { useReadLocalStorage } from 'usehooks-ts'
 import useFetch from '../useFetch.ts'
 import { type FormErrors } from '../types.ts'
 
+import AlertSvg from '../icons/triangle-exclamation-solid.svg?react'
+
 export default function APIForm ({ endpoint, onSuccess, children }: {
   children: Array<JSX.Element | false>
   onSuccess: (...args: any) => void
@@ -67,7 +69,12 @@ export default function APIForm ({ endpoint, onSuccess, children }: {
 
   return (
     <form onSubmit={handleSubmit}>
-      {error !== null && <p className="form-error">{error}</p>}
+      {error !== null && (
+      <p className="form-error">
+        <AlertSvg className="mini inline" />
+        {error}
+      </p>
+      )}
       {children.map((child) => {
         if (child !== false) {
           if (child.type === 'label') {

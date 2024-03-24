@@ -1,8 +1,15 @@
 import { useState } from 'react'
 import Modal from 'react-modal'
 
+import XSvg from '../icons/xmark-solid.svg?react'
+
 export default function DropdownMenu ({ menuItems, children }: {
-  menuItems: Array<false | { title: string, element?: JSX.Element, function?: () => void }>
+  menuItems: Array<false | {
+    title: string
+    icon?: JSX.Element
+    element?: JSX.Element
+    function?: () => void
+  }>
   children: JSX.Element[] | JSX.Element
 }): JSX.Element {
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false)
@@ -12,7 +19,7 @@ export default function DropdownMenu ({ menuItems, children }: {
 
   return (
     <div className="dropdown-menu-wrapper">
-      <button type="button" onClick={toggleOpen}>
+      <button type="button" onClick={toggleOpen} className={dropdownOpen ? 'active' : ''}>
         {children}
       </button>
       {dropdownOpen && (
@@ -31,7 +38,10 @@ export default function DropdownMenu ({ menuItems, children }: {
                 setDropdownOpen(false)
               }}
             >
-              {item.title}
+              <span>
+                {item.title}
+              </span>
+              {item.icon !== undefined && item.icon}
             </button>
           ))}
         </div>
@@ -46,8 +56,13 @@ export default function DropdownMenu ({ menuItems, children }: {
           key={item.title}
         >
           {item.element}
-          <button type="button" onClick={() => { setModalOpen('') }}>
-            Close
+          <button
+            aria-label="Close Modal"
+            type="button"
+            onClick={() => { setModalOpen('') }}
+          >
+            <XSvg />
+            <span>Cancel</span>
           </button>
         </Modal>
         ))

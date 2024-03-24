@@ -3,6 +3,10 @@ import DropdownMenu from './DropdownMenu.tsx'
 import APIForm from './APIForm.tsx'
 import { type UserDetail } from '../types.ts'
 
+import PersonSvg from '../icons/user-solid.svg?react'
+import LogOutSvg from '../icons/right-from-bracket-solid.svg?react'
+import GearsSvg from '../icons/gears-solid.svg?react'
+
 export default function IndexWrapper ({ userData, setToken }: {
   userData: UserDetail
   setToken: (t?: string | null) => void
@@ -24,6 +28,7 @@ export default function IndexWrapper ({ userData, setToken }: {
           menuItems={[
             {
               title: 'Account Settings',
+              icon: (<GearsSvg className="mini" />),
               element: (
                 <APIForm
                   endpoint={{
@@ -57,17 +62,15 @@ export default function IndexWrapper ({ userData, setToken }: {
               )
             }, {
               title: 'Log Out',
+              icon: (<LogOutSvg className="mini" />),
               function: logOut
             }
           ]}
         >
-          <span>
-            Logged in as
-            {' '}
-            <b>
-              {userData.username}
-            </b>
-          </span>
+          <PersonSvg />
+          <b>
+            {userData.username}
+          </b>
         </DropdownMenu>
       </header>
       <main>

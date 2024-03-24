@@ -5,6 +5,11 @@ import Modal from 'react-modal'
 import APIForm from '../components/APIForm.tsx'
 import useFetch from '../useFetch.ts'
 
+import FireSvg from '../icons/fire-solid.svg?react'
+import PeopleSvg from '../icons/users-solid.svg?react'
+import PersonSvg from '../icons/user-solid.svg?react'
+import XSvg from '../icons/xmark-solid.svg?react'
+
 interface ChannelList {
   id: string
   title: string
@@ -46,7 +51,8 @@ export default function Channels (): JSX.Element | undefined {
         <div className="header-bar">
           <h2>Your Channels</h2>
           <button type="button" onClick={() => { setModalIsOpen(true) }}>
-            New Channel
+            <FireSvg />
+            <span>New</span>
           </button>
         </div>
 
@@ -71,7 +77,8 @@ export default function Channels (): JSX.Element | undefined {
             <button type="submit">Create</button>
           </APIForm>
           <button type="button" onClick={() => { setModalIsOpen(false) }}>
-            Cancel
+            <XSvg />
+            <span>Cancel</span>
           </button>
         </Modal>
 
@@ -80,30 +87,28 @@ export default function Channels (): JSX.Element | undefined {
             <div className="channels">
               {data.map((channel) => (
                 <Link to={`/channel/${channel.id}`} key={channel.id} className="channel">
-                  {/* icon goes here */}
+                  <FireSvg className="fire" />
                   <div className="channel-details">
-                    <h3>{channel.title}</h3>
-                    <p className="channel-status">
-                      {channel.userCount > 1
-                        ? (
-                          <span>
-                            {channel.userCount}
-                            {' '}
-                            members
-                          </span>
-                          )
-                        : (<span>Just you</span>)}
+                    <h3 className="channel-title">{channel.title}</h3>
+                    <div className="channel-status">
+                      <PeopleSvg className="mini" />
+                      {channel.userCount}
                       {channel.ownDisplayName !== null && (
-                      <span>
-                        {' '}
-                        |
-                        {' '}
-                        You appear as
-                        {' '}
-                        <b>{channel.ownDisplayName}</b>
-                      </span>
+                        <>
+                          <span>
+                            {' '}
+                            |
+                            {' '}
+                          </span>
+                          <PersonSvg className="mini" />
+                          <span className="channel-displayname">
+                            &quot;
+                            {channel.ownDisplayName}
+                            &quot;
+                          </span>
+                        </>
                       )}
-                    </p>
+                    </div>
                   </div>
 
                 </Link>

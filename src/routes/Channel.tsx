@@ -8,6 +8,16 @@ import Messages from './Messages.tsx'
 import DropdownMenu from '../components/DropdownMenu.tsx'
 import { type FormErrors, type UserDetail } from '../types.ts'
 
+import GearSvg from '../icons/gear-solid.svg?react'
+import AddUserSvg from '../icons/user-plus-solid.svg?react'
+import RemoveUserSvg from '../icons/user-xmark-solid.svg?react'
+import PromoteUserSvg from '../icons/user-shield-solid.svg?react'
+import EditUserSvg from '../icons/user-pen-solid.svg?react'
+import LeaveSvg from '../icons/right-from-bracket-solid.svg?react'
+import EditSvg from '../icons/pen-to-square-solid.svg?react'
+import SendSvg from '../icons/paper-plane-solid.svg?react'
+import AlertSvg from '../icons/triangle-exclamation-solid.svg?react'
+
 interface ChannelDetail {
   id: string
   title: string
@@ -61,6 +71,7 @@ export default function Channel (): JSX.Element | undefined {
             menuItems={[
               data.admin.id === id && {
                 title: 'Edit Channel',
+                icon: (<EditSvg />),
                 element: (
                   <APIForm
                     endpoint={{
@@ -79,6 +90,7 @@ export default function Channel (): JSX.Element | undefined {
                 )
               }, {
                 title: 'Edit Display Name',
+                icon: (<EditUserSvg />),
                 element: (
                   <APIForm
                     endpoint={{
@@ -104,6 +116,7 @@ export default function Channel (): JSX.Element | undefined {
                 )
               }, {
                 title: 'Invite a User',
+                icon: (<AddUserSvg />),
                 element: (
                   <APIForm
                     endpoint={{
@@ -120,8 +133,57 @@ export default function Channel (): JSX.Element | undefined {
                     <button type="submit">Invite</button>
                   </APIForm>
                 )
+              }, data.admin.id === id && data.users.length > 1 && {
+                title: 'Kick a User',
+                icon: (<RemoveUserSvg />),
+                element: (
+                  <APIForm
+                    endpoint={{
+                      url: `http://localhost:3000/channel/${channelId}/kick`,
+                      method: 'POST'
+                    }}
+                    onSuccess={handleSuccess}
+                  >
+                    <h3>Kick a User</h3>
+                    <p className="form-info">
+                      The user will be removed from the channel.
+                      {' '}
+                      They cannot re-enter this channel unless invited back in.
+                    </p>
+                    <label htmlFor="username">
+                      <span>Username</span>
+                      <input type="text" id="username" />
+                    </label>
+                    <button type="submit">Kick</button>
+                  </APIForm>
+                )
+              }, data.admin.id === id && data.users.length > 1 && {
+                title: 'Promote a User',
+                icon: (<PromoteUserSvg />),
+                element: (
+                  <APIForm
+                    endpoint={{
+                      url: `http://localhost:3000/channel/${channelId}/promote`,
+                      method: 'POST'
+                    }}
+                    onSuccess={handleSuccess}
+                  >
+                    <h3>Promote a User</h3>
+                    <p className="form-info">
+                      This will remove your admin privileges and
+                      {' '}
+                      bestow them to another member of this channel.
+                    </p>
+                    <label htmlFor="username">
+                      <span>Username</span>
+                      <input type="text" id="username" />
+                    </label>
+                    <button type="submit">Promote</button>
+                  </APIForm>
+                )
               }, {
                 title: 'Leave this Channel',
+                icon: (<LeaveSvg />),
                 element: (
                   <APIForm
                     endpoint={{
@@ -153,55 +215,10 @@ export default function Channel (): JSX.Element | undefined {
                     <button type="submit">Leave</button>
                   </APIForm>
                 )
-              }, data.admin.id === id && data.users.length > 1 && {
-                title: 'Kick a User',
-                element: (
-                  <APIForm
-                    endpoint={{
-                      url: `http://localhost:3000/channel/${channelId}/kick`,
-                      method: 'POST'
-                    }}
-                    onSuccess={handleSuccess}
-                  >
-                    <h3>Kick a User</h3>
-                    <p className="form-info">
-                      The user will be removed from the channel.
-                      {' '}
-                      They cannot re-enter this channel unless invited back in.
-                    </p>
-                    <label htmlFor="username">
-                      <span>Username</span>
-                      <input type="text" id="username" />
-                    </label>
-                    <button type="submit">Kick</button>
-                  </APIForm>
-                )
-              }, data.admin.id === id && data.users.length > 1 && {
-                title: 'Promote a User',
-                element: (
-                  <APIForm
-                    endpoint={{
-                      url: `http://localhost:3000/channel/${channelId}/promote`,
-                      method: 'POST'
-                    }}
-                    onSuccess={handleSuccess}
-                  >
-                    <h3>Promote a User</h3>
-                    <p className="form-info">
-                      This will remove your admin privileges and
-                      {' '}
-                      bestow them to another member of this channel.
-                    </p>
-                    <label htmlFor="username">
-                      <span>Username</span>
-                      <input type="text" id="username" />
-                    </label>
-                    <button type="submit">Promote</button>
-                  </APIForm>
-                )
               }
             ]}
           >
+            <GearSvg />
             <span>
               Settings
             </span>
@@ -273,9 +290,17 @@ function ComposeMessage ({ setMessageSeed }: {
         <div className="compose-error">
           {data !== null && typeof data !== 'string'
             ? (
-              <p>{data[0].msg}</p>
+              <p>
+                <AlertSvg className="mini inline" />
+                {data[0].msg}
+              </p>
               )
-            : <p>{error}</p>}
+            : (
+              <p>
+                <AlertSvg className="mini inline" />
+                {error}
+              </p>
+              )}
         </div>
       )}
       <form
@@ -293,7 +318,8 @@ function ComposeMessage ({ setMessageSeed }: {
           }}
         />
         <button type="submit" disabled={loading}>
-          Send
+          <SendSvg />
+          <span>Send</span>
         </button>
       </form>
     </div>
