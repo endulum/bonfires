@@ -2,6 +2,7 @@ import { useParams } from 'react-router-dom'
 import { useReadLocalStorage } from 'usehooks-ts'
 import { useEffect, useRef } from 'react'
 import { DateTime } from 'luxon'
+import { Tooltip } from 'react-tooltip'
 import useFetch from '../useFetch.ts'
 
 interface ChannelMessage {
@@ -67,19 +68,19 @@ export default function Messages ({ messageSeed }: {
         {data.length > 0
           ? data.map((message) => (
             <div className="message" key={message.id}>
+              <Tooltip id={message.id} className="tooltip" />
               <small
                 className="message-timestamp"
-                title={
-                  DateTime.fromISO(message.timestamp).toLocaleString({
-                    weekday: 'long',
-                    month: 'long',
-                    day: 'numeric',
-                    year: 'numeric',
-                    hour: 'numeric',
-                    minute: '2-digit',
-                    timeZoneName: 'short'
-                  })
-                }
+                data-tooltip-id={message.id}
+                data-tooltip-content={DateTime.fromISO(message.timestamp).toLocaleString({
+                  weekday: 'long',
+                  month: 'long',
+                  day: 'numeric',
+                  year: 'numeric',
+                  hour: 'numeric',
+                  minute: '2-digit',
+                  timeZoneName: 'short'
+                })}
               >
                 {DateTime.fromISO(message.timestamp).toLocaleString({
                   hour: 'numeric',
@@ -87,9 +88,26 @@ export default function Messages ({ messageSeed }: {
                 })}
               </small>
               <div className="message-body">
-                <span className="message-user">
-                  {message.user.displayName ?? message.user.username}
-                </span>
+                {message.user.displayName !== null
+                  ? (
+                    <>
+                      <span
+                        className="message-user"
+                        data-tooltip-id={message.user.id}
+                        data-tooltip-content={message.user.username}
+                      >
+                        {message.user.displayName}
+                      </span>
+                      <Tooltip id={message.user.id} className="tooltip" />
+                    </>
+                    )
+                  : (
+                    <span
+                      className="message-user"
+                    >
+                      {message.user.username}
+                    </span>
+                    )}
                 <span className="message-content">
                   {unEscape(message.content)}
                 </span>

@@ -393,6 +393,11 @@ svg.inline {
   fill: rgb(var(--red));
 }
 
+.react-tooltip.tooltip {
+  background-color: rgb(var(--white));
+  color: rgb(var(--darker));
+}
+
 @media screen and (max-width: 500px) {
   header button b, .header-bar .dropdown-menu-wrapper > button > span {
     display: none;
