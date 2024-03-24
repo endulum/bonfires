@@ -137,7 +137,7 @@ export default function Messages ({ messageSeed }: {
                 <Markdown
                   remarkPlugins={[remarkGfm]}
                   allowedElements={[
-                    'a', 'strong', 'em', 'del', 'p', 'br'
+                    'a', 'strong', 'em', 'del', 'p', 'br', 'ul', 'ol', 'li'
                   ]}
                   unwrapDisallowed
                   skipHtml
