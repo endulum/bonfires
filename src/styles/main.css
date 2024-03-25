@@ -1,3 +1,8 @@
+/* :root {
+  --rt-opacity: 1!important;
+  --rt-transition-show-delay: 0.5s!important;
+} */
+
 body, html, #root {
   border: none;
   width: 100%;
@@ -346,27 +351,67 @@ svg.inline {
 }
 
 .message {
-  display: flex;
-  flex-direction: row;
-  max-width: 100%;
-  hyphens: auto;
+  margin-left: 1rem;
+  text-indent: -1rem;
+  .react-tooltip {
+    text-indent: 0;
+  }
+}
+
+.message-header {
+  display: inline;
+}
+
+.message-timestamp {
+  display: inline-block;
+  text-indent: 0;
+}
+
+.message-content {
+  overflow: hidden;
+  display: inline;
+  p {
+    display: inline;
+  }
+  a {
+    color: rgb(var(--purple));
+    font-weight: normal;
+  }
+  ul {
+    list-style-type: square;
+  }
+  ul, ol {
+    margin-left: 1rem;
+    list-style-position: outside;
+    li {
+      white-space: break-spaces;
+      padding-left: 1rem;
+      &::marker {
+        color: rgb(var(--purple))
+      }
+    }
+  }
+  img {
+    max-width: min(500px, 100%);
+  }
 }
 
 .message-timestamp {
   margin-top: 0.125rem;
   margin-right: 0.5rem;
   min-width: max-content;
+  font-size: 0.75rem;
   opacity: 0.75;
 }
 
 .message-user {
   font-weight: bold;
   margin-right: 0.5rem;
-  color: rgb(var(--blue));
+  color: rgb(var(--purple));
   svg {
     margin-left: 0.5rem;
     margin-right: 0rem;
-    fill: rgb(var(--blue));
+    fill: rgb(var(--purple));
   }
   &.admin {
     color: rgb(var(--yellow));
@@ -375,14 +420,6 @@ svg.inline {
   &.not-in-channel {
     color: rgb(var(--white));
     svg { fill: rgb(var(--white)) }
-  }
-}
-
-.message-content {
-  display: inline-block;
-  &:has(ul, li, h1, h2, h3, h4, h5, h6) {
-    display: block;
-    margin-left: 1rem;
   }
 }
 
@@ -447,13 +484,35 @@ a:has(.logo) {
   }
 }
 
-.react-tooltip.tooltip {
-  background-color: rgb(var(--white));
-  color: rgb(var(--darker));
+.react-tooltip {
+  background-color: rgb(var(--white))!important;
+  color: rgb(var(--darker))!important;
   font-weight: normal;
+  transition: opacity 0.25s ease-in-out!important;
+  box-shadow: 0 0 10px rgba(var(--darkest), 0.75);
 }
 
 @media screen and (max-width: 500px) {
+  .messages {
+    gap: 0.75rem;
+  }
+
+  .message {
+    text-indent: 0;
+    margin-left: 0;
+  }
+
+  .message-content {
+    display: block;
+    ul, ol {
+      margin-left: 0rem;
+      li {
+        margin-left: 1rem;
+        padding-left: 0;
+      }
+    }
+  }
+
   header button b, .header-bar .dropdown-menu-wrapper > button > span {
     display: none;
   }

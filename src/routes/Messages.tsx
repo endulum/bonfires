@@ -75,37 +75,37 @@ export default function Messages ({ messageSeed }: {
         {data.length > 0
           ? data.map((message) => (
             <div className="message" key={message.id}>
-              <Tooltip id={message.id} className="tooltip" />
-              <small
-                className="message-timestamp"
-                data-tooltip-id={message.id}
-                data-tooltip-content={DateTime.fromISO(message.timestamp).toLocaleString({
-                  weekday: 'long',
-                  month: 'long',
-                  day: 'numeric',
-                  year: 'numeric',
-                  hour: 'numeric',
-                  minute: '2-digit',
-                  timeZoneName: 'short'
-                })}
-              >
-                {DateTime.fromISO(message.timestamp).toLocaleString({
-                  hour: 'numeric',
-                  minute: '2-digit'
-                })}
-              </small>
-              <div className="message-body">
+              <div className="message-header">
+                <Tooltip id={`timestamp-${message.id}`} />
+                <small
+                  className="message-timestamp"
+                  data-tooltip-id={`timestamp-${message.id}`}
+                  data-tooltip-content={DateTime.fromISO(message.timestamp).toLocaleString({
+                    weekday: 'long',
+                    month: 'long',
+                    day: 'numeric',
+                    year: 'numeric',
+                    hour: 'numeric',
+                    minute: '2-digit',
+                    timeZoneName: 'short'
+                  })}
+                >
+                  {DateTime.fromISO(message.timestamp).toLocaleString({
+                    hour: 'numeric',
+                    minute: '2-digit'
+                  })}
+                </small>
                 <span className={`message-user${message.user.isAdmin ? ' admin' : ''}${message.user.isInChannel ? '' : ' not-in-channel'}`}>
                   {message.user.displayName !== null
                     ? (
                       <>
                         <span
-                          data-tooltip-id={message.user.id}
+                          data-tooltip-id={`username-${message.id}`}
                           data-tooltip-content={message.user.username}
                         >
                           {message.user.displayName}
                         </span>
-                        <Tooltip id={message.user.id} className="tooltip" />
+                        <Tooltip id={`username-${message.id}`} />
                       </>
                       )
                     : (
@@ -117,35 +117,35 @@ export default function Messages ({ messageSeed }: {
                     <>
                       <CrownSvg
                         className="mini inline"
-                        data-tooltip-id="admin"
+                        data-tooltip-id={`admin-${message.id}`}
                         data-tooltip-content="This user is the admin of this channel."
                       />
-                      <Tooltip id="admin" className="tooltip" />
+                      <Tooltip id={`admin-${message.id}`} />
                     </>
                   )}
                   {!message.user.isInChannel && (
                   <>
                     <GhostSvg
                       className="mini inline"
-                      data-tooltip-id="admin"
+                      data-tooltip-id={`ghost-${message.id}`}
                       data-tooltip-content="This user is no longer in this channel."
                     />
-                    <Tooltip id="admin" className="tooltip" />
+                    <Tooltip id={`ghost-${message.id}`} />
                   </>
                   )}
                 </span>
-                <Markdown
-                  remarkPlugins={[remarkGfm]}
-                  allowedElements={[
-                    'a', 'strong', 'em', 'del', 'p', 'br', 'ul', 'ol', 'li'
-                  ]}
-                  unwrapDisallowed
-                  skipHtml
-                  className="message-content"
-                >
-                  {unEscape(message.content)}
-                </Markdown>
               </div>
+              <Markdown
+                remarkPlugins={[remarkGfm]}
+                allowedElements={[
+                  'a', 'strong', 'em', 'del', 'p', 'br', 'ul', 'ol', 'li', 'img'
+                ]}
+                unwrapDisallowed
+                skipHtml
+                className="message-content"
+              >
+                {unEscape(message.content)}
+              </Markdown>
             </div>
           ))
           : <p><i>No messages to show.</i></p>}
