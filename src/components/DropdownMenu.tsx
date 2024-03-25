@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import Modal from 'react-modal'
 
 import XSvg from '../icons/xmark-solid.svg?react'
@@ -14,11 +14,30 @@ export default function DropdownMenu ({ menuItems, children }: {
 }): JSX.Element {
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false)
   const [modalOpen, setModalOpen] = useState<string>('')
+  const dropdownRef = useRef<null | HTMLDivElement>(null)
 
   function toggleOpen (): void { setDropdownOpen(!dropdownOpen) }
 
+  function handleClickOutside (event: MouseEvent): void {
+    if (
+      dropdownRef.current !== null &&
+      !dropdownRef.current.contains(event.target as Node)
+    ) {
+      toggleOpen()
+    }
+  }
+
+  useEffect(() => {
+    if (dropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside)
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [dropdownOpen])
+
   return (
-    <div className="dropdown-menu-wrapper">
+    <div className="dropdown-menu-wrapper" ref={dropdownRef}>
       <button type="button" onClick={toggleOpen} className={dropdownOpen ? 'active' : ''}>
         {children}
       </button>
