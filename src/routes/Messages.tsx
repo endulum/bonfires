@@ -48,7 +48,7 @@ export default function MessagesView ({ channelId }: {
   function reload (): void { void fetchData(true) }
 
   return (data === null
-    ? <LoadingWrapper loading={loading} error={error} />
+    ? <LoadingWrapper loading={loading} loadingMessage="Gathering messages..." error={error} />
     : (
       <>
         <MessageList messagesData={data} />

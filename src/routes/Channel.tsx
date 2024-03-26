@@ -51,7 +51,7 @@ export default function ChannelView (): JSX.Element | undefined {
   }
 
   return (data === null || channelId === undefined
-    ? <LoadingWrapper loading={loading} error={error} />
+    ? <LoadingWrapper loading={loading} loadingMessage="Finding channel..." error={error} />
     : (
       <>
         <div className="header-bar">

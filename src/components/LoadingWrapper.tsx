@@ -1,8 +1,9 @@
 import AlertSvg from '../icons/triangle-exclamation-solid.svg?react'
 import FireSvg from '../icons/fire-solid.svg?react'
 
-export default function LoadingWrapper ({ loading, error }: {
+export default function LoadingWrapper ({ loading, loadingMessage, error }: {
   loading: boolean
+  loadingMessage?: string
   error: string | null
 }): JSX.Element | undefined {
   if (loading) {
@@ -12,7 +13,7 @@ export default function LoadingWrapper ({ loading, error }: {
           <FireSvg />
         </div>
         <p>
-          Loading...
+          {loadingMessage ?? 'Loading...'}
         </p>
       </div>
     )

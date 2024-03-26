@@ -66,7 +66,13 @@ export default function App (): JSX.Element | undefined {
   }, [tokenChanged])
 
   return (data === null && error !== 'Please log in.'
-    ? <LoadingWrapper loading={loading} error={error} />
+    ? (
+      <LoadingWrapper
+        loading={loading}
+        loadingMessage="Lighting the fires..."
+        error={error}
+      />
+      )
     : (
       <Routes>
         <Route element={token === null ? <AuthWrapper /> : <Navigate to="/" />}>

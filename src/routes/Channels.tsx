@@ -40,7 +40,7 @@ export default function ChannelList (): JSX.Element | undefined {
   function newChannelSuccess (): void { void fetchData() }
 
   return (data === null
-    ? <LoadingWrapper loading={loading} error={error} />
+    ? <LoadingWrapper loading={loading} loadingMessage="Gathering your channels..." error={error} />
     : (
       <>
         <div className="header-bar">
