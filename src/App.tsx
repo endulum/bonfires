@@ -7,7 +7,7 @@ import IndexWrapper from './components/IndexWrapper.tsx'
 import AuthWrapper from './components/AuthWrapper.tsx'
 import Login from './routes/Login.tsx'
 import Signup from './routes/Signup.tsx'
-import Channels from './routes/Channels.tsx'
+import ChannelList from './routes/Channels.tsx'
 import Channel from './routes/Channel.tsx'
 
 export default function App (): JSX.Element | undefined {
@@ -78,7 +78,7 @@ export default function App (): JSX.Element | undefined {
           <IndexWrapper userData={data} setToken={setTokenAndRefresh} />
           )}
         >
-          <Route path="/" element={<Channels />} />
+          <Route path="/" element={<ChannelList />} />
           <Route path="/channel/:channel" element={<Channel />} />
           <Route path="*" element={<p>Not found.</p>} />
         </Route>
