@@ -5,6 +5,7 @@ import useFetch from './useFetch.ts'
 
 import IndexWrapper from './components/IndexWrapper.tsx'
 import AuthWrapper from './components/AuthWrapper.tsx'
+import LoadingWrapper from './components/LoadingWrapper.tsx'
 import Login from './routes/Login.tsx'
 import Signup from './routes/Signup.tsx'
 import ChannelList from './routes/Channels.tsx'
@@ -64,31 +65,35 @@ export default function App (): JSX.Element | undefined {
     }
   }, [tokenChanged])
 
-  if (loading) return <p>Loading...</p>
-  if (error !== null && error !== 'Please log in.') return <p>{error}</p>
-
-  return (
-    <Routes>
-      <Route element={token === null ? <AuthWrapper /> : <Navigate to="/" />}>
-        <Route path="/login" element={<Login setToken={setTokenAndRefresh} />} />
-        <Route path="/signup" element={<Signup />} />
-      </Route>
-      {data !== null && (
+  return (data === null && error !== 'Please log in.'
+    ? <LoadingWrapper loading={loading} error={error} />
+    : (
+      <Routes>
+        <Route element={token === null ? <AuthWrapper /> : <Navigate to="/" />}>
+          <Route path="/login" element={<Login setToken={setTokenAndRefresh} />} />
+          <Route path="/signup" element={<Signup />} />
+        </Route>
+        {data !== null && (
         <Route element={(
           <IndexWrapper userData={data} setToken={setTokenAndRefresh} />
-          )}
+        )}
         >
           <Route path="/" element={<ChannelList />} />
           <Route path="/channel/:channel" element={<Channel />} />
-          <Route path="*" element={<p>Not found.</p>} />
+          <Route
+            path="*"
+            element={<LoadingWrapper loading={false} error="Nothing found at this URL." />}
+          />
         </Route>
-      )}
-      <Route
-        path="*"
-        element={
-          token === null ? <Navigate to="login" /> : <p>Not found.</p>
-        }
-      />
-    </Routes>
-  )
+        )}
+        <Route
+          path="*"
+          element={
+            token === null
+              ? <Navigate to="login" />
+              : <LoadingWrapper loading={false} error="Nothing found at this URL." />
+          }
+        />
+      </Routes>
+      ))
 }

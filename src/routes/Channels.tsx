@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useReadLocalStorage } from 'usehooks-ts'
 import Modal from 'react-modal'
 import APIForm from '../components/APIForm.tsx'
+import LoadingWrapper from '../components/LoadingWrapper.tsx'
 import useFetch from '../useFetch.ts'
 
 import FireSvg from '../icons/fire-solid.svg?react'
@@ -38,10 +39,9 @@ export default function ChannelList (): JSX.Element | undefined {
 
   function newChannelSuccess (): void { void fetchData() }
 
-  if (loading) return <p>Loading...</p>
-  if (error !== null) return <p>{error}</p>
-  if (data !== null) {
-    return (
+  return (data === null
+    ? <LoadingWrapper loading={loading} error={error} />
+    : (
       <>
         <div className="header-bar">
           <h2>Your Channels</h2>
@@ -55,10 +55,15 @@ export default function ChannelList (): JSX.Element | undefined {
               ))}
             </div>
             )
-          : <p><i>No channels to show.</i></p>}
+          : (
+            <div className="expand">
+              <p>
+                <i>No channels to show.</i>
+              </p>
+            </div>
+            )}
       </>
-    )
-  }
+      ))
 }
 
 function ChannelListItem ({ channel }: {
