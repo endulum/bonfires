@@ -1,16 +1,19 @@
-import { useParams } from 'react-router-dom'
+import { useState, useEffect, useRef, type FormEvent } from 'react'
 import { useReadLocalStorage } from 'usehooks-ts'
-import { useEffect, useRef } from 'react'
-import { DateTime } from 'luxon'
 import { Tooltip } from 'react-tooltip'
 import Markdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
+import { DateTime } from 'luxon'
 import useFetch from '../useFetch.ts'
+import LoadingWrapper from '../components/LoadingWrapper.tsx'
+import type { FormErrors } from '../types.ts'
 
 import CrownSvg from '../icons/crown-solid.svg?react'
 import GhostSvg from '../icons/ghost-solid.svg?react'
+import SendSvg from '../icons/paper-plane-solid.svg?react'
+import AlertSvg from '../icons/triangle-exclamation-solid.svg?react'
 
-interface ChannelMessage {
+interface IChannelMessage {
   id: string
   content: string
   user: {
@@ -23,16 +26,13 @@ interface ChannelMessage {
   timestamp: string
 }
 
-export default function Messages ({ messageSeed }: {
-  messageSeed: number
+export default function MessagesView ({ channelId }: {
+  channelId: string
 }): JSX.Element | undefined {
   const token = useReadLocalStorage<string>('token')
-  const channelId = useParams().channel
-  const bottom = useRef<null | HTMLDivElement>(null)
-
   const {
     data, loading, error, fetchData
-  } = useFetch<ChannelMessage[]>(
+  } = useFetch<IChannelMessage[]>(
     true,
     `http://localhost:3000/channel/${channelId}/messages`,
     {
@@ -45,10 +45,49 @@ export default function Messages ({ messageSeed }: {
     }
   )
 
-  function scrollToBottom (): void {
-    bottom.current?.scrollIntoView()
-  }
+  function reload (): void { void fetchData(true) }
 
+  return (data === null
+    ? <LoadingWrapper loading={loading} error={error} />
+    : (
+      <>
+        <MessageList messagesData={data} />
+        <MessageCompose channelId={channelId} reload={reload} />
+      </>
+      ))
+}
+
+function MessageList ({ messagesData }: {
+  messagesData: IChannelMessage[]
+}): JSX.Element {
+  const bottom = useRef<null | HTMLDivElement>(null)
+
+  useEffect(() => {
+    bottom.current?.scrollIntoView()
+  }, [messagesData])
+
+  return (
+    <div className="messages">
+      {messagesData.length > 0
+        ? (
+          <>
+            {messagesData.map((message) => (
+              <MessageListItem
+                key={message.id}
+                message={message}
+              />
+            ))}
+          </>
+          )
+        : <LoadingWrapper loading={false} error="No messages to show." />}
+      <div ref={bottom} />
+    </div>
+  )
+}
+
+function MessageListItem ({ message }: {
+  message: IChannelMessage
+}): JSX.Element {
   function unEscape (htmlStr: string): string {
     return htmlStr
       .replace(/&lt;/g, '<')
@@ -59,98 +98,170 @@ export default function Messages ({ messageSeed }: {
       .replace(/&amp;/g, '&')
   }
 
-  useEffect(() => {
-    if (messageSeed !== 0) void fetchData(true)
-  }, [messageSeed])
+  return (
+    <div className="message">
+      <div className="message-header">
+        <Tooltip id={`timestamp-${message.id}`} />
+        <small
+          className="message-timestamp"
+          data-tooltip-id={`timestamp-${message.id}`}
+          data-tooltip-content={DateTime.fromISO(message.timestamp).toLocaleString({
+            weekday: 'long',
+            month: 'long',
+            day: 'numeric',
+            year: 'numeric',
+            hour: 'numeric',
+            minute: '2-digit',
+            timeZoneName: 'short'
+          })}
+        >
+          {DateTime.fromISO(message.timestamp).toLocaleString({
+            hour: 'numeric',
+            minute: '2-digit'
+          })}
+        </small>
+        <span className={`message-user${message.user.isAdmin ? ' admin' : ''}${message.user.isInChannel ? '' : ' not-in-channel'}`}>
+          {message.user.displayName !== null
+            ? (
+              <>
+                <span
+                  data-tooltip-id={`username-${message.id}`}
+                  data-tooltip-content={message.user.username}
+                >
+                  {message.user.displayName}
+                </span>
+                <Tooltip id={`username-${message.id}`} />
+              </>
+              )
+            : (
+              <span>
+                {message.user.username}
+              </span>
+              )}
+          {message.user.isAdmin && (
+          <>
+            <CrownSvg
+              className="mini inline"
+              data-tooltip-id={`admin-${message.id}`}
+              data-tooltip-content="This user is the admin of this channel."
+            />
+            <Tooltip id={`admin-${message.id}`} />
+          </>
+          )}
+          {!message.user.isInChannel && (
+          <>
+            <GhostSvg
+              className="mini inline"
+              data-tooltip-id={`ghost-${message.id}`}
+              data-tooltip-content="This user is no longer in this channel."
+            />
+            <Tooltip id={`ghost-${message.id}`} />
+          </>
+          )}
+        </span>
+      </div>
+      <Markdown
+        remarkPlugins={[remarkGfm]}
+        allowedElements={[
+          'a', 'strong', 'em', 'del', 'p', 'br', 'ul', 'ol', 'li', 'img'
+        ]}
+        unwrapDisallowed
+        skipHtml
+        className="message-content"
+      >
+        {unEscape(message.content)}
+      </Markdown>
+    </div>
+  )
+}
+
+function MessageCompose ({ channelId, reload }: {
+  channelId: string
+  reload: () => void
+}): JSX.Element {
+  const token = useReadLocalStorage<string>('token')
+  const [messageContent, setMessageContent] = useState<string>('')
+  const [isSending, setIsSending] = useState(false)
+  const textarea = useRef<null | HTMLTextAreaElement>(null)
+
+  const {
+    data, loading, error, fetchData
+  } = useFetch<string | FormErrors>(
+    false,
+      `http://localhost:3000/channel/${channelId}/messages`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json',
+          Authorization: token !== null ? `Bearer ${token}` : ''
+        },
+        body: JSON.stringify({
+          content: messageContent
+        })
+      }
+  )
+
+  function handleSubmit (e?: FormEvent<HTMLFormElement>): void {
+    if (e !== undefined) e.preventDefault()
+    if (textarea.current !== null) {
+      setMessageContent(textarea.current.value)
+      setIsSending(true)
+    }
+    if (e !== undefined) e.currentTarget.reset()
+    else if (textarea.current !== null) textarea.current.value = ''
+  }
 
   useEffect(() => {
-    if (data !== null) scrollToBottom()
+    if (isSending) {
+      setIsSending(false)
+      void fetchData()
+    }
+  }, [isSending])
+
+  useEffect(() => {
+    if (data !== null && data === 'OK') {
+      reload()
+    }
   }, [data])
 
-  if (loading) return <p>Loading...</p>
-  if (error !== null) return <p>{error}</p>
-  if (data !== null) {
-    return (
-      <>
-        {data.length > 0
-          ? data.map((message) => (
-            <div className="message" key={message.id}>
-              <div className="message-header">
-                <Tooltip id={`timestamp-${message.id}`} />
-                <small
-                  className="message-timestamp"
-                  data-tooltip-id={`timestamp-${message.id}`}
-                  data-tooltip-content={DateTime.fromISO(message.timestamp).toLocaleString({
-                    weekday: 'long',
-                    month: 'long',
-                    day: 'numeric',
-                    year: 'numeric',
-                    hour: 'numeric',
-                    minute: '2-digit',
-                    timeZoneName: 'short'
-                  })}
-                >
-                  {DateTime.fromISO(message.timestamp).toLocaleString({
-                    hour: 'numeric',
-                    minute: '2-digit'
-                  })}
-                </small>
-                <span className={`message-user${message.user.isAdmin ? ' admin' : ''}${message.user.isInChannel ? '' : ' not-in-channel'}`}>
-                  {message.user.displayName !== null
-                    ? (
-                      <>
-                        <span
-                          data-tooltip-id={`username-${message.id}`}
-                          data-tooltip-content={message.user.username}
-                        >
-                          {message.user.displayName}
-                        </span>
-                        <Tooltip id={`username-${message.id}`} />
-                      </>
-                      )
-                    : (
-                      <span>
-                        {message.user.username}
-                      </span>
-                      )}
-                  {message.user.isAdmin && (
-                    <>
-                      <CrownSvg
-                        className="mini inline"
-                        data-tooltip-id={`admin-${message.id}`}
-                        data-tooltip-content="This user is the admin of this channel."
-                      />
-                      <Tooltip id={`admin-${message.id}`} />
-                    </>
-                  )}
-                  {!message.user.isInChannel && (
-                  <>
-                    <GhostSvg
-                      className="mini inline"
-                      data-tooltip-id={`ghost-${message.id}`}
-                      data-tooltip-content="This user is no longer in this channel."
-                    />
-                    <Tooltip id={`ghost-${message.id}`} />
-                  </>
-                  )}
-                </span>
-              </div>
-              <Markdown
-                remarkPlugins={[remarkGfm]}
-                allowedElements={[
-                  'a', 'strong', 'em', 'del', 'p', 'br', 'ul', 'ol', 'li', 'img'
-                ]}
-                unwrapDisallowed
-                skipHtml
-                className="message-content"
-              >
-                {unEscape(message.content)}
-              </Markdown>
-            </div>
-          ))
-          : <p><i>No messages to show.</i></p>}
-        <div ref={bottom} />
-      </>
-    )
-  }
+  return (
+    <div className="compose">
+      {error !== null && (
+        <div className="compose-error">
+          {data !== null && typeof data !== 'string'
+            ? (
+              <p>
+                <AlertSvg className="mini inline" />
+                {data[0].msg}
+              </p>
+              )
+            : (
+              <p>
+                <AlertSvg className="mini inline" />
+                {error}
+              </p>
+              )}
+        </div>
+      )}
+      <form
+        className="compose-row"
+        onSubmit={handleSubmit}
+      >
+        <textarea
+          placeholder="Say something nice..."
+          ref={textarea}
+          onKeyDown={(e) => {
+            if (!e.shiftKey && e.code === 'Enter') {
+              e.preventDefault()
+              handleSubmit()
+            }
+          }}
+        />
+        <button type="submit" disabled={loading}>
+          <SendSvg />
+          <span>Send</span>
+        </button>
+      </form>
+    </div>
+  )
 }

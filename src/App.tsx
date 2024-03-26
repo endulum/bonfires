@@ -9,7 +9,7 @@ import LoadingWrapper from './components/LoadingWrapper.tsx'
 import Login from './routes/Login.tsx'
 import Signup from './routes/Signup.tsx'
 import ChannelList from './routes/Channels.tsx'
-import Channel from './routes/Channel.tsx'
+import ChannelView from './routes/Channel.tsx'
 
 export default function App (): JSX.Element | undefined {
   const [token, setToken] = useLocalStorage<string | null>('token', null, {
@@ -79,7 +79,7 @@ export default function App (): JSX.Element | undefined {
         )}
         >
           <Route path="/" element={<ChannelList />} />
-          <Route path="/channel/:channel" element={<Channel />} />
+          <Route path="/channel/:channel" element={<ChannelView />} />
           <Route
             path="*"
             element={<LoadingWrapper loading={false} error="Nothing found at this URL." />}
