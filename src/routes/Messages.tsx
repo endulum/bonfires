@@ -5,6 +5,7 @@ import Markdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { DateTime } from 'luxon'
 import useFetch from '../useFetch.ts'
+import socket from '../socketConfig.ts'
 import LoadingWrapper from '../components/LoadingWrapper.tsx'
 import type { FormErrors } from '../types.ts'
 
@@ -25,6 +26,10 @@ interface IChannelMessage {
   }
   timestamp: string
 }
+
+socket.on('new message', (msg) => {
+  console.log(`new message detected on frontend: ${msg}`)
+})
 
 export default function MessagesView ({ channelId }: {
   channelId: string
@@ -214,6 +219,7 @@ function MessageCompose ({ channelId, reload }: {
   useEffect(() => {
     if (isSending) {
       setIsSending(false)
+      socket.emit('new message', messageContent)
       void fetchData()
     }
   }, [isSending])
