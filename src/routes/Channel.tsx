@@ -62,7 +62,10 @@ export default function ChannelView (): JSX.Element | undefined {
             onSuccess={handleSuccess}
           />
         </div>
-        <MessagesView channelId={channelId} />
+        <MessagesView
+          channelId={channelId}
+          yourDisplayName={data.currentUser.displayName ?? data.currentUser.username}
+        />
       </>
       ))
 }

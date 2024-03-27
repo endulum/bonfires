@@ -4,10 +4,11 @@ import { Tooltip } from 'react-tooltip'
 import Markdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { DateTime } from 'luxon'
+import { useOutletContext } from 'react-router-dom'
 import useFetch from '../useFetch.ts'
 import socket from '../socketConfig.ts'
 import LoadingWrapper from '../components/LoadingWrapper.tsx'
-import type { FormErrors } from '../types.ts'
+import { type UserDetail, type FormErrors } from '../types.ts'
 
 import CrownSvg from '../icons/crown-solid.svg?react'
 import GhostSvg from '../icons/ghost-solid.svg?react'
@@ -27,8 +28,9 @@ interface IChannelMessage {
   timestamp: string
 }
 
-export default function MessagesView ({ channelId }: {
+export default function MessagesView ({ channelId, yourDisplayName }: {
   channelId: string
+  yourDisplayName: string
 }): JSX.Element | undefined {
   const token = useReadLocalStorage<string>('token')
   const {
@@ -58,7 +60,7 @@ export default function MessagesView ({ channelId }: {
     : (
       <>
         <MessageList messagesData={data} />
-        <MessageCompose channelId={channelId} />
+        <MessageCompose channelId={channelId} yourDisplayName={yourDisplayName} />
       </>
       ))
 }
@@ -91,9 +93,69 @@ function MessageList ({ messagesData }: {
           </>
           )
         : <LoadingWrapper loading={false} error="No messages to show." />}
-      <div ref={bottom} />
+      <div ref={bottom} className="typing">
+        <IsTyping />
+      </div>
     </div>
   )
+}
+
+function IsTyping (): JSX.Element {
+  const [isTyping, setIsTyping] = useState<Record<string, string>>({})
+
+  socket.on('someone started typing', (userId: string, userName: string) => {
+    setIsTyping({ ...isTyping, [userId]: userName })
+  })
+
+  socket.on('someone stopped typing', (userId: string) => {
+    const { [userId]: userName, ...rest } = isTyping
+    setIsTyping(rest)
+  })
+
+  const keys = (obj: Record<string, string>): string[] => Object.keys(obj)
+  const boldName = (index: number): JSX.Element => <b>{isTyping[keys(isTyping)[index]]}</b>
+
+  switch (keys(isTyping).length) {
+    case 0: return (<p>It&apos;s quiet here...</p>)
+
+    case 1: return (
+      <p>
+        <b>{boldName(0)}</b>
+        {' '}
+        is typing...
+      </p>
+    )
+
+    case 2: return (
+      <p>
+        <b>{boldName(0)}</b>
+        {' '}
+        and
+        {' '}
+        <b>{boldName(1)}</b>
+        {' '}
+        are typing...
+      </p>
+    )
+
+    case 3: return (
+      <p>
+        <b>{boldName(0)}</b>
+        ,
+        {' '}
+        <b>{boldName(1)}</b>
+        ,
+        {' '}
+        and
+        {' '}
+        <b>{boldName(3)}</b>
+        {' '}
+        are typing...
+      </p>
+    )
+
+    default: return (<p>Several people are typing...</p>)
+  }
 }
 
 function MessageListItem ({ message }: {
@@ -186,13 +248,17 @@ function MessageListItem ({ message }: {
   )
 }
 
-function MessageCompose ({ channelId }: {
+function MessageCompose ({ channelId, yourDisplayName }: {
   channelId: string
+  yourDisplayName: string
 }): JSX.Element {
   const token = useReadLocalStorage<string>('token')
   const [messageContent, setMessageContent] = useState<string>('')
   const [isSending, setIsSending] = useState(false)
+  const [isTyping, setIsTyping] = useState(false)
+  const timerRef: { current: ReturnType<typeof setInterval> | null } = useRef(null)
   const textarea = useRef<null | HTMLTextAreaElement>(null)
+  const { id } = useOutletContext<UserDetail>()
 
   const {
     data, loading, error, fetchData
@@ -228,6 +294,21 @@ function MessageCompose ({ channelId }: {
     }
   }, [isSending])
 
+  function startTyping (): void {
+    if (!isTyping) {
+      setIsTyping(true)
+      socket.emit('you started typing', channelId, id, yourDisplayName)
+    }
+    if (timerRef.current !== null) clearTimeout(timerRef.current)
+    if (textarea.current !== null && textarea.current.value === '') stopTyping()
+    else timerRef.current = setTimeout(stopTyping, 2000)
+  }
+
+  function stopTyping (): void {
+    setIsTyping(false)
+    socket.emit('you stopped typing', channelId, id)
+  }
+
   return (
     <div className="compose">
       {error !== null && (
@@ -257,9 +338,11 @@ function MessageCompose ({ channelId }: {
           onKeyDown={(e) => {
             if (!e.shiftKey && e.code === 'Enter') {
               e.preventDefault()
+              stopTyping()
               handleSubmit()
             }
           }}
+          onChange={startTyping}
         />
         <button type="submit" disabled={loading}>
           <SendSvg />

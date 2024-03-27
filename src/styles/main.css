@@ -348,6 +348,9 @@ svg.inline {
   padding: 1rem;
   border: 1px solid rgb(var(--dark));
   background-color: rgb(var(--darker));
+  & :nth-last-child(2) {
+    flex-grow: 1;
+  }
 }
 
 .message {
@@ -360,11 +363,6 @@ svg.inline {
 
 .message-header {
   display: inline;
-}
-
-.message-timestamp {
-  display: inline-block;
-  text-indent: 0;
 }
 
 .message-content {
@@ -397,6 +395,8 @@ svg.inline {
 }
 
 .message-timestamp {
+  display: inline-block;
+  text-indent: 0;
   margin-top: 0.125rem;
   margin-right: 0.5rem;
   min-width: max-content;
@@ -421,6 +421,13 @@ svg.inline {
     color: rgb(var(--white));
     svg { fill: rgb(var(--white)) }
   }
+}
+
+.typing {
+  line-height: 0.825rem;
+  min-height: 0.825rem;
+  opacity: 0.825;
+  font-size: 0.825rem;
 }
 
 .compose {
