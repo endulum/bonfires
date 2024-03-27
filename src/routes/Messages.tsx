@@ -27,16 +27,12 @@ interface IChannelMessage {
   timestamp: string
 }
 
-socket.on('new message', (msg) => {
-  console.log(`new message detected on frontend: ${msg}`)
-})
-
 export default function MessagesView ({ channelId }: {
   channelId: string
 }): JSX.Element | undefined {
   const token = useReadLocalStorage<string>('token')
   const {
-    data, loading, error, fetchData
+    data, loading, error
   } = useFetch<IChannelMessage[]>(
     true,
     `http://localhost:3000/channel/${channelId}/messages`,
@@ -50,14 +46,12 @@ export default function MessagesView ({ channelId }: {
     }
   )
 
-  function reload (): void { void fetchData(true) }
-
   return (data === null
     ? <LoadingWrapper loading={loading} loadingMessage="Gathering messages..." error={error} />
     : (
       <>
         <MessageList messagesData={data} />
-        <MessageCompose channelId={channelId} reload={reload} />
+        <MessageCompose channelId={channelId} />
       </>
       ))
 }
@@ -65,18 +59,23 @@ export default function MessagesView ({ channelId }: {
 function MessageList ({ messagesData }: {
   messagesData: IChannelMessage[]
 }): JSX.Element {
+  const [messages, setMessages] = useState<IChannelMessage[]>(messagesData)
   const bottom = useRef<null | HTMLDivElement>(null)
+
+  socket.on('new message created', (msg: IChannelMessage) => {
+    setMessages([...messages, msg])
+  })
 
   useEffect(() => {
     bottom.current?.scrollIntoView()
-  }, [messagesData])
+  }, [messages])
 
   return (
     <div className="messages">
-      {messagesData.length > 0
+      {messages.length > 0
         ? (
           <>
-            {messagesData.map((message) => (
+            {messages.map((message) => (
               <MessageListItem
                 key={message.id}
                 message={message}
@@ -180,9 +179,8 @@ function MessageListItem ({ message }: {
   )
 }
 
-function MessageCompose ({ channelId, reload }: {
+function MessageCompose ({ channelId }: {
   channelId: string
-  reload: () => void
 }): JSX.Element {
   const token = useReadLocalStorage<string>('token')
   const [messageContent, setMessageContent] = useState<string>('')
@@ -219,16 +217,9 @@ function MessageCompose ({ channelId, reload }: {
   useEffect(() => {
     if (isSending) {
       setIsSending(false)
-      socket.emit('new message', messageContent)
       void fetchData()
     }
   }, [isSending])
-
-  useEffect(() => {
-    if (data !== null && data === 'OK') {
-      reload()
-    }
-  }, [data])
 
   return (
     <div className="compose">
