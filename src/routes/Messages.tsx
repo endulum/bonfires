@@ -46,6 +46,13 @@ export default function MessagesView ({ channelId }: {
     }
   )
 
+  useEffect(() => {
+    socket.emit('viewing channel', channelId)
+    return () => {
+      socket.emit('leaving channel', channelId)
+    }
+  }, [])
+
   return (data === null
     ? <LoadingWrapper loading={loading} loadingMessage="Gathering messages..." error={error} />
     : (
