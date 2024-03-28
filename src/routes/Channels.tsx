@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, type Dispatch, type SetStateAction } from 'react'
 import { Link } from 'react-router-dom'
 import { useReadLocalStorage } from 'usehooks-ts'
 import Modal from 'react-modal'
@@ -21,6 +21,7 @@ interface IChannelListItem {
 
 export default function ChannelList (): JSX.Element | undefined {
   const token = useReadLocalStorage<string>('token')
+  const [searchPhrase, setSearchPhrase] = useState<string>('')
 
   const {
     data, loading, error, fetchData
@@ -39,6 +40,15 @@ export default function ChannelList (): JSX.Element | undefined {
 
   function newChannelSuccess (): void { void fetchData() }
 
+  function filterTitle (filterPhrase: string): IChannelListItem[] {
+    if (data !== null) {
+      return data.filter((channel) => (
+        channel.title.toLowerCase().includes(filterPhrase.toLowerCase())
+      ))
+    }
+    return []
+  }
+
   return (data === null
     ? <LoadingWrapper loading={loading} loadingMessage="Gathering your channels..." error={error} />
     : (
@@ -47,10 +57,11 @@ export default function ChannelList (): JSX.Element | undefined {
           <h2>Your Channels</h2>
           <NewChannelModal onSuccess={newChannelSuccess} />
         </div>
-        {data.length > 0
+        <SearchChannels setSearchPhrase={setSearchPhrase} />
+        {filterTitle(searchPhrase).length > 0
           ? (
             <div className="channels">
-              {data.map((channel) => (
+              {filterTitle(searchPhrase).map((channel) => (
                 <ChannelListItem channel={channel} key={channel.id} />
               ))}
             </div>
@@ -64,6 +75,25 @@ export default function ChannelList (): JSX.Element | undefined {
             )}
       </>
       ))
+}
+
+function SearchChannels ({ setSearchPhrase }: {
+  setSearchPhrase: Dispatch<SetStateAction<string>>
+}): JSX.Element {
+  return (
+    <div className="search-row">
+      <label htmlFor="searchChannelTitle">
+        <span>
+          Search by title:
+        </span>
+        <input
+          type="text"
+          id="searchChannelTitle"
+          onChange={(e) => { setSearchPhrase(e.target.value) }}
+        />
+      </label>
+    </div>
+  )
 }
 
 function ChannelListItem ({ channel }: {

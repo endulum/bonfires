@@ -322,6 +322,20 @@ svg.inline {
   }
 }
 
+.search-row {
+  label {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    align-items: center;
+  }
+  input {
+    flex-grow: 1;
+    border: 1px solid rgb(var(--dark));
+    background-color: rgb(var(--darker));
+  }
+}
+
 .channel-details {
   flex-grow: 1;
   max-width: calc(100% - 3.5rem);
