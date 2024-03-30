@@ -17,6 +17,6 @@ export default function App (): JSX.Element {
   if (loading) return <p>loading...</p>
   if (initError !== null) return <p>{initError}</p>
   return userData !== null
-    ? <IndexRouter userData={userData} />
-    : <AuthRouter />
+    ? <IndexRouter logOut={logOut} userData={userData} />
+    : <AuthRouter logIn={logIn} />
 }

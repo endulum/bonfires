@@ -23,6 +23,6 @@
         "react/jsx-filename-extension": "off",
         "react/jsx-no-bind": "off",
         "react-hooks/exhaustive-deps": "off",
-        "react/require-default-props": "off",
+        "react/require-default-props": "off"
     }
 }
