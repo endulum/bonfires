@@ -1,4 +1,5 @@
-import { Routes, Route, Navigate, Outlet } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
+import AuthWrapper from './AuthWrapper.tsx'
 import Login from './Login.tsx'
 import Signup from './Signup.tsx'
 
@@ -13,18 +14,5 @@ export default function AuthRouter ({ logIn }: {
         <Route path="*" element={<Navigate to="/login" />} />
       </Route>
     </Routes>
-  )
-}
-
-function AuthWrapper (): JSX.Element {
-  return (
-    <main className="auth">
-      <h1>Bonfires</h1>
-      <div className="auth-body">
-        <div className="auth-body-inner">
-          <Outlet />
-        </div>
-      </div>
-    </main>
   )
 }
