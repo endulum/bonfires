@@ -16,13 +16,13 @@
         "react"
     ],
     "rules": {
-        "@typescript-eslint/no-unused-vars": "warn",
+        "@typescript-eslint/no-unused-vars": "off",
         "import/no-absolute-path": "off",
         "import/no-unresolved": "off",
         "react/react-in-jsx-scope": "off",
         "react/jsx-filename-extension": "off",
         "react/jsx-no-bind": "off",
         "react-hooks/exhaustive-deps": "off",
-        "react/require-default-props": "off"
+        "react/require-default-props": "off",
     }
 }

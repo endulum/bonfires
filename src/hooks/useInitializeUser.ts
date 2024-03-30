@@ -1,11 +1,7 @@
 import { useEffect, useState } from 'react'
 import fetchData from '../helpers/fetchData.ts'
 import { getStoredToken } from '../helpers/tokenUtils.ts'
-
-interface IUserData {
-  username: string
-  id: string
-}
+import { type IUserData } from '../types.ts'
 
 export default function useInitializeUser (): {
   loading: boolean

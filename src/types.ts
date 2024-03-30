@@ -4,7 +4,7 @@ export type FormErrors = Array<{
   msg: string
 }>
 
-export interface UserDetail {
+export interface IUserData {
   username: string
   id: string
 }

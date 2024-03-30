@@ -1,6 +1,8 @@
 // import { useEffect } from 'react'
 import useInitializeUser from './hooks/useInitializeUser.ts'
 import { setStoredToken, clearStoredToken } from './helpers/tokenUtils.ts'
+import AuthRouter from './components/AuthRouter.tsx'
+import IndexRouter from './components/IndexRouter.tsx'
 
 export default function App (): JSX.Element {
   const { loading, initError, userData, initUser } = useInitializeUser()
@@ -12,28 +14,9 @@ export default function App (): JSX.Element {
   function logIn (t: string): void { setStoredToken(t); void initUser() }
   function logOut (): void { clearStoredToken(); void initUser() }
 
-  // useEffect(() => {
-  //   console.log({ loading, initError, userData })
-  // })
-
   if (loading) return <p>loading...</p>
   if (initError !== null) return <p>{initError}</p>
-  return (
-    <p>
-      {userData !== null ? 'You are in.' : 'You are NOT in.'}
-
-      <button
-        type="button"
-        onClick={() => { logIn('blah') }}
-      >
-        invalid token
-      </button>
-      <button
-        type="button"
-        onClick={logOut}
-      >
-        empty token
-      </button>
-    </p>
-  )
+  return userData !== null
+    ? <IndexRouter userData={userData} />
+    : <AuthRouter />
 }
