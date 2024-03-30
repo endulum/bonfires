@@ -1,6 +1,8 @@
 import { Routes, Route, Navigate, Outlet, useOutletContext } from 'react-router-dom'
 import { type IUserData } from '../types.ts'
 
+import LogoutSvg from '../assets/icons/right-from-bracket-solid.svg?react'
+
 export default function IndexRouter ({ userData, logOut }: {
   userData: IUserData
   logOut: () => void
@@ -22,9 +24,12 @@ function IndexWrapper ({ userData, logOut }: {
   logOut: () => void
 }): JSX.Element {
   return (
-    <div style={{ border: '1px solid blue' }}>
+    <div>
       <Outlet context={userData} />
-      <button type="button" onClick={logOut}>Log Out</button>
+      <button type="button" className="button" onClick={logOut}>
+        <LogoutSvg className="button-svg" />
+        <span>Log Out</span>
+      </button>
     </div>
   )
 }

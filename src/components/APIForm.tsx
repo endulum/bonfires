@@ -1,3 +1,4 @@
+import InfoParagraph from './InfoParagraph.tsx'
 import useAPIFormData from '../hooks/useAPIFormData.ts'
 import isNotFalse from '../helpers/isNotFalse.ts'
 
@@ -11,11 +12,11 @@ export default function APIForm ({ endpoint, onSuccess, children }: {
   } = useAPIFormData(endpoint, onSuccess)
 
   return (
-    <form onSubmit={(event) => { void handleSubmit(event) }}>
+    <form onSubmit={(event) => { void handleSubmit(event) }} className="form">
       {formError !== null && (
-      <p className="form-error-message">
+      <InfoParagraph type="error">
         {formError}
-      </p>
+      </InfoParagraph>
       )}
       {children
         .filter(isNotFalse)
@@ -33,7 +34,7 @@ export default function APIForm ({ endpoint, onSuccess, children }: {
           }
           if (child.type === 'button' && child.props.type === 'submit') {
             return (
-              <button type="submit" key="submit" disabled={loading}>
+              <button type="submit" key="submit" disabled={loading} className={child.props.className}>
                 {loading ? 'Processing...' : child.props.children}
               </button>
             )
@@ -51,12 +52,12 @@ function APIFormLabel ({ htmlFor, inputError, children }: {
 }): JSX.Element {
   return (
     <label
-      className={`form-input-label${inputError !== null ? ' input-error' : ''}`}
+      className={`form-label${inputError !== null ? ' invalid' : ''}`}
       htmlFor={htmlFor}
     >
       {children}
       {inputError !== null && (
-      <small className="form-input-error">
+      <small className="label-error">
         {inputError}
       </small>
       )}

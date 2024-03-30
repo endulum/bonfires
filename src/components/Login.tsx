@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom'
+import { useLocation, Link } from 'react-router-dom'
 import APIForm from './APIForm.tsx'
 
 export default function Login ({ logIn }: {
@@ -13,14 +13,19 @@ export default function Login ({ logIn }: {
       }}
     >
       <label htmlFor="username">
-        <span>Username</span>
-        <input type="text" id="username" defaultValue={state?.username} />
+        <span className="label-span">Username</span>
+        <input type="text" id="username" defaultValue={state?.username} className="label-text-input" />
       </label>
       <label htmlFor="password">
-        <span>Password</span>
-        <input type="password" id="password" />
+        <span className="label-span">Password</span>
+        <input type="password" id="password" className="label-text-input" />
       </label>
-      <button type="submit">Log In</button>
+      <button type="submit" className="auth-submit">Log In</button>
+      <p>
+        Don&apos;t have an account?
+        {' '}
+        <Link to="/signup" className="text-link"><b>Sign up</b></Link>
+      </p>
     </APIForm>
   )
 }

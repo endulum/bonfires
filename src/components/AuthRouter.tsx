@@ -18,8 +18,13 @@ export default function AuthRouter ({ logIn }: {
 
 function AuthWrapper (): JSX.Element {
   return (
-    <div style={{ border: '1px solid red' }}>
-      <Outlet />
-    </div>
+    <main className="auth">
+      <h1>Bonfires</h1>
+      <div className="auth-body">
+        <div className="auth-body-inner">
+          <Outlet />
+        </div>
+      </div>
+    </main>
   )
 }
