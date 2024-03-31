@@ -13,13 +13,14 @@ export default function Login ({ logIn }: {
       }}
     >
       <label htmlFor="username">
-        <span className="label-span">Username</span>
-        <input type="text" id="username" defaultValue={state?.username} className="label-text-input" />
+        <span>Username</span>
+        <input type="text" id="username" defaultValue={state?.username} />
       </label>
       <label htmlFor="password">
-        <span className="label-span">Password</span>
-        <input type="password" id="password" className="label-text-input" />
+        <span>Password</span>
+        <input type="password" id="password" />
       </label>
+
       <button type="submit" className="auth-submit">Log In</button>
       <p>
         Don&apos;t have an account?

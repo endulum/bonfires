@@ -25,17 +25,18 @@ export default function Signup (): JSX.Element {
         }}
       >
         <label htmlFor="username">
-          <span className="label-span">Username</span>
-          <input type="text" id="username" className="label-text-input" />
+          <span>Username</span>
+          <input type="text" id="username" />
         </label>
         <label htmlFor="password">
-          <span className="label-span">Password</span>
-          <input type="password" id="password" className="label-text-input" />
+          <span>Password</span>
+          <input type="password" id="password" />
         </label>
         <label htmlFor="confirmPassword">
-          <span className="label-span">Confirm Password</span>
-          <input type="password" id="confirmPassword" className="label-text-input" />
+          <span>Confirm Password</span>
+          <input type="password" id="confirmPassword" />
         </label>
+
         <button type="submit" className="auth-submit">Sign Up</button>
         <p>
           Already have an account?

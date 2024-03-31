@@ -48,14 +48,37 @@ export default function APIForm ({ endpoint, onSuccess, children }: {
 function APIFormLabel ({ htmlFor, inputError, children }: {
   htmlFor: string
   inputError: string | null
-  children: JSX.Element
+  children: JSX.Element[]
 }): JSX.Element {
   return (
     <label
       className={`form-label${inputError !== null ? ' invalid' : ''}`}
       htmlFor={htmlFor}
     >
-      {children}
+      {children.map((child) => {
+        if (child.type === 'span' && child.props.className === undefined) {
+          return (
+            <span
+              key={child.key}
+              className="label-span"
+            >
+              {child.props.children}
+            </span>
+          )
+        }
+        if (child.type === 'input' && child.props.className === undefined) {
+          return (
+            <input
+              className="label-text-input"
+              key={child.key}
+              type={child.props.type}
+              id={child.props.id}
+              defaultValue={child.props.defaultValue}
+            />
+          )
+        }
+        return child
+      })}
       {inputError !== null && (
       <small className="label-error">
         {inputError}

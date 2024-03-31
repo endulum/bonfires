@@ -32,28 +32,26 @@ export default function IndexWrapper ({ userData, logOut }: {
                 >
                   <h3>Profile Details</h3>
                   <label htmlFor="username">
-                    <span className="label-span">Username</span>
-                    <input type="text" id="username" defaultValue={userData.username} className="label-text-input" />
+                    <span>Username</span>
+                    <input type="text" id="username" defaultValue={userData.username} />
                   </label>
 
                   <h3>Change Password</h3>
                   <label htmlFor="newPassword">
-                    <span className="label-span">New Password</span>
-                    <input type="password" id="newPassword" className="label-text-input" />
+                    <span>New Password</span>
+                    <input type="password" id="newPassword" />
                   </label>
                   <label htmlFor="confirmNewPassword">
-                    <span className="label-span">Confirm New Password</span>
-                    <input type="password" id="confirmNewPassword" className="label-text-input" />
+                    <span>Confirm New Password</span>
+                    <input type="password" id="confirmNewPassword" />
                   </label>
                   <label htmlFor="currentPassword">
-                    <span className="label-span">Current Password</span>
-                    <input type="password" id="currentPassword" className="label-text-input" />
+                    <span>Current Password</span>
+                    <input type="password" id="currentPassword" />
                   </label>
 
                   <button type="submit" className="button">Submit</button>
                 </APIForm>
-
-              // todo: having to add those classes is redundant, manage this in APIForm render
               )
             }, {
               title: 'Log Out',
