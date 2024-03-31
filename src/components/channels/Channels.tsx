@@ -1,6 +1,7 @@
 import useChannels from '../../hooks/useChannels.ts'
 import LoadingWrapper from '../LoadingWrapper.tsx'
 import ChannelsHeader from './ChannelsHeader.tsx'
+import ChannelsList from './ChannelsList.tsx'
 
 export default function ChannelList (): JSX.Element {
   const {
@@ -16,7 +17,9 @@ export default function ChannelList (): JSX.Element {
       />
       )
     : (
-      <ChannelsHeader refreshChannels={() => { void getChannels() }} />
-      // <ChannelsList channels={channels} />
+      <>
+        <ChannelsHeader refreshChannels={() => { void getChannels() }} />
+        <ChannelsList channels={channels} />
+      </>
       )
 }
