@@ -68,6 +68,9 @@ button {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;  
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   &:hover, &.active {
     border: 1px solid rgb(var(--white));
     .button-svg {
@@ -248,4 +251,41 @@ label.form-label {
 input.label-text-input {
   background-color: rgba(var(--darkest), 0.3);
   border-bottom: 1px solid rgb(var(--white));
+}
+
+/* modal */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  padding: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  background-color: rgba(var(--darkest), 0.75);
+}
+
+.modal-content {
+  position: relative;
+  padding: 1rem;
+  background-color: rgb(var(--darker));
+  border: 1px solid rgb(var(--dark));
+  width: calc(100% - 20px);
+  max-width: 400px;
+  margin-bottom: 3rem;
+  h3, p {
+    width: 100%;
+  }
+}
+
+.modal-close {
+  position: absolute;
+  bottom: -3.5rem;
+  left: 0;
+  right: 0;
+  justify-content: center;
+  background-color: rgb(var(--darker));
 }
