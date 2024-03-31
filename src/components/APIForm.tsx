@@ -1,3 +1,4 @@
+import { cloneElement } from 'react'
 import InfoParagraph from './InfoParagraph.tsx'
 import useAPIFormData from '../hooks/useAPIFormData.ts'
 import isNotFalse from '../helpers/isNotFalse.ts'
@@ -34,7 +35,12 @@ export default function APIForm ({ endpoint, onSuccess, children }: {
           }
           if (child.type === 'button' && child.props.type === 'submit') {
             return (
-              <button type="submit" key="submit" disabled={loading} className={child.props.className}>
+              <button
+                type="submit"
+                key="submit"
+                disabled={loading}
+                className={child.props.className}
+              >
                 {loading ? 'Processing...' : child.props.children}
               </button>
             )
@@ -57,25 +63,16 @@ function APIFormLabel ({ htmlFor, inputError, children }: {
     >
       {children.map((child) => {
         if (child.type === 'span' && child.props.className === undefined) {
-          return (
-            <span
-              key={child.key}
-              className="label-span"
-            >
-              {child.props.children}
-            </span>
-          )
+          return cloneElement(child, {
+            className: 'label-span',
+            key: `${htmlFor}-span`
+          })
         }
         if (child.type === 'input' && child.props.className === undefined) {
-          return (
-            <input
-              className="label-text-input"
-              key={child.key}
-              type={child.props.type}
-              id={child.props.id}
-              defaultValue={child.props.defaultValue}
-            />
-          )
+          return cloneElement(child, {
+            className: 'label-text-input',
+            key: `${htmlFor}-input`
+          })
         }
         return child
       })}

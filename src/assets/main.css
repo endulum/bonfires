@@ -355,3 +355,21 @@ input.label-text-input {
   min-width: 1rem;
   fill: rgb(var(--dark));
 }
+
+/* main elements */
+
+.header-bar {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  h2 {
+    flex-grow: 1;
+    border-bottom: 1px solid rgb(var(--dark));
+  }
+}
+
+.header-bar-button {
+  min-height: 3rem;
+  height: 100%;
+  background-color: rgb(var(--darker));
+}

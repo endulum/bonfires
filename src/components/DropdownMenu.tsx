@@ -1,15 +1,11 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, cloneElement } from 'react'
 import useOutsideClick from '../hooks/useOutsideClick.ts'
 import CustomModal from './CustomModal.tsx'
 import isNotFalse from '../helpers/isNotFalse.ts'
+import { type MenuItems } from '../types.ts'
 
 export default function DropdownMenu ({ menuItems, children }: {
-  menuItems: Array<{
-    title: string
-    icon?: JSX.Element
-    element?: JSX.Element
-    function?: () => void
-  } | false>
+  menuItems: MenuItems
   children: JSX.Element | JSX.Element[]
 }): JSX.Element {
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false)
@@ -47,7 +43,9 @@ export default function DropdownMenu ({ menuItems, children }: {
             }}
           >
             <span className="dropdown-menu-button-text">{item.title}</span>
-            {item.icon !== undefined && item.icon}
+            {item.icon !== undefined && cloneElement(item.icon, {
+              className: 'dropdown-menu-svg'
+            })}
           </button>
           ))}
         </div>

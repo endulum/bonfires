@@ -8,3 +8,18 @@ export interface IUserData {
   username: string
   id: string
 }
+
+export type MenuItems = Array<{
+  title: string
+  icon?: JSX.Element
+  element?: JSX.Element
+  function?: () => void
+} | false>
+
+export interface IChannel {
+  id: string
+  title: string
+  adminId: string
+  userCount: number
+  ownDisplayName: string
+}
