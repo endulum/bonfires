@@ -6,27 +6,26 @@ export default function LoadingWrapper ({ loading, loadingMessage, error }: {
   loadingMessage?: string
   error: string | null
 }): JSX.Element | undefined {
-  if (loading) {
-    return (
-      <div className="expand">
+  return (
+    <div className="expand loading-expand">
+      {loading && (
+      <>
         <div className="loading-spinner">
           <FireSvg className="loading-logo-svg" />
         </div>
         <p>
           {loadingMessage ?? 'Loading...'}
         </p>
-      </div>
-    )
-  }
-
-  if (error !== null) {
-    return (
-      <div className="expand">
+      </>
+      )}
+      {error !== null && (
+      <>
         <AlertSvg className="loading-error-svg" />
         <p>
           {error}
         </p>
-      </div>
-    )
-  }
+      </>
+      )}
+    </div>
+  )
 }

@@ -266,6 +266,7 @@ input.label-text-input {
   justify-content: center;
   align-items: start;
   background-color: rgba(var(--darkest), 0.75);
+  transition: opacity 0.5s ease;
 }
 
 .modal-content {
@@ -288,4 +289,17 @@ input.label-text-input {
   right: 0;
   justify-content: center;
   background-color: rgb(var(--darker));
+}
+
+.ReactModal__Overlay {
+  opacity: 0;
+  transition: opacity 250ms ease;
+}
+
+.ReactModal__Overlay--after-open{
+  opacity: 1;
+}
+
+.ReactModal__Overlay--before-close{
+  opacity: 0;
 }

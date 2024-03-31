@@ -22,6 +22,7 @@ export default function CustomModal ({
       overlayClassName="modal-overlay"
       contentLabel={contentLabel}
       isOpen={isOpen}
+      closeTimeoutMS={250}
     >
       {children}
       <button type="button" className="button modal-close" onClick={closeModal}>
