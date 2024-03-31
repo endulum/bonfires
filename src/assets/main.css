@@ -110,6 +110,10 @@ span {
   color: rgb(var(--white));
 }
 
+.text-paragraph + .text-paragraph {
+  margin-top: 0.5rem;
+}
+
 p.info {
   padding: 0.5rem 0.75rem;
   width: 100%;
