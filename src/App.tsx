@@ -1,8 +1,8 @@
 import useInitializeUser from './hooks/useInitializeUser.ts'
 import { setStoredToken, clearStoredToken } from './helpers/tokenUtils.ts'
 import LoadingWrapper from './components/LoadingWrapper.tsx'
-import AuthRouter from './components/AuthRouter.tsx'
-import IndexRouter from './components/IndexRouter.tsx'
+import AuthRouter from './components/auth/AuthRouter.tsx'
+import IndexRouter from './components/index/IndexRouter.tsx'
 
 import './assets/reset.css'
 import './assets/fonts/fonts.css'

@@ -1,5 +1,5 @@
 import { useLocation, Link } from 'react-router-dom'
-import APIForm from './APIForm.tsx'
+import APIForm from '../APIForm.tsx'
 
 export default function Login ({ logIn }: {
   logIn: (t: string) => void

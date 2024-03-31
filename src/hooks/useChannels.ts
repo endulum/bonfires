@@ -18,6 +18,7 @@ export default function useChannels (): {
     if (error !== null) setError(null)
     const token = getStoredToken()
 
+    setLoading(true)
     const { data, statusCode, errorMsg } = await fetchData<IChannel[]>(
       'http://localhost:3000/channels',
       {
@@ -29,8 +30,8 @@ export default function useChannels (): {
           : {}
       }
     )
-
     setLoading(false)
+
     if (statusCode === 200) setChannels(data)
     else setError(errorMsg)
   }

@@ -1,34 +1,10 @@
-import { Outlet, useNavigate, type NavigateFunction } from 'react-router-dom'
-import APIForm from './APIForm.tsx'
-import DropdownMenu from './DropdownMenu.tsx'
-import { type IUserData, type MenuItems } from '../types.ts'
+import { type NavigateFunction } from 'react-router-dom'
+import APIForm from '../APIForm.tsx'
+import { type IUserData, type MenuItems } from '../../types.ts'
+import GearSvg from '../../assets/icons/gear-solid.svg?react'
+import LogoutSvg from '../../assets/icons/right-from-bracket-solid.svg?react'
 
-import UserGearSvg from '../assets/icons/user-gear-solid.svg?react'
-import GearSvg from '../assets/icons/gear-solid.svg?react'
-import LogoutSvg from '../assets/icons/right-from-bracket-solid.svg?react'
-
-export default function IndexWrapper ({ userData, logOut }: {
-  userData: IUserData
-  logOut: () => void
-}): JSX.Element {
-  const navigate = useNavigate()
-  return (
-    <>
-      <header>
-        <h1>Bonfires</h1>
-        <DropdownMenu menuItems={IndexWrapperMenuItems(navigate, userData, logOut)}>
-          <UserGearSvg className="button-svg" />
-          <span>{userData.username}</span>
-        </DropdownMenu>
-      </header>
-      <main>
-        <Outlet context={userData} />
-      </main>
-    </>
-  )
-}
-
-function IndexWrapperMenuItems (
+export default function IndexWrapperMenuItems (
   navigate: NavigateFunction,
   userData: IUserData,
   logOut: () => void
