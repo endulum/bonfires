@@ -28,3 +28,15 @@ export interface IChannelFilter {
   title: string
   mustBeAdmin: boolean
 }
+
+export interface IChannelDetails {
+  id: string
+  title: string
+  currentUser: {
+    id: string
+    username: string
+    displayName: string | null
+  }
+  adminId: string
+  userIds: string[]
+}

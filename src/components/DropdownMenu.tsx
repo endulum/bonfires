@@ -4,8 +4,9 @@ import CustomModal from './CustomModal.tsx'
 import isNotFalse from '../helpers/isNotFalse.ts'
 import { type MenuItems } from '../types.ts'
 
-export default function DropdownMenu ({ menuItems, children }: {
+export default function DropdownMenu ({ menuItems, isInHeaderBar, children }: {
   menuItems: MenuItems
+  isInHeaderBar?: boolean
   children: JSX.Element | JSX.Element[]
 }): JSX.Element {
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false)
@@ -21,7 +22,7 @@ export default function DropdownMenu ({ menuItems, children }: {
         <button
           type="button"
           onClick={toggleDropdown}
-          className={`button dropdown-button${dropdownOpen ? ' active' : ''}`}
+          className={`button dropdown-button${dropdownOpen ? ' active' : ''}${isInHeaderBar === true ? ' header-bar-button' : ''}`}
         >
           {children}
         </button>

@@ -1,10 +1,13 @@
 import { useParams } from 'react-router-dom'
 import LoadingWrapper from '../LoadingWrapper.tsx'
 import useGetData from '../../hooks/useGetData.ts'
+import { type IChannelDetails } from '../../types.ts'
 
-export default function ChannelView (): JSX.Element {
+import ChannelHeader from './ChannelHeader.tsx'
+
+export default function Channel (): JSX.Element {
   const { channelId } = useParams()
-  const { loading, error, data, getData } = useGetData(
+  const { loading, error, data, getData } = useGetData<IChannelDetails>(
     `http://localhost:3000/channel/${channelId}`
   )
 
@@ -16,5 +19,10 @@ export default function ChannelView (): JSX.Element {
         error={error}
       />
       )
-    : <p>yay</p>
+    : (
+      <>
+        <ChannelHeader channel={data} onSuccess={() => { void getData(false) }} />
+        {/* <Messages /> */}
+      </>
+      )
 }
