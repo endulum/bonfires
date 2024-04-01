@@ -8,6 +8,7 @@ import AddUserSvg from '../../assets/icons/user-plus-solid.svg?react'
 import RemoveUserSvg from '../../assets/icons/user-xmark-solid.svg?react'
 import PromoteUserSvg from '../../assets/icons/user-shield-solid.svg?react'
 import LeaveSvg from '../../assets/icons/right-from-bracket-solid.svg?react'
+import InfoParagraph from '../InfoParagraph.tsx'
 
 export default function ChannelHeaderMenuItems (
   channel: IChannelDetails,
@@ -47,13 +48,13 @@ export default function ChannelHeaderMenuItems (
           onSuccess={onSuccess}
         >
           <h3>Change Display Name</h3>
-          <p className="info neutral">
+          <InfoParagraph type="neutral">
             Your display name is your custom name for this channel
             {' '}
             that will be shown in place of your username. Submit blank
             {' '}
             to use your username.
-          </p>
+          </InfoParagraph>
           <label htmlFor="displayName">
             <span>Display Name</span>
             <input type="text" id="displayName" defaultValue={channel.currentUser.displayName ?? ''} />
@@ -92,11 +93,11 @@ export default function ChannelHeaderMenuItems (
           onSuccess={onSuccess}
         >
           <h3>Kick a User</h3>
-          <p className="info neutral">
+          <InfoParagraph type="warning">
             The user will be removed from the channel.
             {' '}
             They cannot re-enter this channel unless invited back in.
-          </p>
+          </InfoParagraph>
           <label htmlFor="username">
             <span>Username</span>
             <input type="text" id="username" />
@@ -116,11 +117,11 @@ export default function ChannelHeaderMenuItems (
           onSuccess={onSuccess}
         >
           <h3>Promote a User</h3>
-          <p className="info neutral">
+          <InfoParagraph type="neutral">
             This will remove your admin privileges and
             {' '}
             bestow them to another member of this channel.
-          </p>
+          </InfoParagraph>
           <label htmlFor="username">
             <span>Username</span>
             <input type="text" id="username" />
@@ -142,22 +143,22 @@ export default function ChannelHeaderMenuItems (
           <h3>Leave Channel</h3>
           {channel.userIds.length === 1
             ? (
-              <p className="info warning">
+              <InfoParagraph type="warning">
                 You are currently the only user left.
                 {' '}
                 If you leave and no other members remain,
                 {' '}
                 this channel and all its messages will be permanently deleted.
-              </p>
+              </InfoParagraph>
               )
             : (
-              <p className="info neutral">
+              <InfoParagraph type="neutral">
                 You will be removed from this channel,
                 {' '}
                 and will not be able to re-enter until
                 {' '}
                 you are invited back in.
-              </p>
+              </InfoParagraph>
               )}
           <button type="submit" className="button">Leave</button>
         </APIForm>
