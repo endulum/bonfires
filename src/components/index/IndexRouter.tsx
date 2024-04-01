@@ -3,6 +3,7 @@ import IndexWrapper from './IndexWrapper.tsx'
 import { type IUserData } from '../../types.ts'
 
 import Channels from '../channels/Channels.tsx'
+import ChannelView from '../channel/ChannelView.tsx'
 
 export default function IndexRouter ({ userData, logOut }: {
   userData: IUserData
@@ -12,6 +13,7 @@ export default function IndexRouter ({ userData, logOut }: {
     <Routes>
       <Route element={<IndexWrapper userData={userData} logOut={logOut} />}>
         <Route path="/" element={<Channels />} />
+        <Route path="/channel/:channelId" element={<ChannelView />} />
         <Route path="/login" element={<Navigate to="/" />} />
         <Route path="/signup" element={<Navigate to="/" />} />
         <Route path="*" element={<p>Nothing found at this URL.</p>} />

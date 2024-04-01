@@ -23,7 +23,7 @@ export default function useInitializeUser (): {
       return
     } setLoading(true)
 
-    const { data, statusCode, errorMsg } = await fetchData<IUserData>(
+    const { fetchedData, statusCode, errorMsg } = await fetchData<IUserData>(
       'http://localhost:3000/login',
       {
         method: 'GET',
@@ -36,7 +36,7 @@ export default function useInitializeUser (): {
     )
 
     if (errorMsg !== null && ![401, 403].includes(statusCode)) setInitError(errorMsg)
-    else setUserData(data)
+    else setUserData(fetchedData)
     setLoading(false)
   }
 
