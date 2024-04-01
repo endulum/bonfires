@@ -23,3 +23,8 @@ export interface IChannel {
   userCount: number
   ownDisplayName: string
 }
+
+export interface IChannelFilter {
+  title: string
+  mustBeAdmin: boolean
+}

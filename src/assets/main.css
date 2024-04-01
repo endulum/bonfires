@@ -1,4 +1,6 @@
-body, html, #root {
+body,
+html,
+#root {
   border: none;
   width: 100%;
   height: 100%;
@@ -17,7 +19,8 @@ body {
   justify-content: center;
 }
 
-header, main {
+header,
+main {
   width: 100%;
   padding: 1rem;
 }
@@ -40,10 +43,16 @@ main {
   height: 0;
 }
 
-button, input, textarea {
+button,
+input,
+textarea {
   appearance: none;
   border: none;
   background-color: transparent;
+  min-width: 0px;
+  &::placeholder {
+    color: rgba(var(--white), 0.5)
+  }
 }
 
 button {
@@ -56,6 +65,7 @@ button {
   padding: 0.5rem 1rem;
   font-size: 1rem;
   cursor: pointer;
+
   &:disabled {
     pointer-events: none;
     opacity: 0.5;
@@ -67,12 +77,15 @@ button {
   color: rgb(var(--white));
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;  
+  text-overflow: ellipsis;
   display: flex;
   flex-direction: row;
   align-items: center;
-  &:hover, &.active {
+
+  &:hover,
+  &.active {
     border: 1px solid rgb(var(--white));
+
     .button-svg {
       fill: rgb(var(--white));
     }
@@ -93,7 +106,8 @@ button {
   fill: rgb(var(--white));
 }
 
-input, textarea {
+input,
+textarea {
   color: rgb(var(--white));
   padding: 0.5rem;
 }
@@ -114,22 +128,26 @@ a {
   color: rgb(var(--white));
 }
 
-.text-paragraph + .text-paragraph {
+.text-paragraph+.text-paragraph {
   margin-top: 0.5rem;
 }
 
 p.info {
   padding: 0.5rem 0.75rem;
   width: 100%;
+
   &.error {
     background-color: rgba(var(--red), 0.3);
   }
+
   &.neutral {
     background-color: rgba(var(--purple), 0.3);
   }
+
   &.success {
     background-color: rgba(var(--blue), 0.3);
   }
+
   &.warning {
     background-color: rgba(var(--yellow), 0.3);
   }
@@ -166,17 +184,19 @@ p.info {
 
 @keyframes spin {
   0% {
-      transform: rotate(0deg);
+    transform: rotate(0deg);
   }
+
   100% {
-      transform: rotate(360deg);
+    transform: rotate(360deg);
   }
-} 
+}
 
 @keyframes no-spin {
   0% {
     transform: rotate(360deg);
   }
+
   100% {
     transform: rotate(0deg);
   }
@@ -203,17 +223,18 @@ p.info {
   position: relative;
   width: 100%;
   padding: 5px;
-  &::before, &::after {
+
+  &::before,
+  &::after {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(
-      to top left, rgb(var(--yellow)), rgb(var(--pale)), rgb(var(--blue))
-    );
+    background: linear-gradient(to top left, rgb(var(--yellow)), rgb(var(--pale)), rgb(var(--blue)));
   }
+
   &::after {
     filter: blur(30px);
     opacity: 0.5;
@@ -235,6 +256,7 @@ p.info {
   color: rgb(var(--white));
   background-color: rgba(var(--darkest), 0.25);
   border: 1px solid rgb(var(--white));
+
   &:hover {
     box-shadow: 0px 0px 10px rgb(var(--yellow));
   }
@@ -255,6 +277,7 @@ label.form-label {
   flex-direction: column;
   width: 100%;
   gap: 0.25rem;
+
   &.invalid input {
     border-bottom: 1px solid rgb(var(--red));
   }
@@ -289,7 +312,9 @@ input.label-text-input {
   width: calc(100% - 20px);
   max-width: 400px;
   margin-bottom: 3rem;
-  h3, p {
+
+  h3,
+  p {
     width: 100%;
   }
 }
@@ -308,11 +333,11 @@ input.label-text-input {
   transition: opacity 250ms ease;
 }
 
-.ReactModal__Overlay--after-open{
+.ReactModal__Overlay--after-open {
   opacity: 1;
 }
 
-.ReactModal__Overlay--before-close{
+.ReactModal__Overlay--before-close {
   opacity: 0;
 }
 
@@ -350,8 +375,10 @@ input.label-text-input {
   display: flex;
   gap: 1rem;
   justify-content: space-between;
+
   &:hover {
     background-color: rgb(var(--dark));
+
     .dropdown-menu-svg {
       fill: rgb(var(--white))
     }
@@ -370,6 +397,7 @@ input.label-text-input {
   display: flex;
   flex-direction: row;
   gap: 1rem;
+
   h2 {
     flex-grow: 1;
     border-bottom: 1px solid rgb(var(--dark));
@@ -384,11 +412,15 @@ input.label-text-input {
 
 /* channel list */
 
+.channels-wrapper {
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
 .channels {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 15px;
-  overflow-y: auto;
 }
 
 .channel {
@@ -400,18 +432,76 @@ input.label-text-input {
   align-items: center;
   border: 1px solid rgb(var(--dark));
   background-color: rgb(var(--darker));
-  svg {
-    fill: rgb(var(--white));
-  }
+
   .fire {
     fill: rgb(var(--dark));
     width: 2.5rem;
     min-width: 2.5rem;
   }
+
   &:hover {
     border-color: rgb(var(--white));
+
     .fire {
       fill: rgb(var(--white))
+    }
+  }
+}
+
+.channels-search {
+  background-color: rgb(var(--darker));
+  border: 1px solid rgb(var(--dark));
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+}
+
+.channels-search-title {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  align-items: center;
+
+  input {
+    width: 100%;
+  }
+}
+
+.channels-search-admin {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+input[type="checkbox"] {
+  border: 1px solid rgb(var(--dark));
+  cursor: pointer;
+  width: 1rem;
+  height: 1rem;
+
+  &:hover {
+    border: 1px solid rgb(var(--white));
+  }
+
+  &:checked {
+    position: relative;
+
+    &:before {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 1px;
+      left: 5px;
+      width: 6px;
+      height: 12px;
+      border: solid rgb(var(--white));
+      border-width: 0 2px 2px 0;
+      -webkit-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+      transform: rotate(45deg);
     }
   }
 }
