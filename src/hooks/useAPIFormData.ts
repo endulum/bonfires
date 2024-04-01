@@ -30,7 +30,7 @@ export default function useAPIFormData (
     setLoading(true)
     setFormError(null)
     setInputErrors({})
-    const { data, statusCode, errorMsg } = await fetchData<FormErrors | unknown>(
+    const { fetchedData, statusCode, errorMsg } = await fetchData<FormErrors | unknown>(
       endpoint.url,
       {
         method: endpoint.method,
@@ -45,13 +45,13 @@ export default function useAPIFormData (
     if (errorMsg !== null) setFormError(errorMsg)
     if (statusCode === 422) {
       const inpErrs: Record<string, string> = {};
-      (data as FormErrors).forEach((error) => {
+      (fetchedData as FormErrors).forEach((error) => {
         inpErrs[error.path] = error.msg
       })
       setInputErrors(inpErrs)
     }
 
-    if (statusCode === 200) onSuccess(formData, data)
+    if (statusCode === 200) onSuccess(formData, fetchedData)
   }
 
   return { handleSubmit, loading, formError, inputErrors }
