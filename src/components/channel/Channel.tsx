@@ -4,6 +4,7 @@ import useGetData from '../../hooks/useGetData.ts'
 import { type IChannelDetails } from '../../types.ts'
 
 import ChannelHeader from './ChannelHeader.tsx'
+import Messages from '../messages/Messages.tsx'
 
 export default function Channel (): JSX.Element {
   const { channelId } = useParams()
@@ -22,7 +23,7 @@ export default function Channel (): JSX.Element {
     : (
       <>
         <ChannelHeader channel={data} onSuccess={() => { void getData(false) }} />
-        {/* <Messages /> */}
+        <Messages channelId={data.id} />
       </>
       )
 }

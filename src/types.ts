@@ -40,3 +40,16 @@ export interface IChannelDetails {
   adminId: string
   userIds: string[]
 }
+
+export interface IMessage {
+  id: string
+  content: string
+  user: {
+    username: string
+    id: string
+    displayName: string | null
+    isAdmin: boolean
+    isInChannel: boolean
+  }
+  timestamp: string
+}

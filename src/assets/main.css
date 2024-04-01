@@ -505,3 +505,100 @@ input[type="checkbox"] {
     }
   }
 }
+
+/* messages */
+
+.messages {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  overflow-y: auto;
+  height: 0px;
+  padding: 1rem;
+  border: 1px solid rgb(var(--dark));
+  background-color: rgb(var(--darker));
+  & .message:nth-last-child(2) {
+    flex-grow: 1;
+  }
+}
+
+.message {
+  margin-left: 1rem;
+  text-indent: -1rem;
+  .react-tooltip {
+    text-indent: 0;
+  }
+}
+
+.message-header {
+  display: inline;
+}
+
+.message-content {
+  overflow: hidden;
+  display: inline;
+  p {
+    display: inline;
+  }
+  a {
+    color: rgb(var(--purple));
+    font-weight: normal;
+  }
+  ul {
+    list-style-type: square;
+  }
+  ul, ol {
+    margin-left: 1rem;
+    list-style-position: outside;
+    li {
+      white-space: break-spaces;
+      padding-left: 1rem;
+      &::marker {
+        color: rgb(var(--purple))
+      }
+    }
+  }
+  img {
+    max-width: min(500px, 100%);
+  }
+}
+
+.message-timestamp {
+  display: inline-block;
+  text-indent: 0;
+  margin-top: 0.125rem;
+  margin-right: 0.5rem;
+  min-width: max-content;
+  font-size: 0.75rem;
+  opacity: 0.75;
+}
+
+.message-user {
+  font-weight: bold;
+  margin-right: 0.5rem;
+  color: rgb(var(--purple));
+  svg {
+    margin-left: 0.5rem;
+    margin-right: 0rem;
+    fill: rgb(var(--purple));
+  }
+  &.admin {
+    color: rgb(var(--yellow));
+    svg { fill: rgb(var(--yellow)) }
+  }
+  &.not-in-channel {
+    color: rgb(var(--white));
+    svg { fill: rgb(var(--white)) }
+  }
+}
+
+/* tooltips */
+
+.react-tooltip {
+  background-color: rgb(var(--white))!important;
+  color: rgb(var(--darker))!important;
+  font-weight: normal;
+  transition: opacity 0.25s ease-in-out!important;
+  box-shadow: 0 0 10px rgba(var(--darkest), 0.75);
+}
