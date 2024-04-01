@@ -593,6 +593,33 @@ input[type="checkbox"] {
   }
 }
 
+.compose {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.compose-row {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  align-items: end;
+  height: calc(2.5rem + 2px);
+  textarea {
+    height: 100%;
+    flex-grow: 1;
+    border: 1px solid rgb(var(--dark));
+    background-color: rgb(var(--darker));
+    color: rgb(var(--white));
+    &::placeholder {
+      color: rgb(var(--dark))
+    } 
+  }
+  button {
+    background-color: rgb(var(--darker));
+  }
+}
+
 /* tooltips */
 
 .react-tooltip {

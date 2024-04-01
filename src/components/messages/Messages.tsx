@@ -1,12 +1,13 @@
 import useGetData from '../../hooks/useGetData.ts'
 import LoadingWrapper from '../LoadingWrapper.tsx'
 import MessagesList from './MessagesList.tsx'
+import MessageCompose from './MessageComponse.tsx'
 import { type IMessage } from '../../types.ts'
 
 export default function Messages ({ channelId }: {
   channelId: string
 }): JSX.Element {
-  const { loading, error, data, getData } = useGetData<IMessage[]>(
+  const { loading, error, data } = useGetData<IMessage[]>(
     `http://localhost:3000/channel/${channelId}/messages`
   )
 
@@ -21,7 +22,7 @@ export default function Messages ({ channelId }: {
     : (
       <>
         <MessagesList messageData={data} />
-        {/* <MessagesCompose channelId={channelId} /> */}
+        <MessageCompose channelId={channelId} />
       </>
       )
 }
