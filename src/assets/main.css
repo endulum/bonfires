@@ -104,6 +104,7 @@ button {
 
 .inline-svg {
   height: 1rem;
+  min-width: 1rem;
   display: inline-block;
   vertical-align: text-top;
   margin-right: 0.5rem;
@@ -121,15 +122,17 @@ small {
 }
 
 span {
-  min-width: max-content;
+  max-width: max-content;
 }
 
 a {
   color: rgb(var(--white));
+  text-decoration: none;
 }
 
 .text-link {
   color: rgb(var(--white));
+  text-decoration: underline;
 }
 
 .text-paragraph+.text-paragraph {
@@ -158,11 +161,12 @@ p.info {
 }
 
 .expand {
+  height: 100%;
   flex-grow: 1;
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  align-items: center;
+  align-items: center;  width: 100%;
   justify-content: center;
 }
 
@@ -322,6 +326,7 @@ input.label-text-input {
   width: calc(100% - 20px);
   max-width: 400px;
   margin-bottom: 3rem;
+  box-shadow: rgba(0, 0, 0, 0.5) 0px 5px 15px;
 }
 
 .modal-close {
@@ -331,6 +336,7 @@ input.label-text-input {
   right: 0;
   justify-content: center;
   background-color: rgb(var(--darker));
+  box-shadow: rgba(0, 0, 0, 0.5) 0px 5px 15px;
 }
 
 .ReactModal__Overlay {
@@ -420,9 +426,12 @@ input.label-text-input {
 .channels-wrapper {
   flex-grow: 1;
   overflow-y: auto;
+  display: flex;
+  align-items: start;
 }
 
 .channels {
+  width: 100%;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 15px;
@@ -451,6 +460,29 @@ input.label-text-input {
       fill: rgb(var(--white))
     }
   }
+}
+
+.channel-details {
+  flex-grow: 1;
+  max-width: calc(100% - 3.5rem);
+}
+
+.channel-status {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.channel-displayname, .channel-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;  
+}
+
+b.channel-status-spacer {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  opacity: 0.5;
 }
 
 .channels-search {
@@ -547,6 +579,7 @@ input[type="checkbox"] {
 
 .md-link {
   color: rgb(var(--purple));
+  text-decoration: underline;
 }
 
 .md-ul, .md-ol {
@@ -640,4 +673,67 @@ textarea.compose-textarea {
   font-weight: normal;
   transition: opacity 0.25s ease-in-out!important;
   box-shadow: 0 0 10px rgba(var(--darkest), 0.75);
+}
+
+/* the logo */
+
+.logo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+  &:hover .logo-svg {
+    fill: rgb(var(--yellow))
+  }
+}
+
+.logo-svg {
+  width: 3rem;
+  fill: rgb(var(--dark));
+  transition: fill 0.5s ease;
+}
+
+.logo-header {
+  font-size: 3rem;
+}
+
+header {
+  .logo {
+    gap: 0.5rem;
+  }
+  .logo-svg {
+    width: 2.5rem;
+  }
+  .logo-header {
+    font-size: 2rem;
+  }
+}
+
+/* media queries */
+
+@media screen and (max-width: 500px) {
+  .messages {
+    gap: 0.75rem;
+  }
+
+  .message {
+    text-indent: 0;
+    margin-left: 0;
+  }
+
+  .message-content {
+    display: block;
+  }
+
+  .md-ol, .md-ul {
+    margin-left: 0rem;
+    .md-li {
+      margin-left: 1rem;
+      padding-left: 0;
+    }
+  }
+
+  header .button span, .header-bar-button span {
+    display: none;
+  }
 }

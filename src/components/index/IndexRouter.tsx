@@ -12,10 +12,11 @@ export default function IndexRouter ({ userData, logOut }: {
   return (
     <Routes>
       <Route element={<IndexWrapper userData={userData} logOut={logOut} />}>
-        <Route path="/" element={<Channels />} />
+        <Route path="/channels" element={<Channels />} />
         <Route path="/channel/:channelId" element={<Channel />} />
-        <Route path="/login" element={<Navigate to="/" />} />
-        <Route path="/signup" element={<Navigate to="/" />} />
+        <Route path="/login" element={<Navigate to="/channels" />} />
+        <Route path="/signup" element={<Navigate to="/channels" />} />
+        <Route path="/" element={<Navigate to="/channels" />} />
         <Route path="*" element={<p>Nothing found at this URL.</p>} />
       </Route>
     </Routes>

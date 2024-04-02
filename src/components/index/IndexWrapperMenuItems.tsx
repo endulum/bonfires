@@ -60,11 +60,11 @@ export default function IndexWrapperMenuItems (
           <p className="text-paragraph">
             A
             {' '}
-            <b>camp</b>
+            <b>camp,</b>
             {' '}
-            is a space where users send messages.
+            or channel, is a space where users send messages.
             {' '}
-            These messages can be seen by all members of the camp.
+            These messages can be seen by all members of the camp, but nobody else outside of it.
           </p>
           <p className="text-paragraph">
             Each camp has a
@@ -74,7 +74,7 @@ export default function IndexWrapperMenuItems (
             {' '}
             Whoever started the camp is automatically its firestarter.
             {' '}
-            The firestarter is free to pass their role to another user, to promote them.
+            The firestarter can pass their role to another user, to promote them to admin.
           </p>
         </>
       )

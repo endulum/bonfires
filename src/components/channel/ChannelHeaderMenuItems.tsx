@@ -18,7 +18,7 @@ export default function ChannelHeaderMenuItems (
   const navigate = useNavigate()
   return [
     channel.adminId === id && {
-      title: 'Edit Channel',
+      title: 'Edit Camp Details',
       icon: (<EditSvg />),
       element: (
         <APIForm
@@ -28,7 +28,7 @@ export default function ChannelHeaderMenuItems (
           }}
           onSuccess={onSuccess}
         >
-          <h3>Edit Channel Details</h3>
+          <h3>Camp Details</h3>
           <label htmlFor="title">
             <span>Channel Title</span>
             <input type="text" id="title" defaultValue={channel.title} />
@@ -49,7 +49,7 @@ export default function ChannelHeaderMenuItems (
         >
           <h3>Change Display Name</h3>
           <InfoParagraph type="neutral">
-            Your display name is your custom name for this channel
+            Your display name is your custom name for this camp
             {' '}
             that will be shown in place of your username. Submit blank
             {' '}
@@ -94,9 +94,9 @@ export default function ChannelHeaderMenuItems (
         >
           <h3>Kick a User</h3>
           <InfoParagraph type="warning">
-            The user will be removed from the channel.
+            The user will be removed from the camp.
             {' '}
-            They cannot re-enter this channel unless invited back in.
+            They cannot re-enter this camp unless invited back in.
           </InfoParagraph>
           <label htmlFor="username">
             <span>Username</span>
@@ -120,7 +120,9 @@ export default function ChannelHeaderMenuItems (
           <InfoParagraph type="neutral">
             This will remove your admin privileges and
             {' '}
-            bestow them to another member of this channel.
+            bestow them to another member of this camp.
+            {' '}
+            They will become this camp&apos;s firestarter.
           </InfoParagraph>
           <label htmlFor="username">
             <span>Username</span>
@@ -130,7 +132,7 @@ export default function ChannelHeaderMenuItems (
         </APIForm>
       )
     }, {
-      title: 'Leave this Channel',
+      title: 'Leave this Camp',
       icon: (<LeaveSvg />),
       element: (
         <APIForm
@@ -140,7 +142,7 @@ export default function ChannelHeaderMenuItems (
           }}
           onSuccess={() => { navigate('/') }}
         >
-          <h3>Leave Channel</h3>
+          <h3>Leave Camp</h3>
           {channel.userIds.length === 1
             ? (
               <InfoParagraph type="warning">
@@ -148,12 +150,12 @@ export default function ChannelHeaderMenuItems (
                 {' '}
                 If you leave and no other members remain,
                 {' '}
-                this channel and all its messages will be permanently deleted.
+                this camp and all its messages will be permanently deleted.
               </InfoParagraph>
               )
             : (
               <InfoParagraph type="neutral">
-                You will be removed from this channel,
+                You will be removed from this camp,
                 {' '}
                 and will not be able to re-enter until
                 {' '}
