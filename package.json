@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@types/hast": "^3.0.4",
+    "autosize": "^6.0.1",
     "luxon": "^3.4.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -24,6 +25,7 @@
     "vite-plugin-svgr": "^4.2.0"
   },
   "devDependencies": {
+    "@types/autosize": "^4.0.3",
     "@types/luxon": "^3.4.2",
     "@types/react": "^18.2.70",
     "@types/react-dom": "^18.2.19",

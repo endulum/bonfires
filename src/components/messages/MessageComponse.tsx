@@ -1,4 +1,5 @@
-import { useState, type FormEvent, useRef } from 'react'
+import { useState, type FormEvent, useRef, type KeyboardEvent, type ChangeEvent } from 'react'
+import autosize from 'autosize'
 import InfoParagraph from '../InfoParagraph.tsx'
 import useSendMessage from '../../hooks/useSendMessage.ts'
 
@@ -9,15 +10,34 @@ export default function MessageCompose ({ channelId }: {
 }): JSX.Element {
   const textarea = useRef<null | HTMLTextAreaElement>(null)
   const [content, setContent] = useState<string>('')
-  const { loading, errorSendingMessage, sendMessage } = useSendMessage(channelId, content)
+  const { loading, errorSendingMessage, sendMessage } = useSendMessage(channelId)
 
-  function handleChange (event: InputEvent): void {}
-
-  function handleSubmit (event: FormEvent<HTMLFormElement>): void {
-    event.preventDefault()
+  function handleChange (_event: ChangeEvent): void {
+    if (textarea.current !== null) {
+      setContent(textarea.current.value)
+      autosize(textarea.current)
+    }
   }
 
-  function handleKeyDown (event: KeyboardEvent): void {}
+  function handleSubmit (event?: FormEvent<HTMLFormElement>): void {
+    if (event !== undefined) {
+      event.preventDefault()
+      event.currentTarget.reset()
+    }
+    if (textarea.current !== null) {
+      textarea.current.value = ''
+      textarea.current.style.height = '3rem'
+    }
+    setContent('')
+    void sendMessage(content)
+  }
+
+  function handleKeyDown (event: KeyboardEvent): void {
+    if (!event.shiftKey && event.code === 'Enter') {
+      event.preventDefault()
+      handleSubmit()
+    }
+  }
 
   return (
     <div className="compose">

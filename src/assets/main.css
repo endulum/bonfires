@@ -607,18 +607,21 @@ input[type="checkbox"] {
   flex-direction: row;
   gap: 1rem;
   align-items: end;
-  height: calc(2.5rem + 2px);
 }
 
-.compose-textarea {
+textarea.compose-textarea {
   height: 100%;
   flex-grow: 1;
   border: 1px solid rgb(var(--dark));
   background-color: rgb(var(--darker));
   color: rgb(var(--white));
+  height: 3rem;
+  max-height: 6rem;
+  overflow-x: hidden!important;
 }
 
 .compose-send {
+  height: 3rem;
   background-color: rgb(var(--darker));
 }
 
