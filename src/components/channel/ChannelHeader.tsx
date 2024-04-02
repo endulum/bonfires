@@ -10,7 +10,7 @@ export default function ChannelHeader ({ channel, onSuccess }: {
 }): JSX.Element {
   return (
     <div className="header-bar">
-      <h2>{channel.title}</h2>
+      <h2 className="header-bar-text">{channel.title}</h2>
       <DropdownMenu menuItems={ChannelHeaderMenuItems(channel, onSuccess)} isInHeaderBar>
         <GearSvg className="button-svg" />
         <span>Settings</span>

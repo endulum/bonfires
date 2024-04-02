@@ -31,6 +31,7 @@ header {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  gap: 1rem;
   background-color: rgb(var(--darker));
   border-bottom: 1px solid rgb(var(--dark));
 }
@@ -55,6 +56,12 @@ textarea {
   }
 }
 
+input, textarea {
+  &::placeholder {
+    color: rgb(var(--dark))
+  } 
+}
+
 button {
   appearance: none;
   border: none;
@@ -75,9 +82,6 @@ button {
 .button {
   border: 1px solid rgb(var(--dark));
   color: rgb(var(--white));
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -160,6 +164,12 @@ p.info {
   gap: 1rem;
   align-items: center;
   justify-content: center;
+}
+
+button, h2, h3, span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* spinner */
@@ -312,11 +322,6 @@ input.label-text-input {
   width: calc(100% - 20px);
   max-width: 400px;
   margin-bottom: 3rem;
-
-  h3,
-  p {
-    width: 100%;
-  }
 }
 
 .modal-close {
@@ -397,11 +402,11 @@ input.label-text-input {
   display: flex;
   flex-direction: row;
   gap: 1rem;
+}
 
-  h2 {
-    flex-grow: 1;
-    border-bottom: 1px solid rgb(var(--dark));
-  }
+.header-bar-text {
+  flex-grow: 1;
+  border-bottom: 1px solid rgb(var(--dark));
 }
 
 .header-bar-button {
@@ -463,10 +468,6 @@ input.label-text-input {
   flex-direction: row;
   gap: 1rem;
   align-items: center;
-
-  input {
-    width: 100%;
-  }
 }
 
 .channels-search-admin {
@@ -538,30 +539,31 @@ input[type="checkbox"] {
 .message-content {
   overflow: hidden;
   display: inline;
-  p {
-    display: inline;
+}
+
+.md-paragraph:only-child {
+  display: inline
+}
+
+.md-link {
+  color: rgb(var(--purple));
+}
+
+.md-ul, .md-ol {
+  margin-left: 1rem;
+  list-style-position: outside;
+}
+
+.md-li {
+  white-space: break-spaces;
+  padding-left: 1rem;
+  &::marker {
+    color: rgb(var(--purple))
   }
-  a {
-    color: rgb(var(--purple));
-    font-weight: normal;
-  }
-  ul {
-    list-style-type: square;
-  }
-  ul, ol {
-    margin-left: 1rem;
-    list-style-position: outside;
-    li {
-      white-space: break-spaces;
-      padding-left: 1rem;
-      &::marker {
-        color: rgb(var(--purple))
-      }
-    }
-  }
-  img {
-    max-width: min(500px, 100%);
-  }
+}
+
+.md-img {
+  max-width: min(500px, 100%);
 }
 
 .message-timestamp {
@@ -575,23 +577,24 @@ input[type="checkbox"] {
 }
 
 .message-user {
-  font-weight: bold;
   margin-right: 0.5rem;
   color: rgb(var(--purple));
-  svg {
-    margin-left: 0.5rem;
-    margin-right: 0rem;
-    fill: rgb(var(--purple));
-  }
   &.admin {
     color: rgb(var(--yellow));
-    svg { fill: rgb(var(--yellow)) }
   }
   &.not-in-channel {
     color: rgb(var(--white));
-    svg { fill: rgb(var(--white)) }
   }
 }
+
+.user-svg {
+  margin-left: 0.5rem;
+  margin-right: 0rem;
+  fill: rgb(var(--purple));
+}
+
+.firestarter-svg { fill: rgb(var(--yellow)) }
+.ghost-svg { fill: rgb(var(--white)) }
 
 .compose {
   display: flex;
@@ -605,19 +608,18 @@ input[type="checkbox"] {
   gap: 1rem;
   align-items: end;
   height: calc(2.5rem + 2px);
-  textarea {
-    height: 100%;
-    flex-grow: 1;
-    border: 1px solid rgb(var(--dark));
-    background-color: rgb(var(--darker));
-    color: rgb(var(--white));
-    &::placeholder {
-      color: rgb(var(--dark))
-    } 
-  }
-  button {
-    background-color: rgb(var(--darker));
-  }
+}
+
+.compose-textarea {
+  height: 100%;
+  flex-grow: 1;
+  border: 1px solid rgb(var(--dark));
+  background-color: rgb(var(--darker));
+  color: rgb(var(--white));
+}
+
+.compose-send {
+  background-color: rgb(var(--darker));
 }
 
 /* tooltips */

@@ -8,7 +8,7 @@ export default function ChannelsHeader ({ refreshChannels }: {
 }): JSX.Element {
   return (
     <div className="header-bar">
-      <h2>Your Camps</h2>
+      <h2 className="header-bar-text">Your Camps</h2>
       <ModalButton
         buttonContent={(
           <>

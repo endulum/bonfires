@@ -31,12 +31,13 @@ export default function MessageCompose ({ channelId }: {
         onSubmit={handleSubmit}
       >
         <textarea
+          className="compose-textarea"
           placeholder="Say something nice..."
           ref={textarea}
           onKeyDown={handleKeyDown}
           onChange={handleChange}
         />
-        <button type="submit" className="button" disabled={loading}>
+        <button type="submit" className="button compose-send" disabled={loading}>
           <SendSvg className="button-svg" />
           <span>Send</span>
         </button>
