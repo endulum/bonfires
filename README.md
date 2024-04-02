@@ -1,4 +1,4 @@
-# Bonfires (API)
+# Bonfires
 Bonfires is a simple messaging web app allowing users to start "camps" with one another and send messages in them. This repo hosts the frontend of Bonfires.
 
 ![Preview of the login screen and the chat interface of a camp in the Bonfires app](https://file.garden/ZUwWpIlFyDFIgXaU/bonfires)
