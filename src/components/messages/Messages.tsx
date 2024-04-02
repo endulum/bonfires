@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+import socket from '../../socketConfig.ts'
 import useGetData from '../../hooks/useGetData.ts'
 import LoadingWrapper from '../LoadingWrapper.tsx'
 import MessagesList from './MessagesList.tsx'
@@ -10,6 +12,13 @@ export default function Messages ({ channelId }: {
   const { loading, error, data } = useGetData<IMessage[]>(
     `http://localhost:3000/channel/${channelId}/messages`
   )
+
+  useEffect(() => {
+    socket.emit('viewing channel', channelId)
+    return () => {
+      socket.emit('leaving channel', channelId)
+    }
+  }, [])
 
   return data === null
     ? (

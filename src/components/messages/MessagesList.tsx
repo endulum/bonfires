@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
+import socket from '../../socketConfig.ts'
 import LoadingWrapper from '../LoadingWrapper.tsx'
 import { type IMessage } from '../../types.ts'
 
@@ -9,6 +10,10 @@ export default function MessagesList ({ messageData }: {
 }): JSX.Element {
   const [messages, setMessages] = useState<IMessage[]>(messageData)
   const bottom = useRef<null | HTMLDivElement>(null)
+
+  socket.on('new message created', (msg: IMessage) => {
+    setMessages([...messages, msg])
+  })
 
   useEffect(() => {
     bottom.current?.scrollIntoView()
