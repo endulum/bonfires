@@ -1,5 +1,6 @@
 import { Outlet } from 'react-router-dom'
 import Logo from '../Logo.tsx'
+import RepoLink from '../RepoLink.tsx'
 
 export default function AuthWrapper (): JSX.Element {
   return (
@@ -10,6 +11,7 @@ export default function AuthWrapper (): JSX.Element {
           <Outlet />
         </div>
       </div>
+      <RepoLink />
     </main>
   )
 }

@@ -673,6 +673,7 @@ textarea.compose-textarea {
   font-weight: normal;
   transition: opacity 0.25s ease-in-out!important;
   box-shadow: 0 0 10px rgba(var(--darkest), 0.75);
+  z-index: 99999;
 }
 
 /* the logo */
@@ -709,6 +710,33 @@ header {
   }
 }
 
+/* repo link */
+
+.repo-p {
+  position: relative;
+  width: 2rem;
+  margin-top: 2rem;
+}
+
+.repo-link {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 99999;
+  margin: auto;
+  width: 2rem;
+  height: 2rem;
+  &:hover .github-svg {
+    fill: rgb(var(--white));
+  }
+}
+
+.github-svg {
+  fill: rgb(var(--dark));
+  transition: fill 0.5s ease;
+}
+
 /* media queries */
 
 @media screen and (max-width: 500px) {
@@ -736,4 +764,11 @@ header {
   header .button span, .header-bar-button span {
     display: none;
   }
+}
+
+.about-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem 0;
 }
