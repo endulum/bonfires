@@ -35,7 +35,7 @@ export default function useInitializeUser (): {
       }
     )
 
-    if (errorMsg !== null && ![401, 403].includes(statusCode)) setInitError(errorMsg)
+    if (errorMsg !== null && ![401, 403, 404].includes(statusCode)) setInitError(errorMsg)
     else setUserData(fetchedData)
     setLoading(false)
   }
