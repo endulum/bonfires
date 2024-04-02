@@ -4,6 +4,7 @@ import LoadingWrapper from '../LoadingWrapper.tsx'
 import { type IMessage } from '../../types.ts'
 
 import MessagesListItem from './MessagesListItem.tsx'
+import IsTyping from './IsTyping.tsx'
 
 export default function MessagesList ({ messageData }: {
   messageData: IMessage[]
@@ -39,7 +40,7 @@ export default function MessagesList ({ messageData }: {
           />
           )}
       <div ref={bottom} className="typing">
-        {/* <IsTyping /> */}
+        <IsTyping />
       </div>
     </div>
   )

@@ -2,17 +2,22 @@ import { useState, type FormEvent, useRef, type KeyboardEvent, type ChangeEvent 
 import autosize from 'autosize'
 import InfoParagraph from '../InfoParagraph.tsx'
 import useSendMessage from '../../hooks/useSendMessage.ts'
+import useIsTyping from '../../hooks/useIsTyping.ts'
 
 import SendSvg from '../../assets/icons/paper-plane-solid.svg?react'
 
-export default function MessageCompose ({ channelId }: {
+export default function MessageCompose ({ channelId, yourId, yourDisplayName }: {
   channelId: string
+  yourId: string
+  yourDisplayName: string | null
 }): JSX.Element {
   const textarea = useRef<null | HTMLTextAreaElement>(null)
   const [content, setContent] = useState<string>('')
   const { loading, errorSendingMessage, sendMessage } = useSendMessage(channelId)
+  const { startTyping, stopTyping } = useIsTyping(channelId, yourId, yourDisplayName)
 
   function handleChange (_event: ChangeEvent): void {
+    startTyping()
     if (textarea.current !== null) {
       setContent(textarea.current.value)
       autosize(textarea.current)
@@ -20,6 +25,7 @@ export default function MessageCompose ({ channelId }: {
   }
 
   function handleSubmit (event?: FormEvent<HTMLFormElement>): void {
+    stopTyping()
     if (event !== undefined) {
       event.preventDefault()
       event.currentTarget.reset()

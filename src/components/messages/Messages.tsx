@@ -6,8 +6,10 @@ import MessagesList from './MessagesList.tsx'
 import MessageCompose from './MessageComponse.tsx'
 import { type IMessage } from '../../types.ts'
 
-export default function Messages ({ channelId }: {
+export default function Messages ({ channelId, yourId, yourDisplayName }: {
   channelId: string
+  yourId: string
+  yourDisplayName: string | null
 }): JSX.Element {
   const { loading, error, data } = useGetData<IMessage[]>(
     `http://localhost:3000/channel/${channelId}/messages`
@@ -31,7 +33,11 @@ export default function Messages ({ channelId }: {
     : (
       <>
         <MessagesList messageData={data} />
-        <MessageCompose channelId={channelId} />
+        <MessageCompose
+          channelId={channelId}
+          yourId={yourId}
+          yourDisplayName={yourDisplayName}
+        />
       </>
       )
 }

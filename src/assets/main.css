@@ -596,6 +596,13 @@ input[type="checkbox"] {
 .firestarter-svg { fill: rgb(var(--yellow)) }
 .ghost-svg { fill: rgb(var(--white)) }
 
+.typing {
+  line-height: 0.825rem;
+  min-height: 0.825rem;
+  opacity: 0.825;
+  font-size: 0.825rem;
+}
+
 .compose {
   display: flex;
   flex-direction: column;

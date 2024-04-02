@@ -23,7 +23,11 @@ export default function Channel (): JSX.Element {
     : (
       <>
         <ChannelHeader channel={data} onSuccess={() => { void getData(false) }} />
-        <Messages channelId={data.id} />
+        <Messages
+          channelId={data.id}
+          yourId={data.currentUser.id}
+          yourDisplayName={data.currentUser.displayName ?? data.currentUser.username}
+        />
       </>
       )
 }
