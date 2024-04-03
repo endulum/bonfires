@@ -5,6 +5,8 @@ Bonfires is a simple messaging web app allowing users to start "camps" with one 
 
 [Backend Repo](https://github.com/endulum/bonfires-api)
 
+[Project Spec](https://www.theodinproject.com/lessons/nodejs-messaging-app)
+
 ![Preview of the login screen and the chat interface of a camp in the Bonfires app](https://file.garden/ZUwWpIlFyDFIgXaU/bonfires)
 
 ## Technologies
