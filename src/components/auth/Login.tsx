@@ -10,7 +10,7 @@ export default function Login ({ logIn }: {
   useDocumentTitle('Bonfires | Log In')
   return (
     <>
-      {(state.username !== null) && (
+      {(state !== null && state.username !== null) && (
         <InfoParagraph type="success">
           Account successfully created. Proceed to log in to your new account below.
         </InfoParagraph>
