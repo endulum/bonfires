@@ -20,7 +20,7 @@ export default function IndexWrapperMenuItems (
       element: (
         <APIForm
           endpoint={{
-            url: `http://localhost:3000/user/${userData.username}`,
+            url: `/user/${userData.username}`,
             method: 'PUT'
           }}
           onSuccess={() => { navigate(0) }}

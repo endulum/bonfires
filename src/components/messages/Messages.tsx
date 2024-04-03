@@ -12,7 +12,7 @@ export default function Messages ({ channelId, yourId, yourDisplayName }: {
   yourDisplayName: string | null
 }): JSX.Element {
   const { loading, error, data } = useGetData<IMessage[]>(
-    `http://localhost:3000/channel/${channelId}/messages`
+    `/channel/${channelId}/messages`
   )
 
   useEffect(() => {

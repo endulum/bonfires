@@ -10,7 +10,7 @@ import { type IChannel, type IChannelFilter } from '../../types.ts'
 export default function ChannelList (): JSX.Element {
   const {
     loading, error, data, getData
-  } = useGetData<IChannel[]>('http://localhost:3000/channels')
+  } = useGetData<IChannel[]>('/channels')
 
   const [filter, setFilter] = useState<IChannelFilter>({ title: '', mustBeAdmin: false })
 

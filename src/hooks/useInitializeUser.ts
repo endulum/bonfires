@@ -24,7 +24,7 @@ export default function useInitializeUser (): {
     } setLoading(true)
 
     const { fetchedData, statusCode, errorMsg } = await fetchData<IUserData>(
-      'http://localhost:3000/login',
+      '/login',
       {
         method: 'GET',
         headers: token !== null

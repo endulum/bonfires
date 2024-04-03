@@ -23,7 +23,7 @@ export default function ChannelHeaderMenuItems (
       element: (
         <APIForm
           endpoint={{
-            url: `http://localhost:3000/channel/${channel.id}`,
+            url: `/channel/${channel.id}`,
             method: 'PUT'
           }}
           onSuccess={onSuccess}
@@ -42,7 +42,7 @@ export default function ChannelHeaderMenuItems (
       element: (
         <APIForm
           endpoint={{
-            url: `http://localhost:3000/channel/${channel.id}/name`,
+            url: `/channel/${channel.id}/name`,
             method: 'POST'
           }}
           onSuccess={onSuccess}
@@ -68,7 +68,7 @@ export default function ChannelHeaderMenuItems (
       element: (
         <APIForm
           endpoint={{
-            url: `http://localhost:3000/channel/${channel.id}/invite`,
+            url: `/channel/${channel.id}/invite`,
             method: 'POST'
           }}
           onSuccess={onSuccess}
@@ -87,7 +87,7 @@ export default function ChannelHeaderMenuItems (
       element: (
         <APIForm
           endpoint={{
-            url: `http://localhost:3000/channel/${channel.id}/kick`,
+            url: `/channel/${channel.id}/kick`,
             method: 'POST'
           }}
           onSuccess={onSuccess}
@@ -111,7 +111,7 @@ export default function ChannelHeaderMenuItems (
       element: (
         <APIForm
           endpoint={{
-            url: `http://localhost:3000/channel/${channel.id}/promote`,
+            url: `/channel/${channel.id}/promote`,
             method: 'POST'
           }}
           onSuccess={onSuccess}
@@ -137,7 +137,7 @@ export default function ChannelHeaderMenuItems (
       element: (
         <APIForm
           endpoint={{
-            url: `http://localhost:3000/channel/${channel.id}`,
+            url: `/channel/${channel.id}`,
             method: 'DELETE'
           }}
           onSuccess={() => { navigate('/') }}

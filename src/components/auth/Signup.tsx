@@ -21,7 +21,7 @@ export default function Signup (): JSX.Element {
       </InfoParagraph>
       )}
       <APIForm
-        endpoint={{ url: 'http://localhost:3000/signup', method: 'POST' }}
+        endpoint={{ url: '/signup', method: 'POST' }}
         onSuccess={(formData, _data) => {
           setNewAccUsername(formData.username)
         }}

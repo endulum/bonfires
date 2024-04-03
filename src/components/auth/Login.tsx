@@ -9,7 +9,7 @@ export default function Login ({ logIn }: {
   useDocumentTitle('Bonfires | Log In')
   return (
     <APIForm
-      endpoint={{ url: 'http://localhost:3000/login', method: 'POST' }}
+      endpoint={{ url: '/login', method: 'POST' }}
       onSuccess={(_formData, data: { token: string }) => {
         logIn(data.token)
       }}

@@ -19,7 +19,7 @@ export default function ChannelsHeader ({ refreshChannels }: {
         modalContent={(
           <APIForm
             endpoint={{
-              url: 'http://localhost:3000/channels',
+              url: '/channels',
               method: 'POST'
             }}
             onSuccess={refreshChannels}

@@ -1,3 +1,5 @@
+const domain = import.meta.env.VITE_DOMAIN
+
 export default async function fetchData<T> (url: string, payload: object): Promise<{
   fetchedData: T | null
   statusCode: number
@@ -7,7 +9,7 @@ export default async function fetchData<T> (url: string, payload: object): Promi
   let statusCode = 0
   let errorMsg = null
   try {
-    const response = await fetch(url, payload)
+    const response = await fetch(domain + url, payload)
     statusCode = response.status
     if (!response.ok) {
       if (response.status === 422) {

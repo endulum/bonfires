@@ -1,6 +1,6 @@
 import { io } from 'socket.io-client'
 
-const url = 'http://localhost:3000'
+const url = import.meta.env.VITE_DOMAIN as string
 
 const socket = io(url)
 export default socket

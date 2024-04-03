@@ -10,7 +10,7 @@ import Messages from '../messages/Messages.tsx'
 export default function Channel (): JSX.Element {
   const { channelId } = useParams()
   const { loading, error, data, getData } = useGetData<IChannelDetails>(
-    `http://localhost:3000/channel/${channelId}`
+    `/channel/${channelId}`
   )
 
   useDocumentTitle(data?.title ?? 'Finding camp...')

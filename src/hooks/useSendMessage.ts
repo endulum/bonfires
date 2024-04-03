@@ -15,7 +15,7 @@ export default function useSendMessage (channelId: string): {
     const token = getStoredToken()
     setLoading(true)
     const { fetchedData, errorMsg } = await fetchData(
-      `http://localhost:3000/channel/${channelId}/messages`,
+      `/channel/${channelId}/messages`,
       {
         method: 'POST',
         headers: {
