@@ -109,7 +109,7 @@ const mdParagraph = (props: any): JSX.Element => (
 )
 
 const mdLink = (props: any): JSX.Element => (
-  <a href={props.href} className="md-link">{props.children}</a>
+  <a href={props.href} target="_blank" className="md-link" rel="noreferrer">{props.children}</a>
 )
 
 const mdUl = (props: any): JSX.Element => (
