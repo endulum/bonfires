@@ -1,6 +1,10 @@
 # Bonfires
 Bonfires is a simple messaging web app allowing users to start "camps" with one another and send messages in them. This repo hosts the frontend of Bonfires.
 
+🚀 [Live on Vercel](https://bonfires.vercel.app)
+
+[Backend Repo](https://github.com/endulum/bonfires-api)
+
 ![Preview of the login screen and the chat interface of a camp in the Bonfires app](https://file.garden/ZUwWpIlFyDFIgXaU/bonfires)
 
 ## Technologies
@@ -8,9 +12,6 @@ Bonfires is a simple messaging web app allowing users to start "camps" with one 
 - Vite as the bundler
 - Style enforced with ESLint ("Standard with TypeScript" and "Airbnb")
 - Live messaging and typing indication with Socket.io
-
-### Todo
-- Deployment!
 
 ## Areas of Improvement
 - **Refine Project Structure:** Source files should be easily navigable such that they are easy to read, and changes made to the app are seamless and localized. The article [Modularizing React Applications with Established UI Patterns](https://martinfowler.com/articles/modularizing-react-apps.html) demonstrates gzood modularization practice. One ground-up refactor has been made so far, splitting up massive component files into smaller ones and separating logic out into hooks and helpers. This project structure will be revisited in the future once more experience with projects has been gained.
