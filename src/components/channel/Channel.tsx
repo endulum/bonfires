@@ -1,4 +1,5 @@
 import { useParams } from 'react-router-dom'
+import { useDocumentTitle } from 'usehooks-ts'
 import LoadingWrapper from '../LoadingWrapper.tsx'
 import useGetData from '../../hooks/useGetData.ts'
 import { type IChannelDetails } from '../../types.ts'
@@ -11,6 +12,8 @@ export default function Channel (): JSX.Element {
   const { loading, error, data, getData } = useGetData<IChannelDetails>(
     `http://localhost:3000/channel/${channelId}`
   )
+
+  useDocumentTitle(data?.title ?? 'Finding camp...')
 
   return data === null
     ? (

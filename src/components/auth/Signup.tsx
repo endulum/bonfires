@@ -1,10 +1,12 @@
 import { useState } from 'react'
+import { useDocumentTitle } from 'usehooks-ts'
 import { Link } from 'react-router-dom'
 import APIForm from '../APIForm.tsx'
 import InfoParagraph from '../InfoParagraph.tsx'
 
 export default function Signup (): JSX.Element {
   const [newAccUsername, setNewAccUsername] = useState<string | null>(null)
+  useDocumentTitle('Bonfires | Sign Up')
   return (
     <>
       {newAccUsername !== null && (

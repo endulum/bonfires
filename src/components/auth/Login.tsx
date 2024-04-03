@@ -1,10 +1,12 @@
 import { useLocation, Link } from 'react-router-dom'
+import { useDocumentTitle } from 'usehooks-ts'
 import APIForm from '../APIForm.tsx'
 
 export default function Login ({ logIn }: {
   logIn: (t: string) => void
 }): JSX.Element {
   const { state } = useLocation()
+  useDocumentTitle('Bonfires | Log In')
   return (
     <APIForm
       endpoint={{ url: 'http://localhost:3000/login', method: 'POST' }}

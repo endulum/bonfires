@@ -1,5 +1,5 @@
 import { useState } from 'react'
-// import useChannels from '../../hooks/useChannels.ts'
+import { useDocumentTitle } from 'usehooks-ts'
 import useGetData from '../../hooks/useGetData.ts'
 import LoadingWrapper from '../LoadingWrapper.tsx'
 import ChannelsHeader from './ChannelsHeader.tsx'
@@ -13,6 +13,8 @@ export default function ChannelList (): JSX.Element {
   } = useGetData<IChannel[]>('http://localhost:3000/channels')
 
   const [filter, setFilter] = useState<IChannelFilter>({ title: '', mustBeAdmin: false })
+
+  useDocumentTitle('Bonfires | Your Camps')
 
   return data === null
     ? (
