@@ -23,17 +23,18 @@ export function IndexWrapper({
 
   return (
     <>
-      <header className="w100">owo</header>
       <main className="w100">
-        <button
-          type="button"
-          className="button neutral outlined"
-          onClick={logOut}
-        >
-          <Logout />
-          <span>Log out</span>
-        </button>
-        <Outlet context={context} />
+        <div className="body">
+          <button
+            type="button"
+            className="button neutral outlined"
+            onClick={logOut}
+          >
+            <Logout />
+            <span>Log out</span>
+          </button>
+          <Outlet context={context} />
+        </div>
       </main>
     </>
   );

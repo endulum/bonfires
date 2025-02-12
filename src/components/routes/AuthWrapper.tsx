@@ -1,7 +1,5 @@
 import { Outlet } from "react-router-dom";
 
-import { Alert } from "../reusable/Alert";
-
 export function AuthWrapper({
   context,
 }: {
@@ -11,12 +9,6 @@ export function AuthWrapper({
 }) {
   return (
     <div className="auth-main">
-      <Alert type="info" className="mb-1">
-        <p>
-          Have a GitHub account? You can <a href="#">authenticate</a> with it
-          here.
-        </p>
-      </Alert>
       <Outlet context={context} />
     </div>
   );

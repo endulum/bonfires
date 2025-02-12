@@ -314,27 +314,17 @@ label {
   max-width: 400px;
 }
 
-header {
-  background-color: var(--bg);
-  border-bottom: 1px solid var(--border);
-}
-
 main {
   flex-grow: 1;
-  padding: 0 1 rem;
+  padding: 0 1rem;
   overflow-y: auto;
 }
 
 .body {
-  padding: 1.25rem;
+  height: 100%;
+  outline: 1px solid red;
+  outline-offset: -1px;
   margin: auto;
   width: 100%;
-  max-width: 1000px;
-}
-
-header,
-main {
-  padding: 1rem;
-  /* outline: 1px solid red;
-  outline-offset: -1px; */
+  max-width: 800px;
 }

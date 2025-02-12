@@ -40,6 +40,10 @@ export function App() {
         <Route element={<routes.AuthWrapper context={{ initUser }} />}>
           <Route path="/login" element={<routes.LoginRoute />} />
           <Route path="/signup" element={<routes.SignupRoute />} />
+          <Route
+            path="/github"
+            element={<routes.GitHubRoute initUser={initUser} />}
+          />
           <Route path="*" element={<Navigate to="/login" />} />
         </Route>
       )}

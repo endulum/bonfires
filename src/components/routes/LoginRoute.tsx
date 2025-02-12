@@ -2,6 +2,7 @@ import { useDocumentTitle } from "usehooks-ts";
 import { Link } from "react-router-dom";
 
 import { LoginForm } from "../forms/LoginForm";
+import { GitHubAlert } from "../unique/GitHubAlert";
 
 export function LoginRoute() {
   useDocumentTitle(`Log In :: ${import.meta.env.VITE_APP_NAME}`);
@@ -11,6 +12,7 @@ export function LoginRoute() {
       <p className="mb-1 tac">
         New to Bonfires? <Link to="/signup">Sign up.</Link>
       </p>
+      <GitHubAlert />
       <LoginForm />
     </>
   );
