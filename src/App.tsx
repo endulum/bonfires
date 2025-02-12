@@ -33,8 +33,9 @@ export function App() {
             <routes.IndexWrapper context={{ user, initUser, changeUsername }} />
           }
         >
-          <Route path="/" element={<routes.IndexRoute />} />
-          <Route path="*" element={<Navigate to="/" />} />
+          <Route path="/login" element={<Navigate to="/" />} />
+          <Route path="/signup" element={<Navigate to="/" />} />
+          <Route path="*" element={<routes.ErrorRoute />} />
         </Route>
       ) : (
         <Route element={<routes.AuthWrapper context={{ initUser }} />}>
