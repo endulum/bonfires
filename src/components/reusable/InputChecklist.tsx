@@ -31,8 +31,8 @@ export function InputChecklist({
           {requirements.map((req) => (
             <li
               key={req.description}
-              className={`flex-row  gap-0-5 ${
-                req.function(inputValue) === true ? " good" : " missing"
+              className={`flex-row g-05 ${
+                req.function(inputValue) === true ? "good" : "missing"
               }`}
             >
               {req.function(inputValue) === true ? (

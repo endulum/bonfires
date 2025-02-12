@@ -16,7 +16,7 @@ export function Alert({
 }) {
   return (
     <div
-      className={`alert ${type} flex-row align-start gap-0-75${
+      className={`alert ${type} flex-row align-start g-75 w100${
         className ? ` ${className}` : ""
       }`}
     >

@@ -11,7 +11,7 @@
   align-items: center;
 }
 
-.g-10 {
+.g-1 {
   gap: 1rem;
 }
 .g-75 {
@@ -77,4 +77,8 @@
 
 .w100 {
   width: 100%;
+}
+
+.tac {
+  text-align: center;
 }
