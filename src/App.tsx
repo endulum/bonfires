@@ -7,6 +7,11 @@ import { useUser } from "./hooks/useUser";
 import { useLogger } from "./hooks/useLogger";
 import { setStoredTheme } from "./functions/themeUtils";
 
+import "./assets/reset.css";
+import "./assets/body.css";
+import "./assets/utility.css";
+import "./assets/main.css";
+
 export function App() {
   const { loading, error, user, initUser, changeUsername } = useUser();
 
@@ -18,11 +23,13 @@ export function App() {
 
   if (loading || error)
     return (
-      <LoadingSpacer
-        loading={loading}
-        error={error}
-        customLoadingText="Starting up..."
-      />
+      <main>
+        <LoadingSpacer
+          loading={loading}
+          error={error}
+          customLoadingText="Starting up..."
+        />
+      </main>
     );
 
   return (
@@ -33,8 +40,21 @@ export function App() {
             <routes.IndexWrapper context={{ user, initUser, changeUsername }} />
           }
         >
-          <Route path="/login" element={<Navigate to="/" />} />
-          <Route path="/signup" element={<Navigate to="/" />} />
+          {["/login", "/signup", "/"].map((path) => (
+            <Route
+              key={path}
+              path={path}
+              element={<Navigate to="/channels" />}
+            />
+          ))}
+          <Route path="/channels" element={<routes.ChannelsRoute />} />
+          <Route
+            path="/settings"
+            element={
+              <routes.UserSettingsRoute changeUsername={changeUsername} />
+            }
+          />
+          <Route path="/about" element={<routes.AboutRoute />} />
           <Route path="*" element={<routes.ErrorRoute />} />
         </Route>
       ) : (

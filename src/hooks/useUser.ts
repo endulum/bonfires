@@ -2,18 +2,18 @@ import { useEffect, useState, useRef } from "react";
 
 import { getStoredToken, clearStoredToken } from "../functions/tokenUtils";
 import { doFetch } from "../functions/doFetch";
-import { type User } from "../types";
+import { UserData } from "../types";
 
 export function useUser(): {
   loading: boolean;
   error: string | null;
-  user: User | null;
+  user: UserData | null;
   initUser: () => Promise<void>;
   changeUsername: (username: string) => void;
 } {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<UserData | null>(null);
   const fetching = useRef<boolean>(false);
 
   async function initUser() {
@@ -29,7 +29,7 @@ export function useUser(): {
 
     if (!loading) setLoading(true);
 
-    const fetchResult = await doFetch<User>("/me", {
+    const fetchResult = await doFetch<UserData>("/me", {
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
     });

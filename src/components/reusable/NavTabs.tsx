@@ -7,7 +7,7 @@ import {
 
 export function NavTabs({ tabs }: { tabs: Array<{ to: To; title: string }> }) {
   return (
-    <div role="tablist" className="navtabs flex-row align-start gap-1">
+    <div role="tablist" className="navtabs flex-row align-start g-05">
       {tabs.map((tab) => (
         <NavTab key={tab.title} to={tab.to} title={tab.title} />
       ))}

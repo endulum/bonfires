@@ -23,6 +23,18 @@
 
   --fontstack: Helvetica, Arial, sans-serif;
   --radius: 3px;
+
+  /* react-tooltip */
+
+  --rt-color-white: var(--bg);
+  --rt-color-dark: var(--fg);
+  --rt-color-success: var(--success);
+  --rt-color-error: var(--warning);
+  --rt-color-warning: var(--warning);
+  --rt-color-info: var(--info);
+  --rt-opacity: 1;
+  --rt-transition-show-delay: 0.15s;
+  --rt-transition-closing-delay: 0.15s;
 }
 
 [data-theme="light"] {
@@ -32,6 +44,8 @@
   --border: var(--white3);
   --lumi: -0.05;
   --alert-txt-lumi: -0.125;
+  --rt-color-white: var(--bg);
+  --rt-color-dark: var(--fg);
 }
 
 [data-theme="dark"] {
@@ -41,6 +55,8 @@
   --border: var(--black3);
   --lumi: 0.05;
   --alert-txt-lumi: 0.125;
+  --rt-color-white: var(--bg);
+  --rt-color-dark: var(--fg);
 }
 
 body {
@@ -49,6 +65,10 @@ body {
   color: var(--fg);
   background-color: var(--bg2);
 }
+
+/* #root {
+  padding: 0 1rem;
+} */
 
 i {
   font-style: normal !important;
@@ -110,6 +130,7 @@ hr {
   small {
     min-width: max-content;
     white-space: nowrap;
+    flex-shrink: 0;
   }
 
   svg {
@@ -181,6 +202,14 @@ hr {
         color: var(--color);
       }
     }
+  }
+
+  &.circle {
+    border-radius: 100%;
+    width: 2.25rem;
+    min-width: 2.25rem;
+    height: 2.25rem;
+    min-height: 2.25rem;
   }
 }
 
@@ -254,7 +283,7 @@ textarea {
   padding: 0.3755rem 0.625rem;
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  background-color: var(--bg);
+  background-color: transparent;
   &:focus,
   &:focus-visible {
     outline: 2px solid var(--neutral);
@@ -303,6 +332,44 @@ label {
   }
 }
 
+/* navtabs */
+
+.navtabs {
+  border-bottom: 1px solid var(--border);
+  width: 100%;
+  button {
+    color: oklch(from var(--fg) l c h / 0.75);
+    background-color: transparent;
+    padding: 1.25rem 0.5rem;
+    margin-bottom: -1px;
+    border-bottom: 3px solid transparent;
+    &[aria-selected="true"] {
+      color: var(--neutral);
+      border-bottom: 3px solid var(--neutral);
+    }
+    &:hover:not([aria-selected="true"]) {
+      cursor: pointer;
+      border-bottom: 3px solid var(--border);
+    }
+  }
+}
+
+/* react-modal modals */
+
+.ReactModal__Overlay {
+  opacity: 0;
+  transition: opacity 0.25s ease-in-out;
+  /* padding: 1rem; */
+}
+
+.ReactModal__Overlay--after-open {
+  opacity: 1;
+}
+
+.ReactModal__Overlay--before-close {
+  opacity: 0;
+}
+
 /**** unqiue components ****/
 
 .auth-main {
@@ -314,17 +381,28 @@ label {
   max-width: 400px;
 }
 
-main {
-  flex-grow: 1;
-  padding: 0 1rem;
-  overflow-y: auto;
+.me {
+  h2 {
+    font-weight: normal;
+    line-height: 1.25rem;
+  }
 }
 
-.body {
-  height: 100%;
-  outline: 1px solid red;
-  outline-offset: -1px;
-  margin: auto;
-  width: 100%;
-  max-width: 800px;
+.me-avatar {
+  position: relative;
+  background-color: var(--bg);
+  border-radius: 100%;
+  img {
+    height: 75px;
+    width: 75px;
+    min-width: 75px;
+    border-radius: 100%;
+  }
+  button {
+    background-color: var(--bg) !important;
+    color: var(--fg) !important;
+    position: absolute;
+    bottom: 0rem;
+    left: 0rem;
+  }
 }

@@ -42,6 +42,10 @@
   flex-grow: 1;
 }
 
+.stretch {
+  align-self: stretch;
+}
+
 .mt-1 {
   margin-top: 1rem;
 }
@@ -59,6 +63,12 @@
 }
 .mb-05 {
   margin-bottom: 0.5rem;
+}
+.ml-1 {
+  margin-left: 1rem;
+}
+.ml-05 {
+  margin-left: 0.5rem;
 }
 
 .p-1 {
@@ -79,6 +89,14 @@
   width: 100%;
 }
 
+.h100 {
+  height: 100%;
+}
+
 .tac {
   text-align: center;
+}
+
+.smaller {
+  font-size: 0.875rem;
 }

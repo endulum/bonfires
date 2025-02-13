@@ -28,17 +28,21 @@ export function useForm<T>(
     event.preventDefault();
     const token = getStoredToken();
 
-    // build a formData object by gathering values
-    // from the event's own target, which is the HTML form
-    const formData: Record<string, string> = {};
+    const formData = new FormData();
     Object.values(event.target).forEach((inputElement) => {
       if (
+        inputElement instanceof HTMLInputElement &&
+        inputElement.type === "file" &&
+        inputElement.files
+      ) {
+        formData.append(inputElement.id, inputElement.files[0]);
+      } else if (
         (inputElement instanceof HTMLInputElement ||
           inputElement instanceof HTMLTextAreaElement ||
           inputElement instanceof HTMLButtonElement) &&
         inputElement.id !== ""
       ) {
-        formData[inputElement.id] = inputElement.value;
+        formData.append(inputElement.id, inputElement.value);
       }
     });
 
@@ -51,10 +55,9 @@ export function useForm<T>(
       {
         method: destination.method,
         headers: {
-          "Content-type": "application/json",
           Authorization: token ? `Bearer ${token}` : "",
         },
-        body: JSON.stringify(formData),
+        body: formData,
       }
     );
     setLoading(false);
@@ -77,7 +80,11 @@ export function useForm<T>(
     }
 
     if (fetchResult.status === 200) {
-      onSuccess(formData, fetchResult.data as T);
+      const formDataObject: Record<string, string> = {};
+      formData.forEach((input, id) => {
+        formDataObject[id] = input.toString();
+      });
+      onSuccess(formDataObject, fetchResult.data as T);
     }
   }
 
