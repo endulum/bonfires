@@ -9,70 +9,66 @@
 }
 
 :root {
-  /* rose pine */
-  --white1: #f4ede8;
-  --white2: #dfdad9;
-  --white3: #cecacd;
-  --black3: #6e6a86;
-  --black2: #393552;
-  --black1: #2a273f;
-  --neutral: #c4a7e7;
-  --warning: #eb6f92;
-  --success: #9ccfd8;
-  --info: var(--neutral);
-
   --fontstack: Helvetica, Arial, sans-serif;
   --radius: 3px;
+  --white: #faf4ed;
+}
 
-  /* react-tooltip */
-
-  --rt-color-white: var(--bg);
-  --rt-color-dark: var(--fg);
-  --rt-color-success: var(--success);
-  --rt-color-error: var(--warning);
-  --rt-color-warning: var(--warning);
-  --rt-color-info: var(--info);
-  --rt-opacity: 1;
-  --rt-transition-show-delay: 0.15s;
-  --rt-transition-closing-delay: 0.15s;
+[data-theme] {
+  --rt-color-white: var(--base);
+  --rt-color-dark: var(--text);
 }
 
 [data-theme="light"] {
-  --fg: var(--black2);
-  --bg: var(--white1);
-  --bg2: var(--white2);
-  --border: var(--white3);
-  --lumi: -0.05;
+  --base: #faf4ed;
+  --surface: #fffaf3;
+  --overlay: #f2e9e1;
+  --border: oklch(from var(--overlay) calc(l - 0.025) c h);
+  --text: #575279;
+  --warning: #b4637a;
+  --success: #56949f;
+  --info: #56949f;
+  --neutral: #907aa9;
+  --lumi: -0.025;
   --alert-txt-lumi: -0.125;
-  --rt-color-white: var(--bg);
-  --rt-color-dark: var(--fg);
+  --rt-opacity: 1;
 }
 
 [data-theme="dark"] {
-  --fg: var(--white1);
-  --bg: var(--black2);
-  --bg2: var(--black1);
-  --border: var(--black3);
+  --base: #191724;
+  --surface: #1f1d2e;
+  --overlay: #26233a;
+  --border: oklch(from var(--overlay) calc(l + 0.05) c h);
+  --text: #e0def4;
+  --warning: #eb6f92;
+  --success: #9ccfd8;
+  --info: #9ccfd8;
+  --neutral: #c4a7e7;
   --lumi: 0.05;
-  --alert-txt-lumi: 0.125;
-  --rt-color-white: var(--bg);
-  --rt-color-dark: var(--fg);
+  --alert-txt-lumi: 0.05;
+  --rt-opacity: 1;
 }
 
 body {
   font-family: "Roboto Condensed", var(--fontstack);
   font-weight: 400;
-  color: var(--fg);
-  background-color: var(--bg2);
+  color: var(--text);
+  background-color: var(--base);
 }
 
-/* #root {
-  padding: 0 1rem;
-} */
+main {
+  background-color: var(--surface);
+  border-left: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+}
 
 i {
   font-style: normal !important;
   font-family: "Roboto Condensed Italic", var(--fontstack);
+}
+
+[role="tooltip"] {
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 2px 4px;
 }
 
 /**** coloring ****/
@@ -100,7 +96,7 @@ small {
 
 a {
   font-weight: bold;
-  color: var(--accent);
+  color: var(--neutral);
 }
 
 textarea {
@@ -168,7 +164,7 @@ hr {
   }
 
   &.solid {
-    color: var(--white1);
+    color: var(--white);
     background-color: oklch(from var(--color) calc(l - 0.125) c h / 1);
     &:not([disabled]):hover {
       background-color: oklch(from var(--color) calc(l - 0.05) c h / 1);
@@ -176,7 +172,7 @@ hr {
   }
 
   &.outlined {
-    color: var(--fg);
+    color: var(--text);
     background-color: transparent;
     border: 1px solid oklch(from var(--color) l c h / 0.5);
     svg {
@@ -191,13 +187,13 @@ hr {
   }
 
   &.plain {
-    color: var(--fg);
+    color: var(--text);
     background-color: transparent;
     svg {
       color: var(--color);
     }
     &:not([disabled]):hover {
-      background-color: oklch(from var(--bg) calc(l + var(--lumi)) c h);
+      background-color: oklch(from var(--overlay) calc(l + var(--lumi)) c h);
       svg {
         color: var(--color);
       }
@@ -252,11 +248,11 @@ hr {
 }
 
 #root > .spacer {
-  background-color: var(--accent1);
+  background-color: var(--surface);
   color: var(--fg);
   height: 100vh;
   svg {
-    color: var(--accent2);
+    color: var(--neutral);
   }
 }
 
@@ -278,7 +274,7 @@ hr {
 input:not([type="checkbox"]),
 select,
 textarea {
-  color: var(--fg);
+  color: var(--text);
   width: 100%;
   padding: 0.3755rem 0.625rem;
   border: 1px solid var(--border);
@@ -338,12 +334,13 @@ label {
   border-bottom: 1px solid var(--border);
   width: 100%;
   button {
-    color: oklch(from var(--fg) l c h / 0.75);
+    color: oklch(from var(--text) l c h / 0.75);
     background-color: transparent;
     padding: 1.25rem 0.5rem;
     margin-bottom: -1px;
     border-bottom: 3px solid transparent;
     &[aria-selected="true"] {
+      font-weight: bold;
       color: var(--neutral);
       border-bottom: 3px solid var(--neutral);
     }
@@ -373,7 +370,7 @@ label {
 /**** unqiue components ****/
 
 .auth-main {
-  background-color: var(--bg);
+  background-color: var(--surface);
   border-radius: var(--radius);
   border: 1px double var(--border);
   padding: 1.25rem;
@@ -390,7 +387,7 @@ label {
 
 .me-avatar {
   position: relative;
-  background-color: var(--bg);
+  background-color: var(--overlay);
   border-radius: 100%;
   img {
     height: 75px;
@@ -399,8 +396,8 @@ label {
     border-radius: 100%;
   }
   button {
-    background-color: var(--bg) !important;
-    color: var(--fg) !important;
+    background-color: var(--overlay) !important;
+    color: var(--text) !important;
     position: absolute;
     bottom: 0rem;
     left: 0rem;

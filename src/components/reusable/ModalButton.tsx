@@ -38,7 +38,7 @@ export function ModalButton({
         closeTimeoutMS={250}
         style={{
           overlay: {
-            backgroundColor: "oklch(from var(--bg2) l c h / 0.5)",
+            backgroundColor: "oklch(from var(--surface) l c h / 0.5)",
             display: "flex",
             justifyContent: "center",
             padding: "1rem",
@@ -50,7 +50,7 @@ export function ModalButton({
             maxWidth: "500px",
             inset: "0px",
             border: "1px solid var(--border)",
-            backgroundColor: "var(--bg)",
+            backgroundColor: "var(--overlay)",
             height: "min-content",
           },
         }}
