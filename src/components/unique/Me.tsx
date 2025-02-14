@@ -1,21 +1,14 @@
 import { useRef } from "react";
 import { Tooltip } from "react-tooltip";
-import { useNavigate } from "react-router-dom";
-import { Edit, Logout } from "@mui/icons-material";
+import { Edit } from "@mui/icons-material";
 
-import { clearStoredToken } from "../../functions/tokenUtils";
 import { type UserData } from "../../types";
 import { ModalButton } from "../reusable/ModalButton";
 import { UploadOwnAvatarForm } from "../forms/UploadOwnAvatarForm";
 import { NavTabs } from "../reusable/NavTabs";
+import { ThemeSwitch } from "./ThemeSwitch";
 
-export function Me({
-  user,
-  initUser,
-}: {
-  user: UserData;
-  initUser: () => void;
-}) {
+export function Me({ user }: { user: UserData }) {
   const avatarRef = useRef<HTMLImageElement | null>(null);
 
   const timeOfDay = () => {
@@ -30,14 +23,6 @@ export function Me({
         user._id
       }/avatar?${timestamp}`;
     }
-  };
-
-  const navigate = useNavigate();
-
-  const logOut = () => {
-    clearStoredToken();
-    initUser();
-    navigate("/");
   };
 
   return (
@@ -73,17 +58,7 @@ export function Me({
           <h2>
             Good {timeOfDay()}, <b>{user.username}</b>
           </h2>
-          <button
-            type="button"
-            className="button neutral plain circle"
-            data-tooltip-id="log-out"
-            data-tooltip-content="Log out"
-            data-tooltip-place="bottom-end"
-            onClick={logOut}
-          >
-            <Logout />
-          </button>
-          <Tooltip id="log-out" />
+          <ThemeSwitch />
         </div>
         <NavTabs
           tabs={[

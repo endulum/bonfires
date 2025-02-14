@@ -49,6 +49,10 @@
   --rt-opacity: 1;
 }
 
+* {
+  transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+
 body {
   font-family: "Roboto Condensed", var(--fontstack);
   font-weight: 400;
