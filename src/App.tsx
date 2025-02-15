@@ -48,12 +48,7 @@ export function App() {
             />
           ))}
           <Route path="/channels" element={<routes.ChannelsRoute />} />
-          <Route
-            path="/settings"
-            element={
-              <routes.UserSettingsRoute changeUsername={changeUsername} />
-            }
-          />
+          <Route path="/settings" element={<routes.UserSettingsRoute />} />
           <Route path="/about" element={<routes.AboutRoute />} />
           <Route path="*" element={<routes.ErrorRoute />} />
         </Route>
