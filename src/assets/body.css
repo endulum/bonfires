@@ -20,6 +20,7 @@ main {
 main {
   max-width: 800px;
   padding: 1rem;
+
   > * {
     width: 100%;
   }
@@ -29,4 +30,6 @@ main {
   /* border: 1px dashed red; */
   flex-grow: 1;
   overflow-y: hidden;
+  display: flex;
+  flex-direction: column;
 }

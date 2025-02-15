@@ -37,6 +37,12 @@
 .jcc {
   justify-content: center;
 }
+.jcstart {
+  justify-content: start;
+}
+.jcend {
+  justify-content: end;
+}
 
 .flg {
   flex-grow: 1;
