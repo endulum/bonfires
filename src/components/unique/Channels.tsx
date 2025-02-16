@@ -1,30 +1,41 @@
+import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { useWindowSize } from "usehooks-ts";
 import { Tooltip } from "react-tooltip";
 
 import { Channel } from "../../types";
 import { LoadingSpacer } from "../reusable/LoadingSpacer";
+import { NoResultsSpacer } from "../reusable/NoResultsSpacer";
 import { DateRelative } from "../reusable/Dates";
-
 import { useChannels } from "../../hooks/useChannels";
 
 export function Channels() {
-  const { loading, error, channels, nextPage, setRefetchOn } = useChannels();
+  const {
+    channels,
+    url, // to check to determine whether a "load more" button is needed
+    title, // to check to determine whether client is performing search
+    setTitle, // to allow another component to trigger a search by changing title
+    setRefetchOn, // to trigger loadmore
+    loading,
+    error,
+  } = useChannels();
 
   return (
     <>
+      <ChannelSearch setTitle={setTitle} />
       {(loading || error) && channels.length === 0 && (
         <LoadingSpacer
           loading={loading}
           error={error}
-          customLoadingText="Finding channels..."
+          customLoadingText={`${
+            title === "" ? "Finding" : "Searching"
+          } your camps...`}
         />
       )}
       {channels.length > 0 && (
         <div className="channels flex-col g-25">
           <ChannelItems channels={channels} />
-          {/* consider: remove button and have refetch be automatic when scrolled to bottom? */}
-          {nextPage && (
+          {url && (
             <button
               type="button"
               className="button neutral solid mt-1"
@@ -38,9 +49,42 @@ export function Channels() {
         </div>
       )}
       {!loading && !error && channels.length === 0 && (
-        <p>no channels to show</p>
+        <NoResultsSpacer>
+          {title !== "" ? (
+            <p>No camps fit your search.</p>
+          ) : (
+            <p>
+              It looks like you aren't in any camps.
+              <br />
+              Why not create one?
+            </p>
+          )}
+        </NoResultsSpacer>
       )}
     </>
+  );
+}
+
+function ChannelSearch({
+  setTitle,
+}: {
+  setTitle: React.Dispatch<React.SetStateAction<string>>;
+}) {
+  const timer = useRef<ReturnType<typeof setInterval> | null>(null);
+  const handleChange = (e: React.ChangeEvent<HTMLFormElement>) => {
+    if (timer.current !== null) clearTimeout(timer.current);
+    timer.current = setTimeout(() => {
+      setTitle(e.target.value);
+    }, 750);
+  };
+
+  return (
+    <form onChange={handleChange} className="flex-row g-1 mb-1">
+      <label htmlFor="title" className="mw-mxc">
+        Search by title
+      </label>
+      <input type="text" id="title" />
+    </form>
   );
 }
 

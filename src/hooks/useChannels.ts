@@ -3,7 +3,6 @@ import { useBoolean } from "usehooks-ts";
 
 import { type Channel } from "../types";
 import { useGet } from "./useGet";
-import { useLogger } from "./useLogger";
 
 type Response = {
   channels: Channel[];
@@ -12,14 +11,23 @@ type Response = {
 
 export function useChannels() {
   const [channels, setChannels] = useState<Channel[]>([]);
-  const [nextPage, setNextPage] = useState<string | null>("/channels");
+  const [url, setUrl] = useState<string | null>("/channels");
+  const [title, setTitle] = useState<string>("");
+
+  // flag to trigger refetch
   const {
     value: refetch,
     setFalse: setRefetchOff,
     setTrue: setRefetchOn,
   } = useBoolean(false);
 
-  const { loading, error, data, get } = useGet<Response>(nextPage as string);
+  const { loading, error, data, get } = useGet<Response>(url as string);
+
+  useEffect(() => {
+    setChannels([]);
+    setUrl(title === "" ? "/channels" : `/channels?title=${title}`);
+    setRefetchOn();
+  }, [title]);
 
   useEffect(() => {
     if (refetch === true) get();
@@ -34,15 +42,17 @@ export function useChannels() {
         refetch === true)
     ) {
       setChannels([...channels, ...data.channels]);
-      setNextPage(data.links.nextPage);
+      setUrl(data.links.nextPage);
       setRefetchOff();
     }
   }, [data]);
 
   return {
     channels,
-    nextPage, // to show "load more"
-    setRefetchOn, // to trigger loading more
+    url, // to check to determine whether a "load more" button is needed
+    title, // to check to determine whether client is performing search
+    setTitle, // to allow another component to trigger a search by changing title
+    setRefetchOn, // to trigger loadmore
     loading,
     error,
   };
