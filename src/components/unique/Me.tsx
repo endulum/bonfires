@@ -1,12 +1,9 @@
 import { useRef } from "react";
-import { Tooltip } from "react-tooltip";
-import { Edit } from "@mui/icons-material";
 
 import { type UserData } from "../../types";
-import { ModalButton } from "../reusable/ModalButton";
-import { UploadOwnAvatarForm } from "../forms/UploadOwnAvatarForm";
 import { NavTabs } from "../reusable/NavTabs";
 import { ThemeSwitch } from "./ThemeSwitch";
+import { UploadOwnAvatar } from "../modals/UploadOwnAvatar";
 
 export function Me({ user }: { user: UserData }) {
   const avatarRef = useRef<HTMLImageElement | null>(null);
@@ -34,22 +31,7 @@ export function Me({ user }: { user: UserData }) {
           alt="Your avatar"
           ref={avatarRef}
         />
-        <ModalButton
-          modalTitle="Change Avatar"
-          buttonElement={
-            <button
-              type="button"
-              className="button neutral solid circle"
-              data-tooltip-id="edit-avatar"
-              data-tooltip-content="Change your avatar"
-              data-tooltip-place="bottom-start"
-            >
-              <Edit />
-            </button>
-          }
-          modalElement={<UploadOwnAvatarForm resetAvatar={resetAvatar} />}
-        />
-        <Tooltip id="edit-avatar" />
+        <UploadOwnAvatar resetAvatar={resetAvatar} />
       </div>
 
       {/* content */}
