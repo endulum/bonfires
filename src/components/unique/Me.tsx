@@ -62,7 +62,7 @@ export function Me({ user }: { user: UserData }) {
         </div>
         <NavTabs
           tabs={[
-            { to: "/channels", title: "Channels" },
+            { to: "/camps", title: "Camps" },
             { to: "/settings", title: "Settings" },
             { to: "/about", title: "About" },
           ]}

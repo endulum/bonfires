@@ -112,7 +112,7 @@ function ChannelItems({ channels }: { channels: Channel[] }) {
               src={`${import.meta.env.VITE_API_URL}/channel/${
                 channel._id
               }/avatar`}
-              alt={`The channel avatar of ${channel.title}`}
+              alt={`The camp avatar of ${channel.title}`}
             />
             <div className="flex-col align-start">
               <div className="flex-row align-end g-75">
