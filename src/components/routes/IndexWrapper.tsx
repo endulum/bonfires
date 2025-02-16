@@ -1,25 +1,20 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useOutletContext } from "react-router-dom";
 
 import { type UserData } from "../../types";
 import { Me } from "../unique/Me";
 
-export function IndexWrapper({
-  context,
-}: {
-  context: {
+export function IndexWrapper() {
+  const { user, initUser, changeUsername } = useOutletContext<{
     user: UserData;
     initUser: () => Promise<void>;
     changeUsername: (username: string) => void;
-  };
-}) {
+  }>();
   return (
     <>
-      <main className="flex-col w100">
-        <Me user={context.user} initUser={context.initUser} />
-        <div className="outlet">
-          <Outlet context={context} />
-        </div>
-      </main>
+      <Me user={user} />
+      <div className="outlet">
+        <Outlet context={{ user, initUser, changeUsername }} />
+      </div>
     </>
   );
 }

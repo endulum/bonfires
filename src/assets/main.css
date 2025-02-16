@@ -135,6 +135,7 @@ hr {
 
   svg {
     width: 1.25rem;
+    min-width: 1.25rem;
     height: 1.25rem;
     transition: color 0.25s ease;
   }
@@ -355,6 +356,32 @@ label {
   }
 }
 
+/* flyouts */
+
+.flyout {
+  width: max-content;
+  height: max-content;
+  position: relative;
+  .menu {
+    z-index: 1;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background-color: var(--overlay);
+    position: absolute;
+    padding: 0.5rem;
+    button,
+    a[type="button"] {
+      justify-content: start;
+      width: 100%;
+      text-align: left;
+      min-width: max-content;
+      &:has(svg) {
+        padding-left: 0.5rem;
+      }
+    }
+  }
+}
+
 /* react-modal modals */
 
 .ReactModal__Overlay {
@@ -466,6 +493,15 @@ label {
   min-height: 30px;
 }
 
+.channelview-avatar {
+  width: 30px;
+  height: 30px;
+  min-width: 30px;
+  min-height: 30px;
+  border-radius: 100%;
+  margin-right: 0.5rem;
+}
+
 /* media queries */
 
 @media screen and (max-width: 500px) {
@@ -478,6 +514,7 @@ label {
   body,
   .button {
     font-size: 0.875rem;
+    line-height: 1.25rem;
   }
   .channel {
     height: calc(1rem + 50px);

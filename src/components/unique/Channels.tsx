@@ -101,7 +101,7 @@ function ChannelItems({ channels }: { channels: Channel[] }) {
     <>
       {channels.map((channel) => (
         <Link
-          to="#"
+          to={`/camp/${channel._id}`}
           key={channel._id}
           className="w100"
           style={{ textDecoration: "none", color: "var(--text)" }}

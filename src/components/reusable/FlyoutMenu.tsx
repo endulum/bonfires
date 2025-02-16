@@ -37,7 +37,7 @@ export function FlyoutMenu({
             style={{
               ...(x === "right" && { left: 0 }),
               ...(x === "left" && { right: 0 }),
-              ...(y === "bottom" && { top: "2rem" }),
+              ...(y === "bottom" && { top: "2.5rem" }),
               ...(y === "top" && { bottom: "2rem" }),
             }}
           >

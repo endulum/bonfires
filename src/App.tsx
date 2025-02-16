@@ -34,20 +34,24 @@ export function App() {
       {user ? (
         <Route
           element={
-            <routes.IndexWrapper context={{ user, initUser, changeUsername }} />
+            <routes.MainWrapper context={{ user, initUser, changeUsername }} />
           }
         >
-          {["/login", "/signup", "/"].map((path) => (
-            <Route
-              key={path}
-              path={path}
-              element={<Navigate to="/channels" />}
-            />
-          ))}
-          <Route path="/camps" element={<routes.ChannelsRoute />} />
-          <Route path="/settings" element={<routes.UserSettingsRoute />} />
-          <Route path="/about" element={<routes.AboutRoute />} />
-          <Route path="*" element={<routes.ErrorRoute />} />
+          <Route element={<routes.IndexWrapper />}>
+            {["/login", "/signup", "/"].map((path) => (
+              <Route
+                key={path}
+                path={path}
+                element={<Navigate to="/camps" />}
+              />
+            ))}
+            <Route path="/camps" element={<routes.ChannelsRoute />} />
+            <Route path="/settings" element={<routes.UserSettingsRoute />} />
+            <Route path="/about" element={<routes.AboutRoute />} />
+
+            <Route path="*" element={<routes.ErrorRoute />} />
+          </Route>
+          <Route path="/camp/:camp" element={<routes.ChannelWrapper />} />
         </Route>
       ) : (
         <Route element={<routes.AuthWrapper context={{ initUser }} />}>
