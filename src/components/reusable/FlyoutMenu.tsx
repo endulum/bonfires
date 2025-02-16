@@ -14,8 +14,9 @@ export function FlyoutMenu({
 }) {
   const { value: opened, setTrue: open, setFalse: close } = useBoolean(false);
   const menu = useRef<HTMLDivElement>(null);
-  useOnClickOutside(menu, () => {
-    if (opened) close();
+  useOnClickOutside(menu, (e) => {
+    const target = e.target as HTMLElement;
+    if (opened && !target.closest(".ReactModalPortal")) close();
   });
 
   /* don't render if no children detected */
