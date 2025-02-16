@@ -4,7 +4,6 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import * as routes from "./components/routes/_index";
 import { LoadingSpacer } from "./components/reusable/LoadingSpacer";
 import { useUser } from "./hooks/useUser";
-import { useLogger } from "./hooks/useLogger";
 import { setStoredTheme } from "./functions/themeUtils";
 
 import "./assets/reset.css";
@@ -14,8 +13,6 @@ import "./assets/main.css";
 
 export function App() {
   const { loading, error, user, initUser, changeUsername } = useUser();
-
-  useLogger({ loading, error, user });
 
   useEffect(() => {
     setStoredTheme();
@@ -47,7 +44,7 @@ export function App() {
               element={<Navigate to="/channels" />}
             />
           ))}
-          <Route path="/channels" element={<routes.ChannelsRoute />} />
+          <Route path="/camps" element={<routes.ChannelsRoute />} />
           <Route path="/settings" element={<routes.UserSettingsRoute />} />
           <Route path="/about" element={<routes.AboutRoute />} />
           <Route path="*" element={<routes.ErrorRoute />} />
