@@ -27,9 +27,21 @@ export function useGet<T>(endpoint: string): {
       headers: token ? { Authorization: `Bearer ${token}` } : {},
     });
 
-    setLoading(false);
-    if (fetchResult.status === 200) setData(fetchResult.data);
-    else setError(fetchResult.error);
+    // toggle on and off
+    const simulateLoading = true;
+    if (simulateLoading)
+      setTimeout(() => {
+        setLoading(false);
+        if (fetchResult.status === 200) setData(fetchResult.data);
+        else setError(fetchResult.error);
+      }, 750);
+    else {
+      setTimeout(() => {
+        setLoading(false);
+        if (fetchResult.status === 200) setData(fetchResult.data);
+        else setError(fetchResult.error);
+      }, 750);
+    }
   }
 
   useEffect(() => {
