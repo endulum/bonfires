@@ -470,9 +470,6 @@ label {
   + .channel-user-badge {
     margin-left: -0.5rem;
   }
-  &:first-child {
-    margin-left: -3px;
-  }
 }
 
 .channel-user-badge {

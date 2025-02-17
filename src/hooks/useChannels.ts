@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useBoolean } from "usehooks-ts";
 
 import { type Channel } from "../types";
 import { useGet } from "./useGet";
@@ -12,48 +11,57 @@ type Response = {
 export function useChannels() {
   const [channels, setChannels] = useState<Channel[]>([]);
   const [url, setUrl] = useState<string | null>("/channels");
-  const [title, setTitle] = useState<string>("");
 
-  // flag to trigger refetch
-  const {
-    value: refetch,
-    setFalse: setRefetchOff,
-    setTrue: setRefetchOn,
-  } = useBoolean(false);
+  const [state, setState] = useState<Record<string, boolean>>({
+    ready: false,
+    isSearching: false,
+    trigger: false,
+  });
 
-  const { loading, error, data, get } = useGet<Response>(url as string);
+  const { error, data, get } = useGet<Response>(url as string);
 
-  useEffect(() => {
+  const searchTitle = (title: string) => {
     setChannels([]);
     setUrl(title === "" ? "/channels" : `/channels?title=${title}`);
-    setRefetchOn();
-  }, [title]);
+    setState({
+      ...state,
+      isSearching: title !== "",
+      ready: false,
+      trigger: true,
+    });
+  };
+
+  const loadMore = () => {
+    if (url) setState({ ...state, ready: false, trigger: true });
+  };
+
+  const canLoadMore = () => url !== null;
 
   useEffect(() => {
-    if (refetch === true) get();
-  }, [refetch]);
+    if (state.trigger === true) get();
+  }, [state]);
 
   useEffect(() => {
     if (
+      !error &&
       data &&
       // first run
       ((channels.length === 0 && data.channels.length > 0) ||
         // subsequent runs
-        refetch === true)
+        state.trigger === true)
     ) {
       setChannels([...channels, ...data.channels]);
       setUrl(data.links.nextPage);
-      setRefetchOff();
+      setState({ ...state, ready: true, trigger: false });
     }
   }, [data]);
 
   return {
     channels,
-    url, // to check to determine whether a "load more" button is needed
-    title, // to check to determine whether client is performing search
-    setTitle, // to allow another component to trigger a search by changing title
-    setRefetchOn, // to trigger loadmore
-    loading,
     error,
+    state,
+    searchTitle,
+    loadMore,
+    canLoadMore,
   };
 }

@@ -1,6 +1,6 @@
-export { AuthWrapper } from "./AuthWrapper";
-export { MainWrapper } from "./MainWrapper";
-export { IndexWrapper } from "./IndexWrapper";
+export { AuthWrapper } from "./wrappers/AuthWrapper";
+export { MainWrapper } from "./wrappers/MainWrapper";
+export { IndexWrapper } from "./wrappers/IndexWrapper";
 
 export { LoginRoute } from "./LoginRoute";
 export { SignupRoute } from "./SignupRoute";
@@ -9,6 +9,6 @@ export { ChannelsRoute } from "./ChannelsRoute";
 export { UserSettingsRoute } from "./UserSettingsRoute";
 export { AboutRoute } from "./AboutRoute";
 
-export { ChannelWrapper } from "./ChannelWrapper";
+export { ChannelRoute } from "./ChannelRoute";
 
 export { ErrorRoute } from "./ErrorRoute";

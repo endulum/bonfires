@@ -2,7 +2,7 @@ import { useState } from "react";
 import { DarkMode, LightMode } from "@mui/icons-material";
 import { Tooltip } from "react-tooltip";
 
-import { getStoredTheme, storeTheme } from "../../functions/themeUtils";
+import { getStoredTheme, storeTheme } from "../../../functions/themeUtils";
 
 export function ThemeSwitch() {
   const [theme, setTheme] = useState<string>(getStoredTheme());

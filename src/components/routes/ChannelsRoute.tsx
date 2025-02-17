@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { SvgIcon } from "@mui/material";
 
 import Camp from "../../assets/icons/camp.svg?react";
-import { Channels } from "../unique/Channels";
+import { Channels } from "../unique/channel-list/Channels";
 
 export function ChannelsRoute() {
   useDocumentTitle(`Your Camps :: ${import.meta.env.VITE_APP_NAME}`);

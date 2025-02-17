@@ -1,4 +1,4 @@
-import { Alert } from "../reusable/Alert";
+import { Alert } from "../../reusable/Alert";
 
 export function GitHubAlert() {
   return (

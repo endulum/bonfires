@@ -1,8 +1,9 @@
 import { Outlet } from "react-router-dom";
 
-import { type UserData } from "../../types";
+import { type UserData } from "../../../types";
+import { Me } from "../../unique/etc/Me";
 
-export function MainWrapper({
+export function IndexWrapper({
   context,
 }: {
   context: {
@@ -13,9 +14,10 @@ export function MainWrapper({
 }) {
   return (
     <>
-      <main className="flex-col w100">
+      <Me />
+      <div className="outlet">
         <Outlet context={context} />
-      </main>
+      </div>
     </>
   );
 }

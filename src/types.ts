@@ -25,3 +25,8 @@ export type Channel = MongoObject & {
   users: string[];
   lastActivity: string;
 };
+
+export type ChannelData = MongoObject & {
+  title: string;
+  admin: User;
+};

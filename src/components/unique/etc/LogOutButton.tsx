@@ -1,7 +1,7 @@
 import { useNavigate, useOutletContext } from "react-router-dom";
 import { Logout } from "@mui/icons-material";
 
-import { clearStoredToken } from "../../functions/tokenUtils";
+import { clearStoredToken } from "../../../functions/tokenUtils";
 
 export function LogOutButton() {
   const { initUser } = useOutletContext<{ initUser: () => void }>();
