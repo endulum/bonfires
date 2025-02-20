@@ -15,18 +15,25 @@ export type UserData = User & {
 };
 
 export type UserSettings = {
-  defaultNameColor: string;
-  defaultInvisible: boolean;
+  defaultNameColor?: string;
 };
 
 export type Channel = MongoObject & {
   title: string;
-  admin: string;
+  owner: string;
   users: string[];
   lastActivity: string;
 };
 
 export type ChannelData = MongoObject & {
   title: string;
-  admin: User;
+  owner: User;
+  users: ChannelUser[];
+};
+
+export type ChannelUser = UserData & {
+  channelSettings: {
+    displayName?: string;
+    nameColor?: string;
+  };
 };

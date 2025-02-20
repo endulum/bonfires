@@ -1,7 +1,8 @@
-import { InsertPhoto } from "@mui/icons-material";
+import { InsertPhoto, DriveFileRenameOutline } from "@mui/icons-material";
 
 import { ModalButton } from "../reusable/ModalButton";
 import { UploadChannelAvatarForm } from "../forms/UploadChannelAvatarForm";
+import { ChannelTitleForm } from "../forms/ChannelTitleForm";
 
 export function UploadChannelAvatar({
   channelId,
@@ -25,6 +26,35 @@ export function UploadChannelAvatar({
         />
       }
       modalTitle="Change Camp Avatar"
+    />
+  );
+}
+
+export function ChangeChannelTitle({
+  channelId,
+  updateTitle,
+  defaultTitle,
+}: {
+  channelId: string;
+  updateTitle: (newTitle: string) => void;
+  defaultTitle: string;
+}) {
+  return (
+    <ModalButton
+      buttonElement={
+        <button type="button" className="button neutral plain">
+          <DriveFileRenameOutline />
+          <span>Camp name</span>
+        </button>
+      }
+      modalElement={
+        <ChannelTitleForm
+          channelId={channelId}
+          updateTitle={updateTitle}
+          defaultTitle={defaultTitle}
+        />
+      }
+      modalTitle="Change Camp Name"
     />
   );
 }

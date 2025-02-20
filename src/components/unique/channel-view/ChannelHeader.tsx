@@ -1,15 +1,19 @@
 import { Link } from "react-router-dom";
 import { ArrowBack } from "@mui/icons-material";
 
-import { ChannelData } from "../../../types";
 import { useLiveAvatar } from "../../../hooks/useLiveAvatar";
 import { useTextTruncate } from "../../../hooks/useTextTruncate";
 import { FlyoutMenu } from "../../reusable/FlyoutMenu";
 import * as Modals from "../../modals/ChannelModals";
 
-export function ChannelHeader({ channel }: { channel: ChannelData }) {
+import { ChannelContext } from "./ChannelContext";
+import { useContext } from "react";
+
+export function ChannelHeader() {
+  const { id, title, updateTitle } = useContext(ChannelContext);
+
   const { baseURL, resetAvatar, avatarRef } = useLiveAvatar(
-    `${import.meta.env.VITE_API_URL}/channel/${channel._id}/avatar`
+    `${import.meta.env.VITE_API_URL}/channel/${id}/avatar`
   );
   const { truncate } = useTextTruncate({});
 
@@ -20,12 +24,14 @@ export function ChannelHeader({ channel }: { channel: ChannelData }) {
           <ArrowBack />
         </Link>
         <img className="channelview-avatar" src={baseURL} ref={avatarRef} />
-        <h2>{truncate(channel.title)}</h2>
+        <h2>{truncate(title)}</h2>
       </div>
       <FlyoutMenu x="left" y="bottom">
-        <Modals.UploadChannelAvatar
-          channelId={channel._id}
-          resetAvatar={resetAvatar}
+        <Modals.UploadChannelAvatar channelId={id} resetAvatar={resetAvatar} />
+        <Modals.ChangeChannelTitle
+          channelId={id}
+          updateTitle={updateTitle}
+          defaultTitle={title}
         />
       </FlyoutMenu>
     </div>
