@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { useBoolean } from "usehooks-ts";
 import { Tooltip } from "react-tooltip";
 import { Loop, Check, Close, Edit } from "@mui/icons-material";
@@ -28,6 +28,8 @@ export function ChannelTitle() {
     }
   );
 
+  const inputRef = useRef<HTMLInputElement>(null);
+
   const getError = () => {
     if (error) {
       if (inputErrors && Object.keys(inputErrors).length > 0) {
@@ -35,6 +37,10 @@ export function ChannelTitle() {
       } else return error;
     } else return null;
   };
+
+  useEffect(() => {
+    if (isEditing && inputRef.current) inputRef.current.focus();
+  }, [isEditing]);
 
   return (
     <>
@@ -53,6 +59,7 @@ export function ChannelTitle() {
               "data-tooltip-id": "channel-title-error",
               "data-tooltip-place": "bottom",
             })}
+            ref={inputRef}
           />
           <button
             type="submit"
@@ -64,7 +71,13 @@ export function ChannelTitle() {
           >
             {loading ? <Loop className="spin" /> : <Check />}
           </button>
-          {getError() && <Tooltip id="channel-title-error" />}
+          {getError() && (
+            <Tooltip
+              id="channel-title-error"
+              defaultIsOpen={!!getError()}
+              isOpen={!!getError()}
+            />
+          )}
           <Tooltip id="channel-title-submit" />
         </form>
       ) : (
