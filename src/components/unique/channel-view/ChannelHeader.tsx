@@ -4,6 +4,7 @@ import { ArrowBack } from "@mui/icons-material";
 import { FlyoutMenu } from "../../reusable/FlyoutMenu";
 import { ChannelAvatar } from "./ChannelAvatar";
 import { ChannelTitle } from "./ChannelTitle";
+import { ChannelUsers } from "./ChannelUsers";
 
 export function ChannelHeader() {
   return (
@@ -23,12 +24,7 @@ export function ChannelHeader() {
 
       {/* menu */}
       <FlyoutMenu x="left" y="bottom">
-        {/* <Modals.UploadChannelAvatar channelId={id} resetAvatar={resetAvatar} />
-        <Modals.ChangeChannelTitle
-          channelId={id}
-          updateTitle={updateTitle}
-          defaultTitle={title}
-        /> */}
+        <ChannelUsers />
       </FlyoutMenu>
     </div>
   );

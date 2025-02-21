@@ -4,6 +4,7 @@ import { type ChannelData, type ChannelUser } from "../../../types";
 
 type Context = {
   id: string;
+  owner_id: string;
   title: string;
   updateTitle: (newTitle: string) => void;
   users: ChannelUser[];
@@ -58,6 +59,7 @@ const ChannelContextProvider = ({
     <ChannelContext.Provider
       value={{
         id: data._id,
+        owner_id: data.owner._id,
         title,
         updateTitle,
         users,

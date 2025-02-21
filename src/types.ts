@@ -7,7 +7,7 @@ export type User = MongoObject & {
 };
 
 export type UserData = User & {
-  status: string;
+  status?: string;
   ghId: number;
   ghUser: string;
   joined: string;

@@ -114,6 +114,16 @@ hr {
   border-top: 1px solid var(--border);
 }
 
+svg {
+  &.small {
+    width: 1.25rem;
+    height: 1.25rem;
+    min-width: 1.25rem;
+    min-height: 1.25rem;
+    vertical-align: top;
+  }
+}
+
 /* buttons */
 
 .button {
@@ -421,6 +431,25 @@ label {
 
 .ReactModal__Overlay--before-close {
   opacity: 0;
+}
+
+/* avatars */
+
+.avatar {
+  border-radius: 100%;
+  width: var(--av-size);
+  height: var(--av-size);
+  min-width: var(--av-size);
+  min-height: var(--av-size);
+  &.small {
+    --av-size: 30px;
+  }
+  &.med {
+    --av-size: 50px;
+  }
+  &.large {
+    --av-size: 75px;
+  }
 }
 
 /**** unqiue components ****/

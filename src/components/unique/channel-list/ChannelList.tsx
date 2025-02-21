@@ -18,7 +18,7 @@ export function ChannelList({ channels }: { channels: Channel[] }) {
         >
           <div className="channel flex-row jcstart g-1 p-05">
             <img
-              className="channel-avatar"
+              className="avatar large"
               src={`${import.meta.env.VITE_API_URL}/channel/${
                 channel._id
               }/avatar`}
