@@ -5,6 +5,7 @@ import { FlyoutMenu } from "../../reusable/FlyoutMenu";
 import { ChannelAvatar } from "./ChannelAvatar";
 import { ChannelTitle } from "./ChannelTitle";
 import { ChannelUsers } from "./ChannelUsers";
+import { ChannelSettings } from "./ChannelSettings";
 
 export function ChannelHeader() {
   return (
@@ -25,6 +26,7 @@ export function ChannelHeader() {
       {/* menu */}
       <FlyoutMenu x="left" y="bottom">
         <ChannelUsers />
+        <ChannelSettings />
       </FlyoutMenu>
     </div>
   );

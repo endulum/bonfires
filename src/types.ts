@@ -16,6 +16,7 @@ export type UserData = User & {
 
 export type UserSettings = {
   defaultNameColor?: string;
+  defaultVisible: boolean;
 };
 
 export type Channel = MongoObject & {
@@ -35,5 +36,6 @@ export type ChannelUser = UserData & {
   channelSettings: {
     displayName?: string;
     nameColor?: string;
+    visible?: boolean;
   };
 };

@@ -36,6 +36,8 @@ export function useForm<T>(
         inputElement.files
       ) {
         formData.append(inputElement.id, inputElement.files[0]);
+      } else if (inputElement.type === "checkbox") {
+        formData.append(inputElement.id, inputElement.checked);
       } else if (
         (inputElement instanceof HTMLInputElement ||
           inputElement instanceof HTMLTextAreaElement ||

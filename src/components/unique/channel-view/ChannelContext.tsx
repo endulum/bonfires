@@ -1,6 +1,7 @@
 import { createContext, useState } from "react";
 
-import { type ChannelData, type ChannelUser } from "../../../types";
+import { UserData, type ChannelData, type ChannelUser } from "../../../types";
+import { useOutletContext } from "react-router-dom";
 
 type Context = {
   id: string;
@@ -8,7 +9,9 @@ type Context = {
   title: string;
   updateTitle: (newTitle: string) => void;
   users: ChannelUser[];
+  getYou: () => ChannelUser | undefined;
   inviteUser: (user: ChannelUser) => void;
+  updateUser: (user: ChannelUser) => void;
   removeUser: (id: string) => void;
   getSettingsForUser: (id: string) => {
     name: string;
@@ -26,6 +29,8 @@ const ChannelContextProvider = ({
   children: React.ReactNode;
   data: ChannelData;
 }) => {
+  const { user: you } = useOutletContext<{ user: UserData }>();
+
   const [title, setTitle] = useState<string>(data.title);
 
   const updateTitle = (newTitle: string) => {
@@ -33,6 +38,10 @@ const ChannelContextProvider = ({
   };
 
   const [users, setUsers] = useState<ChannelUser[]>(data.users);
+
+  const getYou = () => {
+    return users.find((u) => u._id === you._id);
+  };
 
   const getSettingsForUser = (id: string) => {
     const user = users.find((u) => u._id === id);
@@ -51,6 +60,15 @@ const ChannelContextProvider = ({
     setUsers([...users, user]);
   };
 
+  const updateUser = (user: ChannelUser) => {
+    setUsers(
+      users.map((u) => {
+        if (u._id === user._id) return user;
+        return u;
+      })
+    );
+  };
+
   const removeUser = (id: string) => {
     setUsers(users.filter((u) => u._id !== id));
   };
@@ -63,7 +81,9 @@ const ChannelContextProvider = ({
         title,
         updateTitle,
         users,
+        getYou,
         inviteUser,
+        updateUser,
         removeUser,
         getSettingsForUser,
       }}
