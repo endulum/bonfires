@@ -28,7 +28,7 @@ export function useGet<T>(endpoint: string): {
     });
 
     // toggle on and off
-    const simulateLoading = true;
+    const simulateLoading = false;
     if (simulateLoading)
       setTimeout(() => {
         setLoading(false);
@@ -36,11 +36,9 @@ export function useGet<T>(endpoint: string): {
         else setError(fetchResult.error);
       }, 750);
     else {
-      setTimeout(() => {
-        setLoading(false);
-        if (fetchResult.status === 200) setData(fetchResult.data);
-        else setError(fetchResult.error);
-      }, 750);
+      setLoading(false);
+      if (fetchResult.status === 200) setData(fetchResult.data);
+      else setError(fetchResult.error);
     }
   }
 
