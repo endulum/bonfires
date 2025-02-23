@@ -12,10 +12,14 @@ export function useChannels() {
   const [channels, setChannels] = useState<Channel[]>([]);
   const [url, setUrl] = useState<string | null>("/channels");
 
-  const [state, setState] = useState<Record<string, boolean>>({
+  const [state, setState] = useState<{
+    ready: boolean;
+    isSearching: boolean;
+    triggerFetch: boolean;
+  }>({
     ready: false,
     isSearching: false,
-    trigger: false,
+    triggerFetch: false,
   });
 
   const { error, data, get } = useGet<Response>(url as string);
@@ -27,18 +31,18 @@ export function useChannels() {
       ...state,
       isSearching: title !== "",
       ready: false,
-      trigger: true,
+      triggerFetch: true,
     });
   };
 
   const loadMore = () => {
-    if (url) setState({ ...state, ready: false, trigger: true });
+    if (url) setState({ ...state, ready: false, triggerFetch: true });
   };
 
   const canLoadMore = () => url !== null;
 
   useEffect(() => {
-    if (state.trigger === true) get();
+    if (state.triggerFetch === true) get();
   }, [state]);
 
   useEffect(() => {
@@ -48,11 +52,11 @@ export function useChannels() {
       // first run
       (channels.length === 0 ||
         // subsequent runs
-        state.trigger === true)
+        state.triggerFetch === true)
     ) {
       setChannels([...channels, ...data.channels]);
       setUrl(data.links.nextPage);
-      setState({ ...state, ready: true, trigger: false });
+      setState({ ...state, ready: true, triggerFetch: false });
     }
   }, [data]);
 
