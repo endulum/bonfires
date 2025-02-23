@@ -4,6 +4,8 @@ import { SvgIcon } from "@mui/material";
 
 import Camp from "../../assets/icons/camp.svg?react";
 import { Channels } from "../unique/channel-list/Channels";
+import { ModalButton } from "../reusable/ModalButton";
+import { NewChannel } from "../unique/channel-list/NewChannel";
 
 export function ChannelsRoute() {
   useDocumentTitle(`Your Camps :: ${import.meta.env.VITE_APP_NAME}`);
@@ -11,10 +13,16 @@ export function ChannelsRoute() {
     <>
       <div className="flex-row jcspb mb-1">
         <h2>Your Camps</h2>
-        <Link to="#" type="button" className="button neutral solid">
-          <SvgIcon component={Camp} />
-          <span>New Camp</span>
-        </Link>
+        <ModalButton
+          buttonElement={
+            <Link to="#" type="button" className="button neutral solid">
+              <SvgIcon component={Camp} />
+              <span>New Camp</span>
+            </Link>
+          }
+          modalElement={<NewChannel />}
+          modalTitle="New camp"
+        />
       </div>
       <Channels />
     </>
