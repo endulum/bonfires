@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useOutletContext } from "react-router-dom";
 import { ArrowBack } from "@mui/icons-material";
 
 import { FlyoutMenu } from "../../reusable/FlyoutMenu";
@@ -6,8 +6,15 @@ import { ChannelAvatar } from "./ChannelAvatar";
 import { ChannelTitle } from "./ChannelTitle";
 import { ChannelUsers } from "./ChannelUsers";
 import { ChannelSettings } from "./ChannelSettings";
+import { ChannelLeave } from "./ChannelLeave";
+import { useContext } from "react";
+import { User } from "../../../types";
+import { ChannelContext } from "./ChannelContext";
+import { ChannelDelete } from "./ChannelDelete";
 
 export function ChannelHeader() {
+  const { user } = useOutletContext<{ user: User }>();
+  const { owner_id } = useContext(ChannelContext);
   return (
     <div className="flex-row jcspb mb-05">
       <div className="flex-row g-05">
@@ -27,6 +34,8 @@ export function ChannelHeader() {
       <FlyoutMenu x="left" y="bottom">
         <ChannelUsers />
         <ChannelSettings />
+        <ChannelLeave />
+        {user._id === owner_id && <ChannelDelete />}
       </FlyoutMenu>
     </div>
   );
