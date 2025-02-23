@@ -46,7 +46,7 @@ export function useChannels() {
       !error &&
       data &&
       // first run
-      ((channels.length === 0 && data.channels.length > 0) ||
+      (channels.length === 0 ||
         // subsequent runs
         state.trigger === true)
     ) {
