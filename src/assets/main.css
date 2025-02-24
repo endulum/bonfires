@@ -452,6 +452,12 @@ label {
   }
 }
 
+/* etc */
+
+.faded {
+  color: oklch(from var(--border) calc(l + (var(--lumi) * 7)) c h);
+}
+
 /**** unqiue components ****/
 
 .auth-main {
@@ -558,6 +564,24 @@ button:has(.channelview-avatar) {
   cursor: pointer;
   padding: 0.25rem;
   margin-right: 0.25rem;
+}
+
+/* date dividers for messages */
+
+.messages-beginner {
+  svg {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+  h3 {
+    font-weight: normal;
+  }
+}
+
+.messages-event {
+  svg {
+    color: var(--neutral);
+  }
 }
 
 /* media queries */

@@ -15,9 +15,10 @@ type Context = {
   removeUser: (id: string) => void;
   getSettingsForUser: (id: string) => {
     name: string;
-    color: string;
+    color: string | null;
     isOwner: boolean;
-  } | null;
+    isInChannel: boolean;
+  };
 };
 
 const ChannelContext = createContext({} as Context);
@@ -45,7 +46,13 @@ const ChannelContextProvider = ({
 
   const getSettingsForUser = (id: string) => {
     const user = users.find((u) => u._id === id);
-    if (!user) return null;
+    if (!user)
+      return {
+        name: "unknown",
+        color: null,
+        isOwner: false,
+        isInChannel: false,
+      };
     return {
       name: user.channelSettings.displayName ?? user.username,
       color:
@@ -53,6 +60,7 @@ const ChannelContextProvider = ({
         user.settings.defaultNameColor ??
         "var(--text)",
       isOwner: user._id === data.owner._id,
+      isInChannel: true,
     };
   };
 

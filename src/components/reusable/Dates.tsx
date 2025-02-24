@@ -32,3 +32,30 @@ export function DateRelative({
     </>
   );
 }
+
+export function EventStamp({
+  dateString,
+  eventId,
+}: {
+  dateString: string;
+  eventId: string;
+}) {
+  return (
+    <>
+      <small
+        data-tooltip-id={`${eventId}_${dateString}`}
+        data-tooltip-content={`${DateTime.fromISO(dateString).toLocaleString(
+          format
+        )}`}
+        data-tooltip-place="right"
+        className="faded"
+      >
+        {DateTime.fromISO(dateString).toLocaleString({
+          hour: "numeric",
+          minute: "numeric",
+        })}
+      </small>
+      <Tooltip id={`${eventId}_${dateString}`} />
+    </>
+  );
+}

@@ -39,3 +39,24 @@ export type ChannelUser = UserData & {
     visible?: boolean;
   };
 };
+
+export type MessageData = MongoObject & {
+  pinned: boolean;
+  timestamp: string;
+  user: User;
+  content: string;
+};
+
+export type ChannelEvent = MongoObject & {
+  user: User;
+  targetUser: User;
+  timestamp: string;
+  type:
+    | "user_invite"
+    | "user_kick"
+    | "user_leave"
+    | "channel_title"
+    | "channel_avatar"
+    | "message_pin";
+  newChannelTitle: string;
+};

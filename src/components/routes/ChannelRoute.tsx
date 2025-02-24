@@ -6,6 +6,7 @@ import { useGet } from "../../hooks/useGet";
 import { LoadingSpacer } from "../reusable/LoadingSpacer";
 import { ChannelContextProvider } from "../unique/channel-view/ChannelContext";
 import { ChannelHeader } from "../unique/channel-view/ChannelHeader";
+import { MessageView } from "../unique/messages/MessageView";
 
 export function ChannelRoute() {
   const { camp } = useParams();
@@ -34,19 +35,8 @@ export function ChannelRoute() {
       <>
         <ChannelContextProvider data={data}>
           <ChannelHeader />
+          <MessageView />
         </ChannelContextProvider>
       </>
     );
-
-  /* const { ready, error, channel } = useChannel(camp as string);
-
-  if (!ready || error)
-    
-
-  if (channel)
-    return (
-      <>
-        
-      </>
-    ); */
 }
