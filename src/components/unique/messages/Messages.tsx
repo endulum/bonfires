@@ -14,14 +14,16 @@ const getNumeric = (datestring: string) =>
 
 export function Messages({
   events,
-  children,
+  loadmore,
+  bottom,
 }: {
   events: Array<MessageData | ChannelEvent>;
-  children: React.ReactNode;
+  loadmore: React.ReactNode;
+  bottom: React.ReactNode;
 }) {
   return (
     <div className="outlet" style={{ overflow: "auto" }}>
-      {children}
+      {loadmore}
       <div className="flex-col align-start g-1">
         {events.map((event, index) => {
           if (
@@ -38,6 +40,7 @@ export function Messages({
           return <EventItem key={event._id} data={event} />;
         })}
       </div>
+      {bottom}
     </div>
   );
 }

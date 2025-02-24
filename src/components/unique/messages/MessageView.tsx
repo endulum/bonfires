@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useRef } from "react";
 
 import { ChannelContext } from "../channel-view/ChannelContext";
 import { LoadingSpacer } from "../../reusable/LoadingSpacer";
@@ -10,6 +10,16 @@ import { MessageCompose } from "./MessageCompose";
 
 export function MessageView() {
   const { id } = useContext(ChannelContext);
+
+  const endOfChannel = useRef<HTMLDivElement>(null);
+  const scrollToBottom = () => {
+    if (endOfChannel.current) endOfChannel.current.scrollIntoView();
+  };
+  const scrollToMessage = (id: string) => {
+    const message = document.getElementById(id);
+    if (message) message.scrollIntoView();
+  };
+
   const { state, error, events, loadMore, canLoadMore } = useMessages(id);
 
   return (
@@ -29,21 +39,27 @@ export function MessageView() {
         ))}
 
       {events.length > 0 && (
-        <Messages events={events}>
-          {canLoadMore() ? (
-            <button
-              type="button"
-              className="button neutral plain mt-1"
-              onClick={loadMore}
-              style={{ alignSelf: "center" }}
-              disabled={!state.ready}
-            >
-              <span>{!state.ready ? "Loading..." : "Load more"}</span>
-            </button>
-          ) : (
-            <StartOfChannel />
-          )}
-        </Messages>
+        <>
+          <Messages
+            events={events}
+            loadmore={
+              canLoadMore() ? (
+                <button
+                  type="button"
+                  className="button neutral plain mt-1"
+                  onClick={loadMore}
+                  style={{ alignSelf: "center" }}
+                  disabled={!state.ready}
+                >
+                  <span>{!state.ready ? "Loading..." : "Load more"}</span>
+                </button>
+              ) : (
+                <StartOfChannel />
+              )
+            }
+            bottom={<div ref={endOfChannel} />}
+          ></Messages>
+        </>
       )}
 
       <MessageCompose />
