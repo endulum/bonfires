@@ -6,6 +6,7 @@ import { Loop, Check, Close, Edit } from "@mui/icons-material";
 import { useTextTruncate } from "../../../hooks/useTextTruncate";
 import { ChannelContext } from "./ChannelContext";
 import { useForm } from "../../../hooks/useForm";
+import { unEscape } from "../../../functions/unEscape";
 
 export function ChannelTitle() {
   const {
@@ -52,7 +53,7 @@ export function ChannelTitle() {
           <input
             type="text"
             id="title"
-            defaultValue={title}
+            defaultValue={unEscape(title)}
             {...(getError() && {
               style: { border: `1px solid var(--warning)` },
               "data-tooltip-content": getError(),
@@ -81,7 +82,7 @@ export function ChannelTitle() {
           <Tooltip id="channel-title-submit" />
         </form>
       ) : (
-        <h2>{truncate(title)}</h2>
+        <h2>{truncate(unEscape(title))}</h2>
       )}
       <button
         type="button"
