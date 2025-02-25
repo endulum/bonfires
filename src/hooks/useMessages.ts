@@ -17,9 +17,11 @@ export function useMessages(channelId: string) {
   const [state, setState] = useState<{
     ready: boolean;
     triggerFetch: boolean;
+    scrollToMessage: null | string;
   }>({
     ready: false,
     triggerFetch: false,
+    scrollToMessage: null,
   });
 
   const { error, data, get } = useGet<Response>(url as string);
@@ -34,15 +36,20 @@ export function useMessages(channelId: string) {
       data &&
       (events.length === 0 || state.triggerFetch === true)
     ) {
+      const dataEvents = [...data.events, ...data.messages];
       setEvents([
-        ...[...data.events, ...data.messages].sort(
+        ...dataEvents.sort(
           (a: { timestamp: string }, b: { timestamp: string }) =>
             Date.parse(a.timestamp) - Date.parse(b.timestamp)
         ),
         ...events,
       ]);
       setUrl(data.links.nextPage);
-      setState({ ...state, ready: true, triggerFetch: false });
+      setState({
+        ready: true,
+        triggerFetch: false,
+        scrollToMessage: dataEvents[dataEvents.length - 1]._id,
+      });
     }
   }, [data]);
 

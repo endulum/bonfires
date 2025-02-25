@@ -1,4 +1,4 @@
-import { useContext, useRef } from "react";
+import { useContext, useEffect, useRef } from "react";
 
 import { ChannelContext } from "../channel-view/ChannelContext";
 import { LoadingSpacer } from "../../reusable/LoadingSpacer";
@@ -21,6 +21,11 @@ export function MessageView() {
   };
 
   const { state, error, events, loadMore, canLoadMore } = useMessages(id);
+
+  useEffect(() => {
+    if (state.scrollToMessage) scrollToMessage(state.scrollToMessage);
+    else scrollToBottom();
+  }, [events]);
 
   return (
     <>
