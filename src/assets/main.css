@@ -300,6 +300,9 @@ textarea {
     outline: 2px solid var(--neutral);
     outline-offset: -1px;
   }
+  &::placeholder {
+    color: oklch(from var(--border) calc(l + (var(--lumi) * 7)) c h);
+  }
 }
 
 label {
