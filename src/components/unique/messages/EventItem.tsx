@@ -6,6 +6,7 @@ import { ChannelEvent, MessageData } from "../../../types";
 import { useContext } from "react";
 import { ChannelContext } from "../channel-view/ChannelContext";
 import { EventStamp } from "../../reusable/Dates";
+import { MDWrapper } from "../../reusable/MDWrapper";
 
 export function EventItem({ data }: { data: ChannelEvent | MessageData }) {
   if ("type" in data) return <Event data={data} />;
@@ -29,7 +30,8 @@ function Message({ data }: { data: MessageData }) {
           </p>
           <EventStamp dateString={data.timestamp} eventId={data._id} />
         </div>
-        <p>{data.content}</p>
+
+        <MDWrapper content={data.content} />
       </div>
     </div>
   );
