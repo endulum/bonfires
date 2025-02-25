@@ -82,6 +82,8 @@ export function PersonalizeAppearanceForm() {
           </label>
         )}
 
+        <hr />
+
         <div className="flex-row jcspb w100">
           <label htmlFor="wantsCustomColor">Custom name color?</label>
           <input
@@ -97,9 +99,15 @@ export function PersonalizeAppearanceForm() {
         {wantsCustom.color && (
           <label htmlFor="nameColor">
             <span>Name color</span>
-            <input type="color" id="nameColor" />
+            <input
+              type="color"
+              id="nameColor"
+              defaultValue={you.channelSettings.nameColor}
+            />
           </label>
         )}
+
+        <hr />
 
         <div className="flex-row jcspb w100">
           <div className="flex-row g-05">
