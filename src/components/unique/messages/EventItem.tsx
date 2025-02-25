@@ -16,7 +16,7 @@ function Message({ data }: { data: MessageData }) {
   const { getSettingsForUser } = useContext(ChannelContext);
   const user = getSettingsForUser(data.user._id);
   return (
-    <div className="flex-row align-start g-75" id={data._id}>
+    <div className="event-item flex-row align-start g-75" id={data._id}>
       <img
         className="avatar med"
         src={`${import.meta.env.VITE_API_URL}/user/${data.user._id}/avatar`}
@@ -37,7 +37,7 @@ function Message({ data }: { data: MessageData }) {
 
 function Event({ data }: { data: ChannelEvent }) {
   return (
-    <div className="messages-event flex-row g-05" id={data._id}>
+    <div className="event-item flex-row g-05" id={data._id}>
       {iconForType(data.type)}
       {textForType(data)}
       <EventStamp dateString={data.timestamp} eventId={data._id} />

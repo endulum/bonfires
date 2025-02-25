@@ -578,7 +578,11 @@ button:has(.channelview-avatar) {
   }
 }
 
-.messages-event {
+.event-item {
+  padding: 0.5rem 0;
+  &:last-child {
+    padding-bottom: 1rem;
+  }
   svg {
     color: var(--neutral);
   }

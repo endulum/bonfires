@@ -24,7 +24,7 @@ export function Messages({
   return (
     <div className="outlet" style={{ overflow: "auto" }}>
       {loadmore}
-      <div className="flex-col align-start g-1">
+      <div className="flex-col align-start">
         {events.map((event, index) => {
           if (
             events[index + 1] &&

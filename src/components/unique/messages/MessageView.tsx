@@ -20,7 +20,8 @@ export function MessageView() {
     if (message) message.scrollIntoView();
   };
 
-  const { state, error, events, loadMore, canLoadMore } = useMessages(id);
+  const { state, error, events, loadMore, canLoadMore, addMessage } =
+    useMessages(id);
 
   useEffect(() => {
     if (state.scrollToMessage) scrollToMessage(state.scrollToMessage);
@@ -67,7 +68,7 @@ export function MessageView() {
         </>
       )}
 
-      <MessageCompose />
+      <MessageCompose addMessage={addMessage} />
     </>
   );
 }
