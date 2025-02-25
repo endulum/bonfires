@@ -23,6 +23,9 @@ export function Messages({
 }) {
   return (
     <div className="outlet" style={{ overflow: "auto" }}>
+      <div className="flg">
+        <br />
+      </div>
       {loadmore}
       <div className="flex-col align-start">
         {events.map((event, index) => {

@@ -48,7 +48,8 @@ export function useMessages(channelId: string) {
       setState({
         ready: true,
         triggerFetch: false,
-        scrollToMessage: dataEvents[dataEvents.length - 1]._id,
+        scrollToMessage:
+          dataEvents.length > 0 ? dataEvents[dataEvents.length - 1]._id : null,
       });
     }
   }, [data]);
