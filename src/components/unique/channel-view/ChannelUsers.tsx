@@ -64,7 +64,7 @@ function UserList({
   clearSuccess: () => void;
 }) {
   const { user: you } = useOutletContext<{ user: UserData }>();
-  const { id, owner_id, users, removeUser, getSettingsForUser } =
+  const { id, owner_id, users, getSettingsForUser } =
     useContext(ChannelContext);
 
   return (
@@ -82,7 +82,9 @@ function UserList({
             <div className="flex-col align-start w100">
               <div className="flex-row jcspb g-05 w100">
                 <div className="flex-row align-start g-05">
-                  <h4 style={{ color: user.color }}>{user.name}</h4>
+                  <h4 style={{ color: user.color ?? "var(--text)" }}>
+                    {user.name}
+                  </h4>
                   {user.name !== u.username && (
                     <>
                       <span
@@ -114,7 +116,6 @@ function UserList({
                   <KickUserButton
                     channelId={id}
                     user={u}
-                    removeUser={removeUser}
                     kickSuccess={kickSuccess}
                     clearSuccess={clearSuccess}
                   />

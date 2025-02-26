@@ -5,12 +5,17 @@ import { ChannelContext } from "./ChannelContext";
 import { useLiveAvatar } from "../../../hooks/useLiveAvatar";
 import { ModalButton } from "../../reusable/ModalButton";
 import { UploadChannelAvatarForm } from "../../forms/UploadChannelAvatarForm";
+import { socket } from "../../../functions/socketClient";
 
 export function ChannelAvatar() {
   const { id } = useContext(ChannelContext);
   const { baseURL, resetAvatar, avatarRef } = useLiveAvatar(
     `${import.meta.env.VITE_API_URL}/channel/${id}/avatar`
   );
+
+  socket.on("channel avatar", () => {
+    resetAvatar();
+  });
 
   return (
     <>

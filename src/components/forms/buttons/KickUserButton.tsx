@@ -8,13 +8,11 @@ import { useForm } from "../../../hooks/useForm";
 export function KickUserButton({
   channelId,
   user,
-  removeUser,
   kickSuccess,
   clearSuccess,
 }: {
   channelId: string;
   user: User;
-  removeUser: (id: string) => void;
   kickSuccess: (username: string) => void;
   clearSuccess: () => void;
 }) {
@@ -22,7 +20,6 @@ export function KickUserButton({
     { endpoint: `/channel/${channelId}/kick`, method: "POST" },
     (_submissionData, _submissionResult) => {
       kickSuccess(user.username);
-      removeUser(user._id);
     }
   );
 
