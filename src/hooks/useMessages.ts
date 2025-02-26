@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 import { ChannelEvent, MessageData } from "../types";
 import { useGet } from "./useGet";
+import { socket } from "../functions/socketClient";
 
 type Response = {
   messages: MessageData[];
@@ -60,10 +61,10 @@ export function useMessages(channelId: string) {
 
   const canLoadMore = () => url !== null;
 
-  const addMessage = (data: MessageData) => {
+  socket.on("new event", (data: MessageData | ChannelEvent) => {
     setEvents([...events, data]);
     setState({ ...state, scrollToMessage: null });
-  };
+  });
 
   return {
     events,
@@ -71,6 +72,5 @@ export function useMessages(channelId: string) {
     state,
     loadMore,
     canLoadMore,
-    addMessage,
   };
 }

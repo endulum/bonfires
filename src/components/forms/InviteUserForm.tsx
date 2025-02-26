@@ -11,16 +11,15 @@ export function InviteUserForm({
   inviteSuccess: (username: string) => void;
   clearSuccess: () => void;
 }) {
-  const { id, inviteUser } = useContext(ChannelContext);
+  const { id } = useContext(ChannelContext);
   return (
     <Form<ChannelUser>
       destination={{ endpoint: `/channel/${id}/invite`, method: "POST" }}
       onSubmit={() => {
         clearSuccess();
       }}
-      onSuccess={(_submissionData, submissionResult) => {
-        inviteSuccess(submissionResult.username);
-        inviteUser(submissionResult);
+      onSuccess={(submissionData, _submissionResult) => {
+        inviteSuccess(submissionData.username);
       }}
       buttonText="Invite"
     >

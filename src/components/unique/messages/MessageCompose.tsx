@@ -6,19 +6,14 @@ import { ChannelContext } from "../channel-view/ChannelContext";
 import { MessageData } from "../../../types";
 import { Alert } from "../../reusable/Alert";
 
-export function MessageCompose({
-  addMessage,
-}: {
-  addMessage: (data: MessageData) => void;
-}) {
+export function MessageCompose() {
   const form = useRef<HTMLFormElement>(null);
   const textarea = useRef<HTMLTextAreaElement>(null);
   const { id } = useContext(ChannelContext);
   const { loading, error, inputErrors, handleSubmit } = useForm<MessageData>(
     { endpoint: `/channel/${id}/messages`, method: "POST" },
-    (_submissionData, submissionResult) => {
+    (_submissionData, _submissionResult) => {
       if (textarea.current) textarea.current.value = "";
-      addMessage(submissionResult);
     }
   );
 

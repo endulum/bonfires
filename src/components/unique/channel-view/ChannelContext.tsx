@@ -2,6 +2,7 @@ import { createContext, useState } from "react";
 
 import { UserData, type ChannelData, type ChannelUser } from "../../../types";
 import { useOutletContext } from "react-router-dom";
+import { socket } from "../../../functions/socketClient";
 
 type Context = {
   id: string;
@@ -10,9 +11,9 @@ type Context = {
   updateTitle: (newTitle: string) => void;
   users: ChannelUser[];
   getYou: () => ChannelUser | undefined;
-  inviteUser: (user: ChannelUser) => void;
-  updateUser: (user: ChannelUser) => void;
-  removeUser: (id: string) => void;
+  // inviteUser: (user: ChannelUser) => void;
+  // updateUser: (user: ChannelUser) => void;
+  // removeUser: (id: string) => void;
   getSettingsForUser: (id: string) => {
     name: string;
     color: string | null;
@@ -64,22 +65,26 @@ const ChannelContextProvider = ({
     };
   };
 
-  const inviteUser = (user: ChannelUser) => {
-    setUsers([...users, user]);
-  };
+  socket.on("channel title", (newTitle: string) => {
+    setTitle(newTitle);
+  });
 
-  const updateUser = (user: ChannelUser) => {
+  socket.on("user invite", (user: ChannelUser) => {
+    setUsers([...users, user]);
+  });
+
+  socket.on("user leave", (id: string) => {
+    setUsers(users.filter((u) => u._id !== id));
+  });
+
+  socket.on("user personalize", (user: ChannelUser) => {
     setUsers(
       users.map((u) => {
         if (u._id === user._id) return user;
         return u;
       })
     );
-  };
-
-  const removeUser = (id: string) => {
-    setUsers(users.filter((u) => u._id !== id));
-  };
+  });
 
   return (
     <ChannelContext.Provider
@@ -90,9 +95,9 @@ const ChannelContextProvider = ({
         updateTitle,
         users,
         getYou,
-        inviteUser,
-        updateUser,
-        removeUser,
+        // inviteUser,
+        // updateUser,
+        // removeUser,
         getSettingsForUser,
       }}
     >

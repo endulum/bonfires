@@ -26,6 +26,7 @@
     "react-toastify": "^11.0.1",
     "react-tooltip": "^5.28.0",
     "remark-gfm": "^4.0.0",
+    "socket.io-client": "^4.8.1",
     "usehooks-ts": "^3.1.0"
   },
   "devDependencies": {
