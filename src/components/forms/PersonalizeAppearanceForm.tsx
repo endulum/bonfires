@@ -16,7 +16,7 @@ export function PersonalizeAppearanceForm() {
   const [wantsCustom, setWantsCustom] = useState<Record<string, boolean>>({
     name: !!you && "displayName" in you.channelSettings,
     color: !!you && "nameColor" in you.channelSettings,
-    visibility: !!you && "visibility" in you.channelSettings,
+    visibility: !!you && "invisible" in you.channelSettings,
   });
   const {
     value: success,
@@ -138,7 +138,7 @@ export function PersonalizeAppearanceForm() {
             <input
               type="checkbox"
               id="invisible"
-              defaultChecked={!!you.channelSettings.visible}
+              defaultChecked={!!you.channelSettings.invisible}
             />
           </label>
         )}

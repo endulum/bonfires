@@ -14,6 +14,7 @@ type Context = {
   getSettingsForUser: (id: string) => {
     name: string;
     color: string | null;
+    invisible: boolean;
     isOwner: boolean;
     isInChannel: boolean;
   };
@@ -48,6 +49,7 @@ const ChannelContextProvider = ({
       return {
         name: "unknown",
         color: null,
+        invisible: true,
         isOwner: false,
         isInChannel: false,
       };
@@ -57,6 +59,10 @@ const ChannelContextProvider = ({
         user.channelSettings.nameColor ??
         user.settings.defaultNameColor ??
         "var(--text)",
+      invisible:
+        user.channelSettings.invisible !== undefined
+          ? user.channelSettings.invisible
+          : user.settings.defaultInvisible,
       isOwner: user._id === data.owner._id,
       isInChannel: true,
     };
