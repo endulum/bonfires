@@ -6,6 +6,7 @@ import { ChannelContext } from "../channel-view/ChannelContext";
 import { MessageData } from "../../../types";
 import { Alert } from "../../reusable/Alert";
 import { ActiveUsers } from "./ActiveUsers";
+import { useIsTyping } from "../../../hooks/useIsTyping";
 
 export function MessageCompose() {
   const form = useRef<HTMLFormElement>(null);
@@ -17,6 +18,7 @@ export function MessageCompose() {
       if (textarea.current) textarea.current.value = "";
     }
   );
+  const { startTyping, stopTyping } = useIsTyping();
 
   const getError = () => {
     if (error) {
@@ -37,7 +39,14 @@ export function MessageCompose() {
   };
 
   return (
-    <form onSubmit={handleSubmit} ref={form} className="flex-col">
+    <form
+      onSubmit={(e) => {
+        stopTyping();
+        handleSubmit(e);
+      }}
+      ref={form}
+      className="flex-col"
+    >
       <hr />
       <ActiveUsers />
       {getError() !== null && (
@@ -52,6 +61,9 @@ export function MessageCompose() {
           id="content"
           ref={textarea}
           onKeyDown={handleKeyDown}
+          onChange={() => {
+            startTyping();
+          }}
         />
         <button
           type="submit"
