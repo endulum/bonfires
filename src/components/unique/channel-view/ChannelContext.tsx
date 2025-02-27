@@ -91,7 +91,7 @@ const ChannelContextProvider = ({
 
   const [activeUsers, setActiveUsers] = useState<Array<User>>([]);
 
-  socket.on("activity", async (users: User[] | null) => {
+  socket.on("activity update", async (users: User[] | null) => {
     if (users) setActiveUsers(users);
     else setActiveUsers([]);
   });
