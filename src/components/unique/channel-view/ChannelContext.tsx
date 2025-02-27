@@ -1,14 +1,8 @@
 import { createContext, useState } from "react";
 
-import {
-  User,
-  UserData,
-  type ChannelData,
-  type ChannelUser,
-} from "../../../types";
+import { UserData, type ChannelData, type ChannelUser } from "../../../types";
 import { useOutletContext } from "react-router-dom";
 import { socket } from "../../../functions/socketClient";
-import { useLogger } from "../../../hooks/useLogger";
 
 type Context = {
   id: string;
@@ -88,15 +82,6 @@ const ChannelContextProvider = ({
       })
     );
   });
-
-  const [activeUsers, setActiveUsers] = useState<Array<User>>([]);
-
-  socket.on("activity update", async (users: User[] | null) => {
-    if (users) setActiveUsers(users);
-    else setActiveUsers([]);
-  });
-
-  useLogger({ activeUsers });
 
   return (
     <ChannelContext.Provider

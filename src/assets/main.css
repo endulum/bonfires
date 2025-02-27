@@ -591,6 +591,20 @@ button:has(.channelview-avatar) {
   }
 }
 
+/* active users */
+
+.activeroll {
+  padding: 0.5rem 0;
+}
+
+.activeroll-user {
+  img {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 100%;
+  }
+}
+
 /* media queries */
 
 @media screen and (max-width: 500px) {

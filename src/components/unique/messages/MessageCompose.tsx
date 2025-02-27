@@ -5,6 +5,7 @@ import { useForm } from "../../../hooks/useForm";
 import { ChannelContext } from "../channel-view/ChannelContext";
 import { MessageData } from "../../../types";
 import { Alert } from "../../reusable/Alert";
+import { ActiveUsers } from "./ActiveUsers";
 
 export function MessageCompose() {
   const form = useRef<HTMLFormElement>(null);
@@ -37,7 +38,8 @@ export function MessageCompose() {
 
   return (
     <form onSubmit={handleSubmit} ref={form} className="flex-col">
-      <hr className="mb-1" />
+      <hr />
+      <ActiveUsers />
       {getError() !== null && (
         <Alert type="warning" className="mb-1">
           <p>{getError()}</p>
