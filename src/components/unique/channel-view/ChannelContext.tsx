@@ -1,8 +1,14 @@
 import { createContext, useState } from "react";
 
-import { UserData, type ChannelData, type ChannelUser } from "../../../types";
+import {
+  User,
+  UserData,
+  type ChannelData,
+  type ChannelUser,
+} from "../../../types";
 import { useOutletContext } from "react-router-dom";
 import { socket } from "../../../functions/socketClient";
+import { useLogger } from "../../../hooks/useLogger";
 
 type Context = {
   id: string;
@@ -11,9 +17,6 @@ type Context = {
   updateTitle: (newTitle: string) => void;
   users: ChannelUser[];
   getYou: () => ChannelUser | undefined;
-  // inviteUser: (user: ChannelUser) => void;
-  // updateUser: (user: ChannelUser) => void;
-  // removeUser: (id: string) => void;
   getSettingsForUser: (id: string) => {
     name: string;
     color: string | null;
@@ -86,6 +89,15 @@ const ChannelContextProvider = ({
     );
   });
 
+  const [activeUsers, setActiveUsers] = useState<Array<User>>([]);
+
+  socket.on("activity", async (users: User[] | null) => {
+    if (users) setActiveUsers(users);
+    else setActiveUsers([]);
+  });
+
+  useLogger({ activeUsers });
+
   return (
     <ChannelContext.Provider
       value={{
@@ -95,9 +107,6 @@ const ChannelContextProvider = ({
         updateTitle,
         users,
         getYou,
-        // inviteUser,
-        // updateUser,
-        // removeUser,
         getSettingsForUser,
       }}
     >

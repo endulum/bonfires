@@ -7,9 +7,9 @@ import { Messages } from "./Messages";
 import { NoResultsSpacer } from "../../reusable/NoResultsSpacer";
 import { StartOfChannel } from "./Dividers";
 import { MessageCompose } from "./MessageCompose";
-import { socket } from "../../../functions/socketClient";
 import { useOutletContext } from "react-router-dom";
 import { User } from "../../../types";
+import { useSocket } from "../../../hooks/useSocket";
 
 export function MessageView() {
   const { id, title } = useContext(ChannelContext);
@@ -26,17 +26,7 @@ export function MessageView() {
 
   const { state, error, events, loadMore, canLoadMore } = useMessages(id);
 
-  const disconnect = () =>
-    socket.emit("leave channel", { _id: id, title }, user);
-
-  useEffect(() => {
-    socket.emit("view channel", { _id: id, title }, user);
-    window.addEventListener("beforeunload", disconnect);
-    return () => {
-      socket.emit("leave channel", { _id: id, title }, user);
-      window.removeEventListener("beforeunload", disconnect);
-    };
-  }, []);
+  useSocket({ _id: id, title }, user);
 
   useEffect(() => {
     if (state.scrollToMessage) scrollToMessage(state.scrollToMessage);
