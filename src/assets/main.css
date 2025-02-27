@@ -284,6 +284,22 @@ svg {
   }
 }
 
+.blink {
+  animation: blink 2s infinite linear;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
 /* inputs and forms */
 
 input:not([type="checkbox"]),
@@ -583,6 +599,15 @@ button:has(.channelview-avatar) {
 
 .activeroll {
   padding: 0.5rem 0;
+}
+
+.activeroll-user {
+  background-color: var(--overlay);
+  padding: 0.25rem;
+  border-radius: 99px;
+  &:has(small) {
+    padding-right: 0.5rem;
+  }
 }
 
 /* media queries */

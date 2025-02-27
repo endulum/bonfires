@@ -1,4 +1,5 @@
 import { Tooltip } from "react-tooltip";
+import { MoreHoriz } from "@mui/icons-material";
 
 import { useActiveUsers } from "../../../hooks/useActiveUsers";
 import { useLogger } from "../../../hooks/useLogger";
@@ -15,7 +16,7 @@ export function ActiveUsers() {
   useLogger({ activeUsers });
 
   return (
-    <div className="activeroll flex-row align-start w100 g-05">
+    <div className="activeroll flex-row align-start w100 g-25">
       {activeUsers
         .filter((u) => u.user._id !== you._id)
         .map((u) => {
@@ -23,7 +24,7 @@ export function ActiveUsers() {
           return (
             <Fragment key={u.user._id}>
               <div
-                className="activeroll-user flex-row g-25"
+                className="activeroll-user flex-row"
                 data-tooltip-id={`active_${u.user._id}`}
                 data-tooltip-content={`${user.name} is ${
                   u.isTyping ? "typing" : "active"
@@ -37,7 +38,7 @@ export function ActiveUsers() {
                   }/avatar`}
                   alt={`Avatar of user ${user.name}`}
                 />
-                {u.isTyping && <small>is typing...</small>}
+                {u.isTyping && <MoreHoriz className="blink" />}
               </div>
               <Tooltip id={`active_${u.user._id}`} />
             </Fragment>
