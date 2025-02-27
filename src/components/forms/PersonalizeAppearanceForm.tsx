@@ -5,15 +5,13 @@ import { Form } from "../reusable/Form";
 import { ChannelContext } from "../unique/channel-view/ChannelContext";
 import { InputChecklist } from "../reusable/InputChecklist";
 import { ChannelUser } from "../../types";
-import { useLogger } from "../../hooks/useLogger";
 import { Tooltip } from "react-tooltip";
 import { useBoolean } from "usehooks-ts";
 import { Alert } from "../reusable/Alert";
 
 export function PersonalizeAppearanceForm() {
-  const { id, getYou, updateUser } = useContext(ChannelContext);
+  const { id, getYou } = useContext(ChannelContext);
   const you = getYou();
-  useLogger({ you });
 
   const [wantsCustom, setWantsCustom] = useState<Record<string, boolean>>({
     name: !!you && "displayName" in you.channelSettings,
@@ -31,9 +29,8 @@ export function PersonalizeAppearanceForm() {
       <Form<ChannelUser>
         destination={{ endpoint: `/channel/${id}/settings`, method: "PUT" }}
         onSubmit={turnOffSuccess}
-        onSuccess={(_submissionData, submissionResult) => {
+        onSuccess={(_submissionData, _submissionResult) => {
           turnOnSuccess();
-          updateUser(submissionResult);
         }}
         buttonText="Save"
       >
