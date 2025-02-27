@@ -27,7 +27,11 @@ export function ChannelAvatar() {
             data-tooltip-place="bottom-start"
             data-tooltip-content="Change camp avatar"
           >
-            <img className="channelview-avatar" src={baseURL} ref={avatarRef} />
+            <img
+              className="avatar small channelview-avatar"
+              src={baseURL}
+              ref={avatarRef}
+            />
           </button>
         }
         modalElement={

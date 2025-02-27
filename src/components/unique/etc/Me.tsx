@@ -21,7 +21,12 @@ export function Me() {
     <header className="me flex-row g-1 mb-1">
       {/* avatar */}
       <div className="me-avatar p-05">
-        <img src={baseURL} alt="Your avatar" ref={avatarRef} />
+        <img
+          className="avatar index-self"
+          src={baseURL}
+          alt="Your avatar"
+          ref={avatarRef}
+        />
         <UploadOwnAvatar resetAvatar={resetAvatar} />
       </div>
 

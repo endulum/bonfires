@@ -31,6 +31,7 @@ export function ActiveUsers() {
                 data-tooltip-place="top-start"
               >
                 <img
+                  className="avatar small"
                   src={`${import.meta.env.VITE_API_URL}/user/${
                     u.user._id
                   }/avatar`}

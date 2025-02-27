@@ -62,7 +62,7 @@ function ChannelUsers({ channel }: { channel: Channel }) {
           .map((user) => (
             <img
               key={user}
-              className="channel-user"
+              className="channel-user avatar small"
               src={`${import.meta.env.VITE_API_URL}/user/${user}/avatar`}
             />
           ))}

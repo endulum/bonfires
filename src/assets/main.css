@@ -444,14 +444,27 @@ label {
   height: var(--av-size);
   min-width: var(--av-size);
   min-height: var(--av-size);
-  &.small {
+  &.small,
+  &.channel-view {
     --av-size: 30px;
   }
   &.med {
     --av-size: 50px;
   }
-  &.large {
+  &.large,
+  &.index-self {
     --av-size: 75px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .avatar {
+    &.med {
+      --av-size: 40px;
+    }
+    &.large {
+      --av-size: 50px;
+    }
   }
 }
 
@@ -483,12 +496,6 @@ label {
   position: relative;
   background-color: var(--overlay);
   border-radius: 100%;
-  img {
-    height: 75px;
-    width: 75px;
-    min-width: 75px;
-    border-radius: 100%;
-  }
   button {
     background-color: var(--overlay) !important;
     color: var(--text) !important;
@@ -504,8 +511,6 @@ label {
 }
 
 .channel {
-  /* outline: 1px solid red;
-  outline-offset: -1px; */
   font-weight: normal;
   background-color: transparent;
   border-radius: 999px;
@@ -519,16 +524,7 @@ label {
   }
 }
 
-.channel-avatar {
-  width: 75px;
-  height: 75px;
-  min-width: 75px;
-  min-height: 75px;
-  border-radius: 100%;
-}
-
 .channel-user {
-  border-radius: 100%;
   + .channel-user,
   + .channel-user-badge {
     margin-left: -0.5rem;
@@ -551,14 +547,6 @@ label {
   border: 3px solid var(--surface);
   height: 30px;
   min-height: 30px;
-}
-
-.channelview-avatar {
-  width: 30px;
-  height: 30px;
-  min-width: 30px;
-  min-height: 30px;
-  border-radius: 100%;
 }
 
 button:has(.channelview-avatar) {
@@ -597,14 +585,6 @@ button:has(.channelview-avatar) {
   padding: 0.5rem 0;
 }
 
-.activeroll-user {
-  img {
-    width: 1.5rem;
-    height: 1.5rem;
-    border-radius: 100%;
-  }
-}
-
 /* media queries */
 
 @media screen and (max-width: 500px) {
@@ -621,12 +601,5 @@ button:has(.channelview-avatar) {
   }
   .channel {
     height: calc(1rem + 50px);
-  }
-
-  .channel-avatar {
-    width: 50px;
-    height: 50px;
-    min-width: 50px;
-    min-height: 50px;
   }
 }
