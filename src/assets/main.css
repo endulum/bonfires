@@ -124,6 +124,14 @@ svg {
   }
 }
 
+.list {
+  list-style: square;
+  li {
+    margin-left: 1rem;
+    margin-bottom: 0.25rem;
+  }
+}
+
 /* buttons */
 
 .button {
