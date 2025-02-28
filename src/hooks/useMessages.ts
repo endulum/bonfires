@@ -68,6 +68,15 @@ export function useMessages(channelId: string) {
     }
   });
 
+  socket.on("message edit", (data: MessageData) => {
+    setEvents(
+      events.map((e) => {
+        if (e._id === data._id) return data;
+        return e;
+      })
+    );
+  });
+
   return {
     events,
     error,

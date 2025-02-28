@@ -1,3 +1,4 @@
+import { EditNote } from "@mui/icons-material";
 import { DateTime, type DateTimeFormatOptions } from "luxon";
 import { Tooltip } from "react-tooltip";
 
@@ -35,9 +36,11 @@ export function DateRelative({
 
 export function EventStamp({
   dateString,
+  lastEditedString,
   eventId,
 }: {
   dateString: string;
+  lastEditedString?: string;
   eventId: string;
 }) {
   return (
@@ -56,6 +59,20 @@ export function EventStamp({
         })}
       </small>
       <Tooltip id={`${eventId}_${dateString}`} />
+      {lastEditedString && (
+        <>
+          <span
+            className="faded"
+            data-tooltip-id={`${eventId}_edited_${lastEditedString}`}
+            data-tooltip-content={`Last edited ${DateTime.fromISO(
+              lastEditedString
+            ).toLocaleString(format)}`}
+          >
+            <EditNote className="small" />
+          </span>
+          <Tooltip id={`${eventId}_edited_${lastEditedString}`} />
+        </>
+      )}
     </>
   );
 }

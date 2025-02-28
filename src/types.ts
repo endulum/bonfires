@@ -45,6 +45,7 @@ export type MessageData = MongoObject & {
   timestamp: string;
   user: User;
   content: string;
+  lastEdited?: string;
 };
 
 export type ChannelEvent = MongoObject & {

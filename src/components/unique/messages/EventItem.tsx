@@ -39,12 +39,20 @@ function Message({ data }: { data: MessageData }) {
           <p style={{ color: user.color ?? "var(--text)" }}>
             <b>{user.name}</b>
           </p>
-          <EventStamp dateString={data.timestamp} eventId={data._id} />
+          <EventStamp
+            dateString={data.timestamp}
+            lastEditedString={data.lastEdited}
+            eventId={data._id}
+          />
         </div>
         <MDWrapper content={data.content} />
       </div>
       {(isHovering || isOpen) && (
         <MessageDropdown
+          data={data}
+          onSuccess={() => {
+            setIsOpen(false);
+          }}
           onToggle={(opened) => {
             setIsOpen(opened);
           }}
