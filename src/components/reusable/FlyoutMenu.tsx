@@ -1,15 +1,17 @@
 import { MoreHoriz, Close } from "@mui/icons-material";
-import { useRef, Children } from "react";
+import { useRef, Children, useEffect } from "react";
 import { useBoolean } from "usehooks-ts";
 import { useOnClickOutside } from "usehooks-ts";
 
 export function FlyoutMenu({
   x,
   y,
+  onToggle,
   children,
 }: {
   x: "left" | "right";
   y: "bottom" | "top";
+  onToggle?: (opened: boolean) => void;
   children: React.ReactNode;
 }) {
   const { value: opened, setTrue: open, setFalse: close } = useBoolean(false);
@@ -18,6 +20,10 @@ export function FlyoutMenu({
     const target = e.target as HTMLElement;
     if (opened && !target.closest(".ReactModalPortal")) close();
   });
+
+  useEffect(() => {
+    if (onToggle) onToggle(opened);
+  }, [opened]);
 
   /* don't render if no children detected */
   if (Children.toArray(children).length > 0)

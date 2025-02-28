@@ -590,8 +590,28 @@ button:has(.channelview-avatar) {
   &:last-child {
     padding-bottom: 1rem;
   }
-  svg {
+  > svg {
     color: var(--neutral);
+  }
+}
+
+/* messages */
+
+.message {
+  padding: 0.5rem;
+  border-radius: var(--radius);
+  width: 100%;
+  position: relative;
+  &:hover {
+    background-color: oklch(from var(--base) l c h / 0.5);
+  }
+}
+
+.message-dropdown {
+  position: absolute;
+  right: 1rem;
+  .flyout > button {
+    padding: 0.25rem;
   }
 }
 

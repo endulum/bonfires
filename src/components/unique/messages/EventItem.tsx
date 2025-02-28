@@ -1,12 +1,14 @@
 import { ArrowBack, ArrowForward, Close, Edit, Pin } from "@mui/icons-material";
 import { SvgIcon } from "@mui/material";
+import { useHover } from "usehooks-ts";
 
 import Fire from "../../../assets/icons/fire.svg?react";
 import { ChannelEvent, MessageData } from "../../../types";
-import { useContext } from "react";
+import { useContext, useRef, useState } from "react";
 import { ChannelContext } from "../channel-view/ChannelContext";
 import { EventStamp } from "../../reusable/Dates";
 import { MDWrapper } from "../../reusable/MDWrapper";
+import { MessageDropdown } from "./MessageDropdown";
 
 export function EventItem({ data }: { data: ChannelEvent | MessageData }) {
   if ("type" in data) return <Event data={data} />;
@@ -16,8 +18,17 @@ export function EventItem({ data }: { data: ChannelEvent | MessageData }) {
 function Message({ data }: { data: MessageData }) {
   const { getSettingsForUser } = useContext(ChannelContext);
   const user = getSettingsForUser(data.user._id);
+
+  const hoverRef = useRef<HTMLDivElement>(null);
+  const isHovering = useHover(hoverRef);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
   return (
-    <div className="event-item flex-row align-start g-75" id={data._id}>
+    <div
+      className="event-item message flex-row align-start g-75"
+      id={data._id}
+      ref={hoverRef}
+    >
       <img
         className="avatar med"
         src={`${import.meta.env.VITE_API_URL}/user/${data.user._id}/avatar`}
@@ -30,9 +41,15 @@ function Message({ data }: { data: MessageData }) {
           </p>
           <EventStamp dateString={data.timestamp} eventId={data._id} />
         </div>
-
         <MDWrapper content={data.content} />
       </div>
+      {(isHovering || isOpen) && (
+        <MessageDropdown
+          onToggle={(opened) => {
+            setIsOpen(opened);
+          }}
+        />
+      )}
     </div>
   );
 }
