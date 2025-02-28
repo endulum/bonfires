@@ -8,6 +8,7 @@ import { ChannelContext } from "../channel-view/ChannelContext";
 
 import { ModalButton } from "../../reusable/ModalButton";
 import { EditMessageForm } from "../../forms/EditMessageForm";
+import { MessageItem } from "./MessageItem";
 
 export function MessageDropdown({
   data,
@@ -44,10 +45,23 @@ export function MessageDropdown({
         )}
 
         {/* anyone can pin any message */}
-        <button type="button" className="button neutral plain">
-          <PushPin />
-          <span>Pin message</span>
-        </button>
+        <ModalButton
+          buttonElement={
+            <button type="button" className="button neutral plain">
+              <PushPin />
+              <span>Pin message</span>
+            </button>
+          }
+          modalElement={
+            <>
+              <p className="mb-1">Are you sure you want to pin this message?</p>
+              <div className="modal-messages flex-col">
+                <MessageItem data={data} />
+              </div>
+            </>
+          }
+          modalTitle="Pin message"
+        />
 
         {/* if it's your message or your camp, you're able to delete it */}
         {(data.user._id === user._id || user._id === owner_id) && (
