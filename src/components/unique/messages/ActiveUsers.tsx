@@ -2,7 +2,6 @@ import { Tooltip } from "react-tooltip";
 import { MoreHoriz } from "@mui/icons-material";
 
 import { useActiveUsers } from "../../../hooks/useActiveUsers";
-import { useLogger } from "../../../hooks/useLogger";
 import { useOutletContext } from "react-router-dom";
 import { Fragment } from "react/jsx-runtime";
 import { useContext } from "react";
@@ -12,8 +11,6 @@ export function ActiveUsers() {
   const { user: you } = useOutletContext<{ user: { _id: string } }>();
   const { getSettingsForUser } = useContext(ChannelContext);
   const activeUsers = useActiveUsers();
-
-  useLogger({ activeUsers });
 
   return (
     <div className="activeroll flex-row align-start w100 g-25">

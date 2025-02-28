@@ -69,7 +69,7 @@ export function MessageView() {
               )
             }
             bottom={<div ref={endOfChannel} />}
-          ></Messages>
+          />
         </>
       )}
 

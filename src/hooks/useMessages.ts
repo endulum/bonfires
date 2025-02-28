@@ -61,9 +61,11 @@ export function useMessages(channelId: string) {
 
   const canLoadMore = () => url !== null;
 
-  socket.on("new event", (data: MessageData | ChannelEvent) => {
-    setEvents([...events, data]);
-    setState({ ...state, scrollToMessage: null });
+  socket.on("new event", (data: MessageData | ChannelEvent | null) => {
+    if (data) {
+      setEvents([...events, data]);
+      setState({ ...state, scrollToMessage: null });
+    }
   });
 
   return {

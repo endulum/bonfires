@@ -6,12 +6,18 @@ import { ChannelContext } from "../components/unique/channel-view/ChannelContext
 
 export function useSocket(channel: { _id: string; title: string }, user: User) {
   const { getYou, getSettingsForUser } = useContext(ChannelContext);
-  const yourSettings = getSettingsForUser(getYou()!._id);
 
   const timerRef: { current: ReturnType<typeof setInterval> | null } =
     useRef(null);
 
+  const getYourSettings = () => {
+    const you = getYou();
+    if (!you) return null;
+    return getSettingsForUser(you._id);
+  };
+
   const disconnect = () => {
+    const yourSettings = getYourSettings();
     window.removeEventListener("beforeunload", disconnect);
     socket.emit(
       "leave channel",
@@ -19,12 +25,14 @@ export function useSocket(channel: { _id: string; title: string }, user: User) {
       {
         _id: user._id,
         username: user.username,
-        invisible: yourSettings.invisible,
+        invisible: yourSettings ? yourSettings.invisible : false,
       }
     );
   };
 
   const connect = () => {
+    const yourSettings = getYourSettings();
+    if (!yourSettings) return;
     window.addEventListener("beforeunload", disconnect);
     socket.emit(
       "view channel",
