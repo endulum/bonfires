@@ -67,6 +67,15 @@ export function UserSettingsForm() {
         />
       </label>
 
+      <label htmlFor="tagline">
+        <span>Tagline</span>
+        <textarea
+          id="tagline"
+          defaultValue={user.tagline}
+          maxLength={256}
+        ></textarea>
+      </label>
+
       <div className="flex-row jcspb w100">
         <div className="flex-row g-05">
           <label htmlFor="wantsCustomColor">Set a default name color?</label>

@@ -122,9 +122,9 @@ function UserList({
                 )}
               </div>
 
-              {u.status && (
+              {u.tagline && u.tagline !== "" && (
                 <p>
-                  <small>{u.status}</small>
+                  <small>{u.tagline}</small>
                 </p>
               )}
             </div>
