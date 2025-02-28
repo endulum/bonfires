@@ -77,6 +77,15 @@ export function useMessages(channelId: string) {
     );
   });
 
+  socket.on("message pin", (data: MessageData, pinned: boolean) => {
+    setEvents(
+      events.map((e) => {
+        if (e._id === data._id) return { ...e, pinned };
+        return e;
+      })
+    );
+  });
+
   return {
     events,
     error,

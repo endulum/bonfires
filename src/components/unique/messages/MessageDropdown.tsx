@@ -8,7 +8,7 @@ import { ChannelContext } from "../channel-view/ChannelContext";
 
 import { ModalButton } from "../../reusable/ModalButton";
 import { EditMessageForm } from "../../forms/EditMessageForm";
-import { MessageItem } from "./MessageItem";
+import { PinMessageForm } from "../../forms/PinMessageForm";
 
 export function MessageDropdown({
   data,
@@ -49,16 +49,11 @@ export function MessageDropdown({
           buttonElement={
             <button type="button" className="button neutral plain">
               <PushPin />
-              <span>Pin message</span>
+              <span>{data.pinned ? "Unpin" : "Pin"} message</span>
             </button>
           }
           modalElement={
-            <>
-              <p className="mb-1">Are you sure you want to pin this message?</p>
-              <div className="modal-messages flex-col">
-                <MessageItem data={data} />
-              </div>
-            </>
+            <PinMessageForm channelId={id} data={data} onSuccess={onSuccess} />
           }
           modalTitle="Pin message"
         />

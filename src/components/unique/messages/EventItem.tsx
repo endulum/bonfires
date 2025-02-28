@@ -1,4 +1,10 @@
-import { ArrowBack, ArrowForward, Close, Edit, Pin } from "@mui/icons-material";
+import {
+  ArrowBack,
+  ArrowForward,
+  Close,
+  Edit,
+  PushPin,
+} from "@mui/icons-material";
 import { SvgIcon } from "@mui/material";
 
 import Fire from "../../../assets/icons/fire.svg?react";
@@ -34,7 +40,7 @@ const iconForType = (type: string) => {
     case "channel_avatar":
       return <Edit />;
     case "message_pin":
-      return <Pin />;
+      return <PushPin />;
     default:
       return <SvgIcon component={Fire} />;
   }
