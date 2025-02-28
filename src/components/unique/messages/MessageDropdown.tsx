@@ -9,6 +9,7 @@ import { ChannelContext } from "../channel-view/ChannelContext";
 import { ModalButton } from "../../reusable/ModalButton";
 import { EditMessageForm } from "../../forms/EditMessageForm";
 import { PinMessageForm } from "../../forms/PinMessageForm";
+import { DeleteMessageForm } from "../../forms/DeleteMessageForm";
 
 export function MessageDropdown({
   data,
@@ -60,10 +61,22 @@ export function MessageDropdown({
 
         {/* if it's your message or your camp, you're able to delete it */}
         {(data.user._id === user._id || user._id === owner_id) && (
-          <button type="button" className="button warning plain">
-            <Delete />
-            <span>Delete message</span>
-          </button>
+          <ModalButton
+            buttonElement={
+              <button type="button" className="button warning plain">
+                <Delete />
+                <span>Delete message</span>
+              </button>
+            }
+            modalElement={
+              <DeleteMessageForm
+                channelId={id}
+                data={data}
+                onSuccess={onSuccess}
+              />
+            }
+            modalTitle="Delete message"
+          />
         )}
       </FlyoutMenu>
     </div>

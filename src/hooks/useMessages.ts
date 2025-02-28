@@ -86,6 +86,10 @@ export function useMessages(channelId: string) {
     );
   });
 
+  socket.on("message delete", (id: string) => {
+    setEvents(events.filter((e) => e._id !== id));
+  });
+
   return {
     events,
     error,
