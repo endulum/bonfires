@@ -22,6 +22,11 @@ export function MessageItem({ data }: { data: MessageData }) {
           <p style={{ color: user.color ?? "var(--text)" }}>
             <b>{user.name}</b>
           </p>
+          <EventStamp
+            dateString={data.timestamp}
+            lastEditedString={data.lastEdited}
+            eventId={data._id}
+          />
         </div>
         <MDWrapper content={data.content} />
       </div>

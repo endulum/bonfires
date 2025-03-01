@@ -625,7 +625,7 @@ button:has(.channelview-avatar) {
 
 .modal-messages {
   .event-item {
-    padding: 0.5rem;
+    padding: 0.75rem;
     border-radius: var(--radius);
     width: 100%;
     background-color: oklch(from var(--base) l c h / 0.5);
