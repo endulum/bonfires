@@ -58,8 +58,12 @@ export function AboutRoute() {
             kick members and delete the camp.
           </li>
           <li>
-            Messages can be freely pinned and unpinned, with a limit of ten pins
-            per camp.
+            Messages can be edited by the sender, and deleted by the sender or
+            camp owner.
+          </li>
+          <li>
+            Messages can be freely pinned and unpinned, with a limit of twenty
+            pins per camp.
           </li>
           <li>
             Messages use{" "}
