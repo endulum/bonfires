@@ -27,7 +27,7 @@ export function DeleteMessageForm({
           irreversible.
         </p>
       </Alert>
-      <div className="modal-messages flex-col">
+      <div className="modal-messages flex-col w100">
         <MessageItem data={data} />
       </div>
     </Form>

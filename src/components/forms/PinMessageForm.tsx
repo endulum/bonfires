@@ -23,7 +23,7 @@ export function PinMessageForm({
       <p>
         Are you sure you want to {data.pinned ? "unpin" : "pin"} this message?
       </p>
-      <div className="modal-messages flex-col">
+      <div className="modal-messages flex-col w100">
         <MessageItem data={data} />
       </div>
       <label htmlFor="pin" style={{ display: "none" }} aria-hidden>
