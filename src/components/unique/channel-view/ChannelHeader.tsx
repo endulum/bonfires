@@ -11,6 +11,7 @@ import { useContext } from "react";
 import { User } from "../../../types";
 import { ChannelContext } from "./ChannelContext";
 import { ChannelDelete } from "./ChannelDelete";
+import { PinnedMessages } from "../messages/PinnedMessages";
 
 export function ChannelHeader() {
   const { user } = useOutletContext<{ user: User }>();
@@ -34,6 +35,7 @@ export function ChannelHeader() {
       <FlyoutMenu x="left" y="bottom">
         <ChannelUsers />
         <ChannelSettings />
+        <PinnedMessages />
         <ChannelLeave />
         {user._id === owner_id && <ChannelDelete />}
       </FlyoutMenu>
