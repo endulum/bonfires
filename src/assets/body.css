@@ -1,3 +1,17 @@
+/* bg */
+
+body {
+  background-image: linear-gradient(to bottom, transparent 75%, #f6c177),
+    linear-gradient(to bottom, transparent 25%, #eb6f92),
+    linear-gradient(
+      to bottom,
+      var(--overlay),
+      oklch(from var(--base) l c h / 0.5)
+    ),
+    url("../assets/bonfire.png");
+  background-blend-mode: hard-light, normal, normal, luminosity;
+}
+
 /* for body sizing and positioning. */
 
 html,
