@@ -2,7 +2,7 @@ type Theme = "light" | "dark";
 
 export function getStoredTheme(): Theme {
   const theme: Theme | null = localStorage.getItem("theme") as Theme | null;
-  if (!theme) return "light";
+  if (!theme) return "dark";
   return JSON.parse(theme);
 }
 
