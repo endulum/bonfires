@@ -4,9 +4,9 @@ import { PushPin } from "@mui/icons-material";
 import { MessageData } from "../../../types";
 import { ChannelContext } from "../channel-view/ChannelContext";
 import { LoadingSpacer } from "../../reusable/LoadingSpacer";
-import { useLogger } from "../../../hooks/useLogger";
 import { ModalButton } from "../../reusable/ModalButton";
 import { MessageItem } from "./MessageItem";
+import { NoResultsSpacer } from "../../reusable/NoResultsSpacer";
 
 export function PinnedMessages() {
   return (
@@ -29,8 +29,6 @@ function PinnedList() {
     `/channel/${id}/pins`
   );
 
-  useLogger({ data });
-
   if (loading || error)
     return (
       <LoadingSpacer
@@ -40,12 +38,15 @@ function PinnedList() {
       />
     );
 
-  if (data)
-    return (
-      <div className="modal-messages flex-col w100 g-05">
-        {data.pinned.map((message) => (
-          <MessageItem key={message._id} data={message} />
-        ))}
-      </div>
-    );
+  return data && data.pinned.length > 0 ? (
+    <div className="modal-messages flex-col w100 g-05">
+      {data.pinned.map((message) => (
+        <MessageItem key={message._id} data={message} />
+      ))}
+    </div>
+  ) : (
+    <NoResultsSpacer>
+      <p>This camp has no pinned messages.</p>
+    </NoResultsSpacer>
+  );
 }
