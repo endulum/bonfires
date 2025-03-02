@@ -82,8 +82,8 @@ export function UserSettingsForm() {
           <Info data-tooltip-id="custom color" className="small" />
           <Tooltip id="custom color">
             <p style={{ maxWidth: "250px" }}>
-              This sets the color of your display name in all camps. This can be
-              overwritten in individual camps using a camp's{" "}
+              This sets the color of your display name in all camps you're in.
+              This can be overwritten in individual camps using a camp's{" "}
               <b>Personalize appearance</b> menu.
             </p>
           </Tooltip>
@@ -115,8 +115,8 @@ export function UserSettingsForm() {
       >
         <div className="flex-row g-05">
           <span>Invisible</span>
-          <Info data-tooltip-id="custom color" className="small" />
-          <Tooltip id="custom color">
+          <Info data-tooltip-id="invisibility" className="small" />
+          <Tooltip id="invisibility">
             <p style={{ maxWidth: "250px" }}>
               When <b>invisible</b>, you will not appear online when viewing a
               camp and there will be no typing indicator created when you are
