@@ -6,6 +6,8 @@ import { useHover } from "usehooks-ts";
 import { EventStamp } from "../../reusable/Dates";
 import { MessageDropdown } from "./MessageDropdown";
 
+import { GhostIndicator } from "./GhostIndicator";
+
 export function MessageItem({ data }: { data: MessageData }) {
   const { getSettingsForUser } = useContext(ChannelContext);
   const user = getSettingsForUser(data.user);
@@ -22,6 +24,7 @@ export function MessageItem({ data }: { data: MessageData }) {
           <p style={{ color: user.color ?? "var(--text)" }}>
             <b>{user.name}</b>
           </p>
+          {!user.isInChannel && <GhostIndicator user={data.user} />}
           <EventStamp
             dateString={data.timestamp}
             lastEditedString={data.lastEdited}
@@ -58,6 +61,7 @@ export function LiveMessageItem({ data }: { data: MessageData }) {
           <p style={{ color: user.color ?? "var(--text)" }}>
             <b>{user.name}</b>
           </p>
+          {!user.isInChannel && <GhostIndicator user={data.user} />}
           <EventStamp
             dateString={data.timestamp}
             lastEditedString={data.lastEdited}
