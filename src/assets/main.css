@@ -57,7 +57,6 @@ body {
   font-family: "Roboto Condensed", var(--fontstack);
   font-weight: 400;
   color: var(--text);
-  background-color: var(--base);
 }
 
 main {
@@ -500,14 +499,50 @@ label {
 
 /**** unqiue components ****/
 
-.auth-main {
-  background-color: var(--surface);
-  border-radius: var(--radius);
-  border: 1px double var(--border);
-  padding: 1.25rem;
+#root:has(.auth) {
+  padding: 1rem;
+}
+
+.auth {
+  position: relative;
   width: 100%;
   max-width: 400px;
+  padding: 5px;
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, #eb6f92, #f6c177);
+  }
+
+  &::after {
+    filter: blur(30px);
+    opacity: 0.5;
+  }
 }
+
+.auth-inner {
+  position: relative;
+  z-index: 1;
+  background-color: var(--surface);
+}
+
+.logo {
+  font-size: 2.5rem;
+  color: #e0def4;
+  svg {
+    width: 3rem;
+    height: 3rem;
+    margin-right: 1rem;
+    color: #f6c177;
+  }
+}
+
+/* index me-section */
 
 .me {
   h2 {
