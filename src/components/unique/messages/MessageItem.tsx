@@ -8,7 +8,7 @@ import { MessageDropdown } from "./MessageDropdown";
 
 export function MessageItem({ data }: { data: MessageData }) {
   const { getSettingsForUser } = useContext(ChannelContext);
-  const user = getSettingsForUser(data.user._id);
+  const user = getSettingsForUser(data.user);
 
   return (
     <div className="event-item flex-row align-start g-75">
@@ -36,7 +36,7 @@ export function MessageItem({ data }: { data: MessageData }) {
 
 export function LiveMessageItem({ data }: { data: MessageData }) {
   const { getSettingsForUser } = useContext(ChannelContext);
-  const user = getSettingsForUser(data.user._id);
+  const user = getSettingsForUser(data.user);
 
   const hoverRef = useRef<HTMLDivElement>(null);
   const isHovering = useHover(hoverRef);

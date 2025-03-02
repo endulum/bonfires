@@ -1,6 +1,11 @@
 import { createContext, useState } from "react";
 
-import { UserData, type ChannelData, type ChannelUser } from "../../../types";
+import {
+  User,
+  UserData,
+  type ChannelData,
+  type ChannelUser,
+} from "../../../types";
 import { useOutletContext } from "react-router-dom";
 import { socket } from "../../../functions/socketClient";
 
@@ -11,7 +16,7 @@ type Context = {
   updateTitle: (newTitle: string) => void;
   users: ChannelUser[];
   getYou: () => ChannelUser | undefined;
-  getSettingsForUser: (id: string) => {
+  getSettingsForUser: (user: User) => {
     name: string;
     color: string | null;
     invisible: boolean;
@@ -43,26 +48,26 @@ const ChannelContextProvider = ({
     return users.find((u) => u._id === you._id);
   };
 
-  const getSettingsForUser = (id: string) => {
-    const user = users.find((u) => u._id === id);
-    if (!user)
+  const getSettingsForUser = (user: User) => {
+    const userWithSettings = users.find((u) => u._id === user._id);
+    if (!userWithSettings)
       return {
-        name: "unknown",
+        name: user.username,
         color: null,
         invisible: true,
         isOwner: false,
         isInChannel: false,
       };
     return {
-      name: user.channelSettings.displayName ?? user.username,
+      name: userWithSettings.channelSettings.displayName ?? user.username,
       color:
-        user.channelSettings.nameColor ??
-        user.settings.defaultNameColor ??
+        userWithSettings.channelSettings.nameColor ??
+        userWithSettings.settings.defaultNameColor ??
         "var(--text)",
       invisible:
-        user.channelSettings.invisible !== undefined
-          ? user.channelSettings.invisible
-          : user.settings.defaultInvisible,
+        userWithSettings.channelSettings.invisible !== undefined
+          ? userWithSettings.channelSettings.invisible
+          : userWithSettings.settings.defaultInvisible,
       isOwner: user._id === data.owner._id,
       isInChannel: true,
     };

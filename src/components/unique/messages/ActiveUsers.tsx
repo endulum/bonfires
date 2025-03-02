@@ -17,7 +17,7 @@ export function ActiveUsers() {
       {activeUsers
         .filter((u) => u.user._id !== you._id)
         .map((u) => {
-          const user = getSettingsForUser(u.user._id);
+          const user = getSettingsForUser(u.user);
           return (
             <Fragment key={u.user._id}>
               <div

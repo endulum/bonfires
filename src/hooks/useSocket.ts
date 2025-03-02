@@ -13,7 +13,7 @@ export function useSocket(channel: { _id: string; title: string }, user: User) {
   const getYourSettings = () => {
     const you = getYou();
     if (!you) return null;
-    return getSettingsForUser(you._id);
+    return getSettingsForUser(you);
   };
 
   const disconnect = () => {

@@ -70,7 +70,7 @@ function UserList({
   return (
     <div className="memberlist flex-col g-1">
       {users.map((u) => {
-        const user = getSettingsForUser(u._id);
+        const user = getSettingsForUser(u);
         if (!user) return <br />;
         return (
           <div key={u._id} className="flex-row g-75 w100">
