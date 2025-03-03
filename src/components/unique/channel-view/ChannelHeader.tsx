@@ -17,7 +17,7 @@ export function ChannelHeader() {
   const { user } = useOutletContext<{ user: User }>();
   const { owner_id } = useContext(ChannelContext);
   return (
-    <div className="flex-row jcspb mb-05">
+    <div className="channel-header flex-row jcspb mb-05">
       <div className="flex-row g-05">
         {/* go back to index */}
         <Link to="/camps" type="button" className="button neutral plain">

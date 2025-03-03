@@ -616,6 +616,13 @@ button:has(.channelview-avatar) {
   margin-right: 0.25rem;
 }
 
+/* channel header */
+
+.channel-header {
+  position: relative;
+  z-index: 1;
+}
+
 /* date dividers for messages */
 
 .messages-beginner {
@@ -645,6 +652,7 @@ button:has(.channelview-avatar) {
   border-radius: var(--radius);
   width: 100%;
   position: relative;
+  z-index: 0;
   &:hover {
     background-color: oklch(from var(--base) l c h / 0.5);
   }
