@@ -10,7 +10,8 @@ export function LoginRoute() {
     <>
       <h2 className="mb-05 tac">Log In</h2>
       <p className="mb-1 tac">
-        New to Bonfires? <Link to="/signup">Sign up.</Link>
+        New to {import.meta.env.VITE_APP_NAME}?{" "}
+        <Link to="/signup">Sign up.</Link>
       </p>
       <GitHubAlert />
       <LoginForm />

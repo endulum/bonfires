@@ -2,11 +2,13 @@ import { useDocumentTitle } from "usehooks-ts";
 import { GitHub } from "@mui/icons-material";
 
 export function AboutRoute() {
-  useDocumentTitle(`About Bonfires :: ${import.meta.env.VITE_APP_NAME}`);
+  useDocumentTitle(
+    `About ${import.meta.env.VITE_APP_NAME} :: ${import.meta.env.VITE_APP_NAME}`
+  );
   return (
     <>
       <div className="flex-row jcspb mb-1">
-        <h2>About Bonfires</h2>
+        <h2>About {import.meta.env.VITE_APP_NAME}</h2>
         <a
           href="https://github.com/endulum/bonfires"
           type="button"
@@ -20,9 +22,9 @@ export function AboutRoute() {
 
       <div style={{ overflow: "auto" }}>
         <p className="mb-05">
-          <b>Bonfires</b> is a messaging app with a cozy, toasty flavor. Users
-          can send messages to one another through <b>camps</b>, the thematic
-          analogue for group chats.
+          <b>{import.meta.env.VITE_APP_NAME}</b> is a messaging app with a cozy,
+          toasty flavor. Users can send messages to one another through{" "}
+          <b>camps</b>, the thematic analogue for group chats.
         </p>
 
         <p className="mb-05">
@@ -49,9 +51,9 @@ export function AboutRoute() {
           <li>
             Likewise to Discord's freedom of individual customization across{" "}
             <i>servers</i>, users can customize their name and name color on
-            both a default and per-camp basis. Bonfires also includes
-            invisibility - whether you can be shown as active and typing - in
-            this freedom of customization.
+            both a default and per-camp basis. {import.meta.env.VITE_APP_NAME}{" "}
+            also includes customization of invisibility - whether you can be
+            shown as active and typing in a camp.
           </li>
           <li>
             There is a designated "owner" role granted to the camp's creator,
@@ -68,7 +70,9 @@ export function AboutRoute() {
           </li>
           <li>
             Messages use{" "}
-            <a href="https://commonmark.org/help/">limited markdown.</a>{" "}
+            <a href="https://commonmark.org/help/" target="_blank">
+              limited markdown.
+            </a>{" "}
             Supported markdown formats are:
             <ul className="mt-05">
               <li>First- to third-level headings</li>

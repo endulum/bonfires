@@ -14,7 +14,7 @@ export function AuthWrapper({
     <>
       <h1 className="logo flex-row mb-1">
         <SvgIcon component={Camp} />
-        <span>Bonfires</span>
+        <span>{import.meta.env.VITE_APP_NAME}</span>
       </h1>
       <div className="auth">
         <div className="auth-inner p-1">
