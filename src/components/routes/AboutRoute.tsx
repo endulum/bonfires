@@ -11,6 +11,7 @@ export function AboutRoute() {
           href="https://github.com/endulum/bonfires"
           type="button"
           className="button neutral solid"
+          target="_blank"
         >
           <GitHub />
           <span>Repo</span>
