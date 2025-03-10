@@ -1,17 +1,20 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import { BrowserRouter } from 'react-router-dom'
-import Modal from 'react-modal'
-import App from './App.tsx'
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
+import Modal from "react-modal";
 
-const root = document.getElementById('root')
+import { App } from "./App";
+import "react-tooltip/dist/react-tooltip.css";
+
+const root = document.getElementById("root");
 
 if (root !== null) {
-  Modal.setAppElement('#root')
+  Modal.setAppElement("#root");
   ReactDOM.createRoot(root).render(
     <React.StrictMode>
-      
-      <BrowserRouter><App /></BrowserRouter>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </React.StrictMode>
-  )
+  );
 }

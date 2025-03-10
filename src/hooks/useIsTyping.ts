@@ -1,30 +1,34 @@
-import { useState, useRef } from 'react'
-import socket from '../socketConfig.ts'
+import { useState, useRef, useContext } from "react";
+import { socket } from "../functions/socketClient";
+import { useOutletContext } from "react-router-dom";
+import { ChannelContext } from "../components/unique/channel-view/ChannelContext";
+import { type User } from "../types";
 
-export default function useIsTyping (
-  channelId: string,
-  yourId: string,
-  yourDisplayName: string | null
-): {
-    startTyping: () => void
-    stopTyping: () => void
-  } {
-  const [isTyping, setIsTyping] = useState<boolean>(false)
-  const timerRef: { current: ReturnType<typeof setInterval> | null } = useRef(null)
+export function useIsTyping(): {
+  startTyping: () => void;
+  stopTyping: () => void;
+} {
+  const { id } = useContext(ChannelContext);
+  const { user } = useOutletContext<{ user: User }>();
 
-  function startTyping (): void {
+  const [isTyping, setIsTyping] = useState<boolean>(false);
+
+  const timerRef: { current: ReturnType<typeof setInterval> | null } =
+    useRef(null);
+
+  function startTyping(): void {
     if (!isTyping) {
-      setIsTyping(true)
-      socket.emit('you started typing', channelId, yourId, yourDisplayName)
+      setIsTyping(true);
+      socket.emit("you started typing", id, user._id);
     }
-    if (timerRef.current !== null) clearTimeout(timerRef.current)
-    timerRef.current = setTimeout(stopTyping, 2000)
+    if (timerRef.current !== null) clearTimeout(timerRef.current);
+    timerRef.current = setTimeout(stopTyping, 2000);
   }
 
-  function stopTyping (): void {
-    setIsTyping(false)
-    socket.emit('you stopped typing', channelId, yourId)
+  function stopTyping(): void {
+    setIsTyping(false);
+    socket.emit("you stopped typing", id, user._id);
   }
 
-  return { startTyping, stopTyping }
+  return { startTyping, stopTyping };
 }

@@ -1,55 +1,63 @@
-export type FormErrors = Array<{
-  path: string
-  value: string
-  msg: string
-}>
+export type MongoObject = {
+  _id: string;
+};
 
-export interface IUserData {
-  username: string
-  id: string
-}
+export type User = MongoObject & {
+  username: string;
+};
 
-export type MenuItems = Array<{
-  title: string
-  icon?: JSX.Element
-  element?: JSX.Element
-  function?: () => void
-} | false>
+export type UserData = User & {
+  tagline?: string;
+  ghId: number;
+  ghUser: string;
+  joined: string;
+  settings: UserSettings;
+};
 
-export interface IChannel {
-  id: string
-  title: string
-  adminId: string
-  userCount: number
-  ownDisplayName: string
-}
+export type UserSettings = {
+  defaultNameColor?: string;
+  defaultInvisible: boolean;
+};
 
-export interface IChannelFilter {
-  title: string
-  mustBeAdmin: boolean
-}
+export type Channel = MongoObject & {
+  title: string;
+  owner: string;
+  users: string[];
+  lastActivity: string;
+};
 
-export interface IChannelDetails {
-  id: string
-  title: string
-  currentUser: {
-    id: string
-    username: string
-    displayName: string | null
-  }
-  adminId: string
-  userIds: string[]
-}
+export type ChannelData = MongoObject & {
+  title: string;
+  owner: User;
+  users: ChannelUser[];
+};
 
-export interface IMessage {
-  id: string
-  content: string
-  user: {
-    username: string
-    id: string
-    displayName: string | null
-    isAdmin: boolean
-    isInChannel: boolean
-  }
-  timestamp: string
-}
+export type ChannelUser = UserData & {
+  channelSettings: {
+    displayName?: string;
+    nameColor?: string;
+    invisible?: boolean;
+  };
+};
+
+export type MessageData = MongoObject & {
+  pinned: boolean;
+  timestamp: string;
+  user: User;
+  content: string;
+  lastEdited?: string;
+};
+
+export type ChannelEvent = MongoObject & {
+  user: User;
+  targetUser: User;
+  timestamp: string;
+  type:
+    | "user_invite"
+    | "user_kick"
+    | "user_leave"
+    | "channel_title"
+    | "channel_avatar"
+    | "message_pin";
+  newChannelTitle: string;
+};

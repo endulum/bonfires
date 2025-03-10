@@ -1,35 +1,59 @@
-import useInitializeUser from './hooks/useInitializeUser.ts'
-import { setStoredToken, clearStoredToken } from './helpers/tokenUtils.ts'
-import LoadingWrapper from './components/LoadingWrapper.tsx'
-import AuthRouter from './components/auth/AuthRouter.tsx'
-import IndexRouter from './components/index/IndexRouter.tsx'
+import { useEffect } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
 
-import './assets/reset.css'
-import './assets/fonts/fonts.css'
-import './assets/colors.css'
-import './assets/main.css'
+import * as routes from "./components/routes/_index";
+import { LoadingSpacer } from "./components/reusable/LoadingSpacer";
+import { useUser } from "./hooks/useUser";
+import { setStoredTheme } from "./functions/themeUtils";
+import { UserData } from "./types";
 
-export default function App (): JSX.Element {
-  const { loading, initError, userData, initUser } = useInitializeUser()
-  // - when loading = display loading
-  // - when done loading and error = display error
-  // - when done loading and no data = return auth routes
-  // - when done loading and data = return index routes
+import "./assets/reset.css";
+import "./assets/body.css";
+import "./assets/utility.css";
+import "./assets/main.css";
 
-  function logIn (t: string): void { setStoredToken(t); void initUser() }
-  function logOut (): void { clearStoredToken(); void initUser() }
+export function App() {
+  const { loading, error, user, initUser, changeUsername } = useUser();
+  const indexContext = { user: user as UserData, initUser, changeUsername };
 
-  if (loading || initError !== null) {
+  useEffect(() => {
+    setStoredTheme();
+  }, []);
+
+  if (loading || error)
     return (
-      <LoadingWrapper
-        loading={loading}
-        error={initError}
-        loadingMessage="Lighting the fires..."
-      />
-    )
-  }
+      <main>
+        <LoadingSpacer
+          loading={loading}
+          error={error}
+          customLoadingText="Starting up..."
+        />
+      </main>
+    );
 
-  return userData !== null
-    ? <IndexRouter logOut={logOut} userData={userData} />
-    : <AuthRouter logIn={logIn} />
+  return (
+    <Routes>
+      {!user ? (
+        <Route element={<routes.AuthWrapper context={{ initUser }} />}>
+          <Route path="/login" element={<routes.LoginRoute />} />
+          <Route path="/signup" element={<routes.SignupRoute />} />
+          <Route path="/github" element={<routes.GitHubRoute />} />
+          <Route path="*" element={<Navigate to="/login" />} />
+        </Route>
+      ) : (
+        <Route element={<routes.MainWrapper context={{ user }} />}>
+          <Route element={<routes.IndexWrapper context={indexContext} />}>
+            <Route path="/camps" element={<routes.ChannelsRoute />} />
+            <Route path="/settings" element={<routes.UserSettingsRoute />} />
+            <Route path="/about" element={<routes.AboutRoute />} />
+          </Route>
+          <Route path="/camp/:camp" element={<routes.ChannelRoute />} />
+          {["/login", "/signup", "/"].map((path) => (
+            <Route key={path} path={path} element={<Navigate to="/camps" />} />
+          ))}
+          <Route path="*" element={<routes.ErrorRoute />} />
+        </Route>
+      )}
+    </Routes>
+  );
 }
