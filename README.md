@@ -6,5 +6,4 @@ Bonfires is a messaging app with a toasty, cozy flavor.
 
 [Live Deployment](https://bonfires.up.railway.app)
 
-![Bonfires channel overview.](https://github.com/endulum/bonfires/blob/main/screenshot2.png)
-![Bonfires channel messaging view.](https://github.com/endulum/bonfires/blob/main/screenshot3.png)
+![Bonfires channel overview and messaging view.](https://github.com/endulum/bonfires/blob/main/screenshot.png)
